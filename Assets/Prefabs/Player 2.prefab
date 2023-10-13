@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 6770314204537912594}
   - component: {fileID: 3782888142941102275}
   - component: {fileID: 4738583996780304027}
+  - component: {fileID: 9057239722746343378}
   m_Layer: 0
   m_Name: cube car 2
   m_TagString: Player
@@ -561,6 +562,28 @@ MonoBehaviour:
   driftTimer: 0
   boostForce: 50
   boostStrength: 10
+--- !u!114 &9057239722746343378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5413639140701992678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641e7bd38d7442447aad3adac842914a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 8074239417728882242}
+  spriteRenderer: {fileID: 9062787315414759710}
+  wSprites:
+  - {fileID: 21300000, guid: c6120a08e4852604b810aa3dc882b4a7, type: 3}
+  aSprites:
+  - {fileID: 662491270, guid: 38246661dcccf4046b06836a3585374f, type: 3}
+  - {fileID: 731651025, guid: 38246661dcccf4046b06836a3585374f, type: 3}
+  dSprites:
+  - {fileID: -1278788022, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
+  - {fileID: 359191, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
 --- !u!1 &5604449604312343028
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,7 +626,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1694261018495429490}
   - component: {fileID: 9062787315414759710}
-  - component: {fileID: 2664503326183058455}
   - component: {fileID: 8074239417728882242}
   m_Layer: 0
   m_Name: DriverSprite
@@ -679,28 +701,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2664503326183058455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5938235760978648587}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641e7bd38d7442447aad3adac842914a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 8074239417728882242}
-  spriteRenderer: {fileID: 9062787315414759710}
-  wSprites:
-  - {fileID: 21300000, guid: c6120a08e4852604b810aa3dc882b4a7, type: 3}
-  aSprites:
-  - {fileID: 662491270, guid: 38246661dcccf4046b06836a3585374f, type: 3}
-  - {fileID: 731651025, guid: 38246661dcccf4046b06836a3585374f, type: 3}
-  dSprites:
-  - {fileID: -1278788022, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
-  - {fileID: 359191, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
 --- !u!50 &8074239417728882242
 Rigidbody2D:
   serializedVersion: 4

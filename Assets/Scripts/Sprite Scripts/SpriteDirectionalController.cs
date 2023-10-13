@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpriteDirectionalController : MonoBehaviour
 {
@@ -13,14 +14,48 @@ public class SpriteDirectionalController : MonoBehaviour
 
     Vector2 direction;
 
-    private PlayerControls controls;
+    //private PlayerControls controls;
+
+    private InputActionAsset inputAsset;
+    private InputActionMap gameplay;
+    private InputAction ChangeSprite;
+
+
+    private void Awake()
+    {
+        //controls = new PlayerControls();
+
+        inputAsset = this.GetComponent<PlayerInput>().actions;
+        gameplay = inputAsset.FindActionMap("Gameplay");
+
+        gameplay.FindAction("ChangeSprite").started += ctx => GetSpriteDirection();
+
+        gameplay.FindAction("ChangeSprite").canceled += ctx => GetSpriteDirection();
+
+        
+        //controls.Gameplay.ChangeSprite.performed += ctx => GetSpriteDirection();
+
+        //direction = controls.Gameplay.ChangeSprite.ReadValue<Vector2>();
+    }
+    
+    private void OnEnable()
+    {
+        gameplay.Enable();
+    }
+
+    private void OnDisable()
+    {
+        gameplay.Disable();
+    }
 
     
     void Update()
     {
         //direction = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        direction = controls.Gameplay.ChangeSprite.ReadValue<Vector2>();
+        //direction = gameplay.Gameplay.ChangeSprite.ReadValue<Vector2>();
+
+        direction =  gameplay.FindAction("ChangeSprite").ReadValue<Vector2>();
 
         handleSpriteFlip();
         GetSpriteDirection();

@@ -2344,7 +2344,6 @@ GameObject:
   m_Component:
   - component: {fileID: 718272298}
   - component: {fileID: 718272300}
-  - component: {fileID: 718272302}
   - component: {fileID: 718272301}
   m_Layer: 0
   m_Name: DriverSprite
@@ -2447,28 +2446,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!114 &718272302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 718272297}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 641e7bd38d7442447aad3adac842914a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 718272301}
-  spriteRenderer: {fileID: 718272300}
-  wSprites:
-  - {fileID: 21300000, guid: c6120a08e4852604b810aa3dc882b4a7, type: 3}
-  aSprites:
-  - {fileID: 662491270, guid: 38246661dcccf4046b06836a3585374f, type: 3}
-  - {fileID: 731651025, guid: 38246661dcccf4046b06836a3585374f, type: 3}
-  dSprites:
-  - {fileID: -1278788022, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
-  - {fileID: 359191, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
 --- !u!1 &744343239
 GameObject:
   m_ObjectHideFlags: 0
@@ -6485,6 +6462,7 @@ GameObject:
   - component: {fileID: 2060904627}
   - component: {fileID: 2060904628}
   - component: {fileID: 2060904629}
+  - component: {fileID: 2060904630}
   m_Layer: 0
   m_Name: cube car
   m_TagString: Player
@@ -6704,7 +6682,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theRB: {fileID: 2060904623}
   forwardAccel: 50
-  reverseAccel: 10
+  reverseAccel: 2
   turnStrength: 40
   gravityForce: 10
   dragOnGround: 7
@@ -6721,6 +6699,28 @@ MonoBehaviour:
   driftTimer: 0
   boostForce: 50
   boostStrength: 10
+--- !u!114 &2060904630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060904620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 641e7bd38d7442447aad3adac842914a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 718272301}
+  spriteRenderer: {fileID: 718272300}
+  wSprites:
+  - {fileID: 21300000, guid: c6120a08e4852604b810aa3dc882b4a7, type: 3}
+  aSprites:
+  - {fileID: 662491270, guid: 38246661dcccf4046b06836a3585374f, type: 3}
+  - {fileID: 731651025, guid: 38246661dcccf4046b06836a3585374f, type: 3}
+  dSprites:
+  - {fileID: -1278788022, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
+  - {fileID: 359191, guid: e0b29a7a587b61044af9ee8fa09a0e31, type: 3}
 --- !u!1 &2090489789
 GameObject:
   m_ObjectHideFlags: 0
