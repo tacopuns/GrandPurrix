@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CarController : MonoBehaviour
+public class ISCarCntrl : MonoBehaviour
 {
     public Rigidbody theRB;
 
     public float forwardAccel = 50f, reverseAccel = 10f, turnStrength = 40f, gravityForce = 10f, dragOnGround = 7f;
     
-    public LayerMask whatIsGround; //anything set as ground, the car will be able to move on
+    public LayerMask whatIsGround; 
     private float groundRayLength = .5f;
     public Transform groundRayPoint;
     
@@ -21,49 +21,43 @@ public class CarController : MonoBehaviour
     private float currentSpeed = 0f;
     public float accelerationRate;
     public float maxSpeed = 530f;
-
     [SerializeField]
     private float accelerationTimer = 0.0f;
-    public float accelerationTime = 5.0f; //time needed to reach max speed
+    public float accelerationTime = 5.0f;
 
     private bool isDrifting = false;
     public float driftDuration = 3.0f;
     public float driftTimer = 0.0f;
     
     private bool isBoosting = false;
-    public float boostForce = 100f;
-    public float boostStrength = 200f;
+    public float boostForce = 50f;
+    public float boostStrength = 10f;
     
-    private InputActionAsset inputAsset;
-    private InputActionMap gameplay;
-    private InputAction MoveForward;
-    private InputAction Turn;
-    private InputAction Drift;
+    
+
+    private PlayerControls controls;
 
     private void Awake()
     {
-        inputAsset = this.GetComponent<PlayerInput>().actions;
-        gameplay = inputAsset.FindActionMap("Gameplay");
+        controls = new PlayerControls();
+        controls.Gameplay.MoveForward.performed += ctx => speedInput = ctx.ReadValue<float>();
+        controls.Gameplay.MoveForward.canceled += ctx => speedInput = 0f;
 
-        gameplay.FindAction("MoveForward").started += ctx => speedInput = ctx.ReadValue<float>();
-        gameplay.FindAction("Turn").started += ctx => turnInput = ctx.ReadValue<float>();
-        gameplay.FindAction("Drift").started += ctx => StartDrift();
+        controls.Gameplay.Turn.performed += ctx => turnInput = ctx.ReadValue<float>();
+        controls.Gameplay.Turn.canceled += ctx => turnInput = 0f;
 
-        gameplay.FindAction("MoveForward").canceled += ctx => speedInput = 0f;
-        gameplay.FindAction("Turn").canceled += ctx => turnInput = 0f;
-        gameplay.FindAction("Drift").canceled += ctx => StopDrift();
+        controls.Gameplay.Drift.started += ctx => StartDrift();
+        controls.Gameplay.Drift.canceled += ctx => StopDrift();
     }
 
     private void OnEnable()
     {
-        gameplay.Enable();
-
-        gameplay.FindAction("Turn").started += ctx => turnInput = ctx.ReadValue<float>();
+        controls.Enable();
     }
 
     private void OnDisable()
     {
-        gameplay.Disable();
+        controls.Disable();
     }
     
     void Start()
@@ -89,11 +83,12 @@ public class CarController : MonoBehaviour
         }
         else if (speedInput < 0)
         {
-            speedInput = -reverseAccel * 1000f * Time.deltaTime; //this needs to change, so inconsistent barf
+            speedInput = -reverseAccel * 1000f * Time.deltaTime;
         }
         else
         {
-            accelerationTimer = 0f; //when player is not moving
+            // If no input, reset acceleration
+            accelerationTimer = 0f;
         }
         
     }
@@ -177,7 +172,7 @@ public class CarController : MonoBehaviour
         else
         {
             isBoosting = false;
-            driftTimer = 0.0f; //reset time when drift stop or not drifting
+            driftTimer = 0.0f; // Reset driftTimer when not drifting
         }
     }
 

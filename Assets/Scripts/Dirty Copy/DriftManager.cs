@@ -32,10 +32,6 @@ public class DriftManager : MonoBehaviour
     private bool isBoosting = false;
     public float boostForce = 50f;
     public float boostStrength = 10f;
-    
-    
-
-    //private PlayerControls controls;
 
     private InputActionAsset inputAsset;
     private InputActionMap gameplay;
@@ -45,21 +41,9 @@ public class DriftManager : MonoBehaviour
 
     private void Awake()
     {
-        //controls = new PlayerControls();
 
         inputAsset = this.GetComponent<PlayerInput>().actions;
         gameplay = inputAsset.FindActionMap("Gameplay");
-
-        /*
-        controls.Gameplay.MoveForward.performed += ctx => speedInput = ctx.ReadValue<float>();
-        controls.Gameplay.MoveForward.canceled += ctx => speedInput = 0f;
-
-        controls.Gameplay.Turn.performed += ctx => turnInput = ctx.ReadValue<float>();
-        controls.Gameplay.Turn.canceled += ctx => turnInput = 0f;
-
-        controls.Gameplay.Drift.started += ctx => StartDrift();
-        controls.Gameplay.Drift.canceled += ctx => StopDrift();
-        */
 
         gameplay.FindAction("MoveForward").started += ctx => speedInput = ctx.ReadValue<float>();
         gameplay.FindAction("Turn").started += ctx => turnInput = ctx.ReadValue<float>();
@@ -72,24 +56,14 @@ public class DriftManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //controls.Enable();
         gameplay.Enable();
 
         gameplay.FindAction("Turn").started += ctx => turnInput = ctx.ReadValue<float>();
-
-
     }
 
     private void OnDisable()
     {
-        //controls.Disable();
-
         gameplay.Disable();
-
-        
-
-
-
     }
     
     void Start()
@@ -119,7 +93,6 @@ public class DriftManager : MonoBehaviour
         }
         else
         {
-            // If no input, reset acceleration
             accelerationTimer = 0f;
         }
         
@@ -172,7 +145,6 @@ public class DriftManager : MonoBehaviour
         isDrifting = true;
         driftTimer = 0f;
         turnStrength = 100f;
-
     }
 
     private void StopDrift()
@@ -204,7 +176,7 @@ public class DriftManager : MonoBehaviour
         else
         {
             isBoosting = false;
-            driftTimer = 0.0f; // Reset driftTimer when not drifting
+            driftTimer = 0.0f; 
         }
     }
 

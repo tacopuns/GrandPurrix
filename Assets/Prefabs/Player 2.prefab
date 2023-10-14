@@ -344,7 +344,6 @@ GameObject:
   - component: {fileID: 395455589636544407}
   - component: {fileID: 6770314204537912594}
   - component: {fileID: 3782888142941102275}
-  - component: {fileID: 4738583996780304027}
   - component: {fileID: 9057239722746343378}
   m_Layer: 0
   m_Name: cube car 2
@@ -507,14 +506,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5413639140701992678}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6cb15496065424bbe9c7c73e688add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 395455589636544407}
   forwardAccel: 50
-  reverseAccel: 10
+  reverseAccel: 2
   turnStrength: 40
   gravityForce: 10
   dragOnGround: 7
@@ -531,37 +530,6 @@ MonoBehaviour:
   driftTimer: 0
   boostForce: 100
   boostStrength: 200
---- !u!114 &4738583996780304027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5413639140701992678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb363342f565b424fae4dd8cc35b97ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  theRB: {fileID: 395455589636544407}
-  forwardAccel: 50
-  reverseAccel: 10
-  turnStrength: 40
-  gravityForce: 10
-  dragOnGround: 7
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  groundRayPoint: {fileID: 4950348405718500037}
-  currentSpeed: 0
-  accelerationRate: 0
-  maxSpeed: 530
-  accelerationTimer: 0
-  accelerationTime: 5
-  driftDuration: 3
-  driftTimer: 0
-  boostForce: 50
-  boostStrength: 10
 --- !u!114 &9057239722746343378
 MonoBehaviour:
   m_ObjectHideFlags: 0
