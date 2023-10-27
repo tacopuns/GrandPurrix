@@ -513,7 +513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   theRB: {fileID: 395455589636544407}
   forwardAccel: 50
-  reverseAccel: 2
+  reverseAccel: 10
   turnStrength: 40
   gravityForce: 10
   dragOnGround: 7

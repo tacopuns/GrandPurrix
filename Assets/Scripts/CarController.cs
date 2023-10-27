@@ -144,7 +144,7 @@ public class CarController : MonoBehaviour
     {
         isDrifting = true;
         driftTimer = 0f;
-        turnStrength = 100f;
+        turnStrength = 60f;
 
     }
 
