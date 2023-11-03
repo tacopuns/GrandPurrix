@@ -10,7 +10,7 @@ public class AICarController : MonoBehaviour
     
 
     public float rotationSpeed = 6f;
-    public float currentSpeed = 20f;
+    public float currentSpeed = 0f;
 
     public Rigidbody aiRB;
 
@@ -31,45 +31,41 @@ public class AICarController : MonoBehaviour
         waypoints = waypointContainer.waypoints.ToArray();
         aiRB.transform.parent = null;
         currentWaypointIndex = 0;
-
+        currentSpeed = 0f;
     }
 
-    
+
     void Update()
     {
-
-        /*if (currentWaypointIndex < waypoints.Length)
-        {
-            Vector3 targetPosition = waypoints[currentWaypointIndex].position;
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
-
-            // rotates the CPU towards the next waypoint
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-            
-            RaycastHit hit;
-            if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
-            {
-                
-                transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
-            }
-            else
-            {
-                //
-            }
-
-            if (Vector3.Distance(transform.position, targetPosition) < 1f)
-            {
-                currentWaypointIndex++;
-            }
-
+        // Acceleration logic
             if (currentSpeed < maxSpeed)
             {
                 currentSpeed += accelerationRate * Time.deltaTime;
-                currentSpeed = Mathf.Min(currentSpeed, maxSpeed); // Ensure speed doesn't exceed the maximum
+                currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
             }
-        }*/
+
+        //Stuck timer
+        if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < waypoints.Length)
+        {
+            stuckTimer += Time.deltaTime;
+            if (stuckTimer > maxStuckTime)
+            {
+                currentWaypointIndex++; 
+                stuckTimer = 0f; 
+            }
+        }
+        else
+        {
+            stuckTimer = 0f;
+        }   
+        
+    
+     Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
+    
+    }
+    
+    void FixedUpdate()
+    {
 
         if (currentWaypointIndex < waypoints.Length)
         {
@@ -88,28 +84,22 @@ public class AICarController : MonoBehaviour
                 Vector3 forwardForce = transform.forward * currentSpeed;
                 
                 if (hit.normal != Vector3.up)
-                    { 
-                        // Adjust vertical movement on ramps
-                        //transform.position = Vector3.Lerp(transform.position, hit.point + Vector3.up * 2f, Time.deltaTime);
-                        
-                        //Vector3 newPosition = Vector3.Lerp(transform.position, hit.point + Vector3.up * 2f, Time.deltaTime);
-                        //transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.z);
-                        forwardForce += hit.normal * 10f;
-                    }
+                { 
+                    // Apply a force perpendicular to the ground to follow the ramp's inclination
+                    forwardForce += hit.normal * 10f;
+                }
 
-                // Move forward on both regular track and ramps
-                //transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime);
+                
                 // Apply the forward force to the Rigidbody
                 aiRB.AddForce(forwardForce, ForceMode.Force);
+                //transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime); speeds car up, breaks flying off ramps
 
             }
             else
             {
                 // Handling for when the car is not on the ground
-                //(steal dragonground logic from carcontroller)
-
                 aiRB.drag = 0.1f;
-                aiRB.AddForce(Vector3.up * -gravityForce * 10f);
+                aiRB.AddForce(Vector3.up * -gravityForce * 50f);
             }
 
             // Waypoint handling
@@ -123,33 +113,10 @@ public class AICarController : MonoBehaviour
                 // Continue moving until very close to the waypoint
             }
 
-            // Acceleration logic
-            if (currentSpeed < maxSpeed)
-            {
-                currentSpeed += accelerationRate * Time.deltaTime;
-                currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-            }
-
+            
         }   
-
-
-
-        if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < waypoints.Length)
-        {
-            stuckTimer += Time.deltaTime;
-            if (stuckTimer > maxStuckTime)
-            {
-                currentWaypointIndex++; 
-                stuckTimer = 0f; 
-            }
-        }
-        else
-        {
-            stuckTimer = 0f;
-        }   
-        
-    
-     Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
 
     }
+
+    
 }
