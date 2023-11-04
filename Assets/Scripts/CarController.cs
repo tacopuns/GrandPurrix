@@ -89,7 +89,7 @@ public class CarController : MonoBehaviour
         }
         else if (speedInput < 0)
         {
-            speedInput = -reverseAccel * 1000f * Time.deltaTime; //this needs to change, so inconsistent barf
+            speedInput = -reverseAccel * Time.deltaTime; //this needs to change, so inconsistent barf
         }
         else
         {

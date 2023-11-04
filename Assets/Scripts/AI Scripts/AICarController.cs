@@ -10,7 +10,9 @@ public class AICarController : MonoBehaviour
     
 
     public float rotationSpeed = 6f;
+
     public float currentSpeed = 0f;
+    public float cpuSpeed = 20f;
 
     public Rigidbody aiRB;
 
@@ -25,6 +27,10 @@ public class AICarController : MonoBehaviour
 
     public float dragOnGround = 7f, gravityForce = 10f;
 
+    [SerializeField]
+    private float accelerationTimer = 0.0f;
+    public float accelerationTime = 5.0f; 
+
     
     void Start()
     {
@@ -37,12 +43,27 @@ public class AICarController : MonoBehaviour
 
     void Update()
     {
-        // Acceleration logic
-            if (currentSpeed < maxSpeed)
+        currentSpeed = aiRB.velocity.magnitude;
+        
+        if (cpuSpeed < maxSpeed)
+        {
+            // Calculate the rate of acceleration
+            float accelerationRate = maxSpeed / accelerationTime;
+
+            // Increment the acceleration timer
+            accelerationTimer += Time.deltaTime;
+
+            // If acceleration timer exceeds the acceleration time, reset it
+            if (accelerationTimer > accelerationTime)
             {
-                currentSpeed += accelerationRate * Time.deltaTime;
-                currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
+                accelerationTimer = accelerationTime;
             }
+
+            // Apply acceleration to CPU speed
+            cpuSpeed += accelerationRate * Time.deltaTime;
+            cpuSpeed = Mathf.Min(cpuSpeed, maxSpeed); // Ensure speed doesn't exceed the maximum
+        }
+
 
         //Stuck timer
         if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < waypoints.Length)
@@ -59,6 +80,12 @@ public class AICarController : MonoBehaviour
             stuckTimer = 0f;
         }   
         
+
+        if (currentWaypointIndex >= waypoints.Length)
+        {
+            currentWaypointIndex = 0;  // Reset the waypoint index to begin a new lap
+            // Increment a lap count if needed
+        }
     
      Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
     
@@ -81,7 +108,7 @@ public class AICarController : MonoBehaviour
             {
                 aiRB.drag = dragOnGround;
                 
-                Vector3 forwardForce = transform.forward * currentSpeed;
+                Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
                 
                 if (hit.normal != Vector3.up)
                 { 
@@ -108,7 +135,7 @@ public class AICarController : MonoBehaviour
             {
                 currentWaypointIndex++;
             }
-            else if (distanceToWaypoint < currentSpeed * Time.deltaTime)
+            else if (distanceToWaypoint < cpuSpeed * Time.deltaTime)
             {
                 // Continue moving until very close to the waypoint
             }
