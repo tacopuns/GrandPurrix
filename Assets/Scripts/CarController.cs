@@ -89,7 +89,7 @@ public class CarController : MonoBehaviour
         }
         else if (speedInput < 0)
         {
-            speedInput = -reverseAccel * Time.deltaTime; //this needs to change, so inconsistent barf
+            speedInput = -reverseAccel * Time.deltaTime * 100f; //this needs to change, so inconsistent barf
         }
         else
         {
@@ -124,7 +124,7 @@ public class CarController : MonoBehaviour
         else
         {
             theRB.drag = 0.1f;
-            theRB.AddForce(Vector3.up * -gravityForce * 100f);
+            theRB.AddForce(Vector3.up * -gravityForce * 50f);
         }
 
         UpdateDriftBoost();
