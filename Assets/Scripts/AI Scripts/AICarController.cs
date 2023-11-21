@@ -31,6 +31,9 @@ public class AICarController : MonoBehaviour
     private float accelerationTimer = 0.0f;
     public float accelerationTime = 5.0f; 
 
+    public float obstacleDetectionDistance = 0f;
+    public float obstacleAvoidanceForce = 0f;
+
     
     void Start()
     {
