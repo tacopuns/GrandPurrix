@@ -7,7 +7,7 @@ public class CarController : MonoBehaviour
 {
     public Rigidbody theRB;
 
-    public float forwardAccel = 50f, reverseAccel = 10f, turnStrength = 40f, gravityForce = 10f, dragOnGround = 7f;
+    public float forwardAccel = 50f, reverseAccel = 10f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
     
     public LayerMask whatIsGround; //anything set as ground, the car will be able to move on
     private float groundRayLength = .5f;
@@ -29,6 +29,8 @@ public class CarController : MonoBehaviour
     private bool isDrifting = false;
     public float driftDuration = 3.0f;
     public float driftTimer = 0.0f;
+
+    public ParticleSystem driftXF;
     
     private bool isBoosting = false;
     public float boostForce = 100f;
@@ -69,6 +71,7 @@ public class CarController : MonoBehaviour
     void Start()
     {
         theRB.transform.parent = null;
+        driftXF = GetComponentInChildren<ParticleSystem>();
     }
 
     void Update()
@@ -115,6 +118,7 @@ public class CarController : MonoBehaviour
         if (grounded)
         {   
             theRB.drag = dragOnGround;
+            
 
             if (Mathf.Abs(speedInput) > 0)
             {
@@ -144,7 +148,16 @@ public class CarController : MonoBehaviour
     {
         isDrifting = true;
         driftTimer = 0f;
-        turnStrength = 60f;
+        turnStrength = 50f;
+
+         if (!driftXF.isPlaying)
+         {
+            driftXF.Play();
+         }
+         else
+         {
+            driftXF.Stop();
+         }
 
     }
 
@@ -152,13 +165,18 @@ public class CarController : MonoBehaviour
     {
         isDrifting = false;
         driftTimer = 0f;
-        turnStrength = 40f;
+        turnStrength = 10f;
 
         if (isBoosting)
         {
             Vector3 boostForce = transform.forward * boostStrength;
             theRB.AddForce(boostForce, ForceMode.VelocityChange);
         }
+
+        if (driftXF.isPlaying)
+         {
+            driftXF.Stop();
+         }
 
     }
 
@@ -167,6 +185,7 @@ public class CarController : MonoBehaviour
         if (isDrifting)
         {
             driftTimer += Time.deltaTime; 
+            
 
             if (driftTimer >= driftDuration)
             {
@@ -178,6 +197,7 @@ public class CarController : MonoBehaviour
         {
             isBoosting = false;
             driftTimer = 0.0f; //reset time when drift stop or not drifting
+            
         }
     }
 
