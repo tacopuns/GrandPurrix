@@ -439,7 +439,7 @@ MonoBehaviour:
   TheCamera: {fileID: 1928906947}
   billboard: {fileID: 421108360}
   useAnimator: 1
-  use4Directions: 1
+  use4Directions: 0
   sprites: []
   HiddenSprites8: []
   HiddenSprites4: []
@@ -1791,6 +1791,7 @@ GameObject:
   - component: {fileID: 116788557}
   - component: {fileID: 116788559}
   - component: {fileID: 116788558}
+  - component: {fileID: 116788560}
   m_Layer: 0
   m_Name: DriverSprite
   m_TagString: Untagged
@@ -1892,6 +1893,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &116788560
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116788556}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14a79257134128b4d819a91afc4a34f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &117165617
 GameObject:
   m_ObjectHideFlags: 0
@@ -4495,7 +4517,6 @@ GameObject:
   - component: {fileID: 421108363}
   - component: {fileID: 421108362}
   - component: {fileID: 421108364}
-  - component: {fileID: 421108365}
   m_Layer: 0
   m_Name: DriverSprite
   m_TagString: Untagged
@@ -4586,7 +4607,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 9
-  m_Sprite: {fileID: 21300000, guid: c6120a08e4852604b810aa3dc882b4a7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1ef97a99ccc1d84d8175f3c4dffd014, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4618,26 +4639,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &421108365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421108360}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 332f62b6a5cb75f4dbbb067f5dc2b12d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TheCamera: {fileID: 56307082}
-  billboard: {fileID: 421108360}
-  useAnimator: 1
-  use4Directions: 1
-  sprites: []
-  HiddenSprites8: []
-  HiddenSprites4: []
-  useMirror: 0
 --- !u!1 &427250927
 GameObject:
   m_ObjectHideFlags: 0
@@ -10224,6 +10225,7 @@ GameObject:
   - component: {fileID: 496251843}
   - component: {fileID: 496251842}
   - component: {fileID: 496251847}
+  - component: {fileID: 496251848}
   m_Layer: 0
   m_Name: CPU O
   m_TagString: Opp
@@ -10404,6 +10406,26 @@ MonoBehaviour:
   accelerationTime: 4
   obstacleDetectionDistance: 8
   obstacleAvoidanceForce: 0.3
+--- !u!114 &496251848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496251840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332f62b6a5cb75f4dbbb067f5dc2b12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TheCamera: {fileID: 1928906947}
+  billboard: {fileID: 116788556}
+  useAnimator: 1
+  use4Directions: 0
+  sprites: []
+  HiddenSprites8: []
+  HiddenSprites4: []
+  useMirror: 0
 --- !u!114 &532158583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12056,6 +12078,7 @@ GameObject:
   - component: {fileID: 670037956}
   - component: {fileID: 670037960}
   - component: {fileID: 670037961}
+  - component: {fileID: 670037962}
   m_Layer: 0
   m_Name: CPU 2
   m_TagString: Opp
@@ -12226,6 +12249,26 @@ MonoBehaviour:
   accelerationTime: 2
   obstacleDetectionDistance: 8
   obstacleAvoidanceForce: 0.3
+--- !u!114 &670037962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670037952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332f62b6a5cb75f4dbbb067f5dc2b12d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TheCamera: {fileID: 1928906947}
+  billboard: {fileID: 880866706}
+  useAnimator: 1
+  use4Directions: 0
+  sprites: []
+  HiddenSprites8: []
+  HiddenSprites4: []
+  useMirror: 0
 --- !u!1 &674731274
 GameObject:
   m_ObjectHideFlags: 0
@@ -14837,6 +14880,7 @@ GameObject:
   - component: {fileID: 880866707}
   - component: {fileID: 880866709}
   - component: {fileID: 880866708}
+  - component: {fileID: 880866710}
   m_Layer: 0
   m_Name: DriverSprite
   m_TagString: Untagged
@@ -14938,6 +14982,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &880866710
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880866706}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 14a79257134128b4d819a91afc4a34f6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &892887268
 GameObject:
   m_ObjectHideFlags: 0
