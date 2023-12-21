@@ -42,6 +42,9 @@ public class CarController : MonoBehaviour
     private InputAction Turn;
     private InputAction Drift;
 
+    private CheckpointManager checkpointManager;
+    public int currentCheckpointIndex = 0;
+
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -71,6 +74,10 @@ public class CarController : MonoBehaviour
     void Start()
     {
         theRB.transform.parent = null;
+
+        checkpointManager = CheckpointManager.Instance;
+        currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
         driftXF = GetComponentInChildren<ParticleSystem>();
     }
 
@@ -97,6 +104,15 @@ public class CarController : MonoBehaviour
         else
         {
             accelerationTimer = 0f; //when player is not moving
+        }
+
+        float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+        currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
+        if (distanceToCheckpoint < 1f)
+        {
+            checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
+            currentCheckpointIndex++;
         }
         
     }

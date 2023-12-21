@@ -106,7 +106,7 @@ public class PaparazziCarCon : MonoBehaviour
     {
         isSticking = true;
         stickingTimer = 0f;
-        Debug.Log("sticking");
+        //Debug.Log("sticking");
         StickToPlayer();
     }
 

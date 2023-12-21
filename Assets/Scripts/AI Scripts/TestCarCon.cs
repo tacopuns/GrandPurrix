@@ -31,12 +31,21 @@ public class TestCarCon : MonoBehaviour
     public float obstacleDetectionDistance = 0f;
     public float obstacleAvoidanceForce = 0f;
 
+    private CheckpointManager checkpointManager;
+    public int currentCheckpointIndex = 0;
+
+
     void Start()
     {
         waypoints = waypointContainer.waypoints.ToArray();
         aiRB.transform.parent = null;
         currentWaypointIndex = 0;
         currentSpeed = 0f;
+
+        checkpointManager = CheckpointManager.Instance;
+        // Set the initial checkpoint index based on the last passed checkpoint
+        currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+        
     }
 
     void Update()
@@ -76,6 +85,20 @@ public class TestCarCon : MonoBehaviour
             currentWaypointIndex = 0;
         }
 
+        if (currentWaypointIndex < waypoints.Length)
+        {
+            currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
+            float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+
+        if (distanceToCheckpoint < 1f)
+        {
+            checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
+            currentCheckpointIndex++;
+        }
+
+        }
+
         Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
     }
 
@@ -97,10 +120,10 @@ public class TestCarCon : MonoBehaviour
 
     RaycastHit hit;
 
-    // Perform the raycast
+    
     if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
     {
-        // Car is grounded
+        
         aiRB.drag = dragOnGround;
 
         Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
@@ -114,7 +137,6 @@ public class TestCarCon : MonoBehaviour
     }
     else
     {
-        // Car is not grounded, handle mid-air logic
         HandleMidAir();
     }
 
@@ -123,6 +145,7 @@ public class TestCarCon : MonoBehaviour
     if (distanceToWaypoint < 1f)
     {
         currentWaypointIndex++;
+        
     }
     else if (distanceToWaypoint < cpuSpeed * Time.deltaTime)
     {
@@ -135,16 +158,15 @@ public class TestCarCon : MonoBehaviour
     }
     else
     {
-        // Other case handling logic 
+        
     }
 }
 
-void HandleMidAir()
-{
+    void HandleMidAir()
+    {
     aiRB.drag = 0.1f;
     aiRB.AddForce(Vector3.up * -gravityForce * 50f);
-    // You might want to add additional mid-air handling logic here
-}
+    }   
 
     void AvoidObstacles()
     {
@@ -158,7 +180,6 @@ void HandleMidAir()
         {
             if (!IsRamp(hitFront.collider))
             {
-                Debug.Log("Obstacle detected in front!");
                 AvoidObstacle(hitFront);
             }
         }
@@ -167,7 +188,6 @@ void HandleMidAir()
         {
             if (!IsRamp(hitLeft.collider))
             {
-                Debug.Log("Obstacle detected to the left!");
                 AvoidObstacle(hitLeft);
             }
         }
@@ -176,7 +196,6 @@ void HandleMidAir()
         {
             if (!IsRamp(hitRight.collider))
             {
-                Debug.Log("Obstacle detected to the right!");
                 AvoidObstacle(hitRight);
             }
         }
