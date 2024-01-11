@@ -7,7 +7,7 @@ public class CarController : MonoBehaviour
 {
     public Rigidbody theRB;
 
-    public float forwardAccel = 50f, reverseAccel = 10f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
+    public float forwardAccel = 50f, reverseAccel = 50f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
     
     public LayerMask whatIsGround; //anything set as ground, the car will be able to move on
     private float groundRayLength = .5f;
@@ -20,21 +20,22 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0f;
     public float accelerationRate;
-    public float maxSpeed = 530f;
+    public float maxSpeed = 260f;
 
     [SerializeField]
     private float accelerationTimer = 0.0f;
-    public float accelerationTime = 5.0f; //time needed to reach max speed
+    public float accelerationTime = 2.0f; //time needed to reach max speed
 
     private bool isDrifting = false;
-    public float driftDuration = 3.0f;
+    public float driftDuration = 2.0f;
     public float driftTimer = 0.0f;
 
     public ParticleSystem driftXF;
+    public GameObject skidXF;
     
     private bool isBoosting = false;
-    public float boostForce = 100f;
-    public float boostStrength = 200f;
+    public float boostForce = 50;
+    public float boostStrength = 100f;
     
     private InputActionAsset inputAsset;
     private InputActionMap gameplay;
@@ -44,6 +45,7 @@ public class CarController : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
+
 
     private void Awake()
     {
@@ -73,12 +75,13 @@ public class CarController : MonoBehaviour
     
     void Start()
     {
-        theRB.transform.parent = null;
+        //theRB.transform.parent = null;
 
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
         driftXF = GetComponentInChildren<ParticleSystem>();
+        skidXF.SetActive(false);
     }
 
     void Update()
@@ -115,6 +118,9 @@ public class CarController : MonoBehaviour
             currentCheckpointIndex++;
         }
         
+
+
+        
     }
 
     private void FixedUpdate() 
@@ -150,7 +156,7 @@ public class CarController : MonoBehaviour
         UpdateDriftBoost();
     }
 
-    private void HandleMoveForwardInput(float value)
+    /*private void HandleMoveForwardInput(float value)
     {
         speedInput = value;
     }
@@ -158,21 +164,25 @@ public class CarController : MonoBehaviour
     private void HandleTurnInput(float value)
     {
         turnInput = value;
-    }
+    }*/
 
     private void StartDrift()
     {
         isDrifting = true;
         driftTimer = 0f;
+        float driftForce = 10f; // Adjust this value to control the drift force
         turnStrength = 50f;
+        theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
 
          if (!driftXF.isPlaying)
          {
             driftXF.Play();
+            skidXF.SetActive(true);
          }
          else
          {
             driftXF.Stop();
+            skidXF.SetActive(false);
          }
 
     }
@@ -192,6 +202,7 @@ public class CarController : MonoBehaviour
         if (driftXF.isPlaying)
          {
             driftXF.Stop();
+            skidXF.SetActive(false);
          }
 
     }

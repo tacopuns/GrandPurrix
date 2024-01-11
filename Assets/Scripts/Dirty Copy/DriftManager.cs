@@ -7,9 +7,9 @@ public class DriftManager : MonoBehaviour
 {
     public Rigidbody theRB;
 
-    public float forwardAccel = 50f, reverseAccel = 10f, turnStrength = 40f, gravityForce = 10f, dragOnGround = 7f;
+    public float forwardAccel = 50f, reverseAccel = 50f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
     
-    public LayerMask whatIsGround; 
+    public LayerMask whatIsGround; //anything set as ground, the car will be able to move on
     private float groundRayLength = .5f;
     public Transform groundRayPoint;
     
@@ -20,28 +20,37 @@ public class DriftManager : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0f;
     public float accelerationRate;
-    public float maxSpeed = 530f;
+    public float maxSpeed = 260f;
+
     [SerializeField]
     private float accelerationTimer = 0.0f;
-    public float accelerationTime = 5.0f;
+    public float accelerationTime = 2.0f; //time needed to reach max speed
 
     private bool isDrifting = false;
-    public float driftDuration = 3.0f;
+    public float driftDuration = 2.0f;
     public float driftTimer = 0.0f;
+
+    public ParticleSystem driftXF;
+    public GameObject skidXF;
     
     private bool isBoosting = false;
-    public float boostForce = 50f;
-    public float boostStrength = 10f;
-
+    public float boostForce = 50;
+    public float boostStrength = 100f;
+    
     private InputActionAsset inputAsset;
     private InputActionMap gameplay;
     private InputAction MoveForward;
     private InputAction Turn;
     private InputAction Drift;
 
+    private CheckpointManager checkpointManager;
+    public int currentCheckpointIndex = 0;
+
+    
+
+
     private void Awake()
     {
-
         inputAsset = this.GetComponent<PlayerInput>().actions;
         gameplay = inputAsset.FindActionMap("Gameplay");
 
@@ -68,7 +77,13 @@ public class DriftManager : MonoBehaviour
     
     void Start()
     {
-        theRB.transform.parent = null;
+        //theRB.transform.parent = null;
+
+        checkpointManager = CheckpointManager.Instance;
+        currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
+        driftXF = GetComponentInChildren<ParticleSystem>();
+        skidXF.SetActive(false);
     }
 
     void Update()
@@ -77,6 +92,7 @@ public class DriftManager : MonoBehaviour
 
         accelerationRate = maxSpeed / accelerationTime;
         accelerationTimer += Time.deltaTime;
+
 
         if (accelerationTimer > accelerationTime)
         {
@@ -89,12 +105,22 @@ public class DriftManager : MonoBehaviour
         }
         else if (speedInput < 0)
         {
-            speedInput = -reverseAccel * 1000f * Time.deltaTime;
+            speedInput = -reverseAccel * Time.deltaTime * 100f; //this needs to change, so inconsistent barf
         }
         else
         {
-            accelerationTimer = 0f;
+            accelerationTimer = 0f; //when player is not moving
         }
+
+        float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+        currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
+        if (distanceToCheckpoint < 1f)
+        {
+            checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
+            currentCheckpointIndex++;
+        }
+
         
     }
 
@@ -115,6 +141,7 @@ public class DriftManager : MonoBehaviour
         if (grounded)
         {   
             theRB.drag = dragOnGround;
+            
 
             if (Mathf.Abs(speedInput) > 0)
             {
@@ -124,27 +151,31 @@ public class DriftManager : MonoBehaviour
         else
         {
             theRB.drag = 0.1f;
-            theRB.AddForce(Vector3.up * -gravityForce * 100f);
+            theRB.AddForce(Vector3.up * -gravityForce * 50f);
         }
 
-        UpdateDriftBoost();
+        //UpdateDriftBoost();
+        if (isDrifting)
+    {
+        PowerSlide();
+    }
     }
 
-    private void HandleMoveForwardInput(float value)
-    {
-        speedInput = value;
-    }
-
-    private void HandleTurnInput(float value)
-    {
-        turnInput = value;
-    }
 
     private void StartDrift()
     {
-        isDrifting = true;
-        driftTimer = 0f;
-        turnStrength = 100f;
+        if (currentSpeed > 20f && (turnInput < -0.1f || turnInput > 0.1f))
+        {
+            isDrifting = true;
+            driftTimer = 0f;
+
+            PlayDriftEffects();
+        }
+        else
+        {
+            StopDrift();
+        }
+
     }
 
     private void StopDrift()
@@ -152,6 +183,8 @@ public class DriftManager : MonoBehaviour
         isDrifting = false;
         driftTimer = 0f;
         turnStrength = 40f;
+
+         StopDriftEffects();
 
         if (isBoosting)
         {
@@ -161,22 +194,50 @@ public class DriftManager : MonoBehaviour
 
     }
 
-    void UpdateDriftBoost()
+    private void PlayDriftEffects()
+{
+    if (!driftXF.isPlaying)
+    {
+        driftXF.Play();
+    }
+
+    if (!skidXF.activeSelf)
+    {
+        skidXF.SetActive(true);
+    }
+}
+
+private void StopDriftEffects()
+{
+    if (driftXF.isPlaying)
+    {
+        driftXF.Stop();
+    }
+
+    if (skidXF.activeSelf)
+    {
+        skidXF.SetActive(false);
+    }
+}
+
+    /*void UpdateDriftBoost()
     {
         if (isDrifting)
         {
             driftTimer += Time.deltaTime; 
+            
 
             if (driftTimer >= driftDuration)
             {
                 driftTimer = driftDuration;
-                ApplySpeedBoost();
+                //ApplySpeedBoost();
             }
         }
         else
         {
             isBoosting = false;
-            driftTimer = 0.0f; 
+            driftTimer = 0.0f; //reset time when drift stop or not drifting
+            
         }
     }
 
@@ -188,6 +249,53 @@ public class DriftManager : MonoBehaviour
             isBoosting = true;
             Debug.Log("boost");
         }
+    } */
+
+    
+    private float steerRight = 1;
+    private float steerLeft = -1;
+
+    public float driftForce = 10f;
+    public float counterDrift = 20f;
+
+   void PowerSlide()
+    {
+
+            if (turnInput < 0)
+            {
+                ApplyLeftDriftForce();
+
+                
+            }
+            else if (turnInput > 0)
+            {
+                
+                ApplyRightDriftForce();
+
+               
+            }
+            else
+            {
+                StopDrift();
+            }
+        
     }
+    
+
+    void ApplyLeftDriftForce()
+    {
+        theRB.AddForce(-transform.right * driftForce, ForceMode.Acceleration);
+        turnStrength = 50f;
+    }
+
+    void ApplyRightDriftForce()
+    {
+        theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
+        turnStrength = 50f;
+
+    }
+
+        
+        
 
 }
