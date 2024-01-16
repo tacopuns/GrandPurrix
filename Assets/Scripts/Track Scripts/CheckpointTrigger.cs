@@ -9,10 +9,8 @@ public class CheckpointTrigger : MonoBehaviour
         if (other.CompareTag("Player") || other.CompareTag("Opp"))
         {
             int checkpointIndex = GetCheckpointIndex();
-            //Debug.Log("CheckpointTrigger OnTriggerEnter: " + other.name + ", Checkpoint Index: " + checkpointIndex);
 
             CheckpointManager.Instance.UpdateCheckpoint(other.gameObject, checkpointIndex);
-            //Debug.Log("CheckpointTrigger: Checkpoint Updated");
         }
     }
 

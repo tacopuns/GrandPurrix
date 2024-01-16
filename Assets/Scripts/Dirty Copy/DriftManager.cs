@@ -45,10 +45,9 @@ public class DriftManager : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
+    //public int currentLap = 0;
 
     
-
-
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -251,12 +250,8 @@ private void StopDriftEffects()
         }
     } */
 
-    
-    private float steerRight = 1;
-    private float steerLeft = -1;
 
     public float driftForce = 10f;
-    public float counterDrift = 20f;
 
    void PowerSlide()
     {

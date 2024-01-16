@@ -33,6 +33,7 @@ public class TestCarCon : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
+    //public int currentLap = 0;
 
 
     void Start()
@@ -43,9 +44,7 @@ public class TestCarCon : MonoBehaviour
         currentSpeed = 0f;
 
         checkpointManager = CheckpointManager.Instance;
-        // Set the initial checkpoint index based on the last passed checkpoint
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
-        
     }
 
     void Update()
@@ -96,7 +95,6 @@ public class TestCarCon : MonoBehaviour
             checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
             currentCheckpointIndex++;
         }
-
         }
 
         Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
@@ -213,4 +211,6 @@ public class TestCarCon : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(newDirection);
         aiRB.AddForce(transform.forward * cpuSpeed, ForceMode.Force);
     }
+
+
 }
