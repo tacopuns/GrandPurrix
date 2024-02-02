@@ -166,7 +166,9 @@ public class CheckpointManager : MonoBehaviour
     public Dictionary<GameObject, List<float>> lapTimes = new Dictionary<GameObject, List<float>>();
 
     private float lapTime;
-    private Dictionary<GameObject, float> lapStartTimes = new Dictionary<GameObject, float>();
+
+    //public RaceStatsHUD raceStatsHUD;
+    public Dictionary<GameObject, float> lapStartTimes = new Dictionary<GameObject, float>();
 
     private void Awake()
     {
@@ -220,10 +222,11 @@ public class CheckpointManager : MonoBehaviour
         lapStartTimes[racer] = Time.time;
 
         // Log lap time for the first lap THIS ONE GOOD
-        Debug.Log(racer.name + " completed lap 1 in " + FormatLapTime(Time.time)); // Assuming lap time for the first lap is 0
+        Debug.Log(racer.name + " completed lap 1 in " + FormatLapTime(Time.time));
 
         // Initialize lap count for the racer
         lapsCompleted[racer] = 1;
+
         }
 
         if (lapsCompleted[racer] > 1)
@@ -235,6 +238,8 @@ public class CheckpointManager : MonoBehaviour
         
         //Current Race time
         Debug.Log(racer.name + " completed lap " + lapsCompleted[racer] + ". Race time is currently " + FormatLapTime(Time.time));
+
+    
     }
 
     public int GetLapCount(GameObject racer)
@@ -259,7 +264,7 @@ public class CheckpointManager : MonoBehaviour
         }
     }
 
-    private void RecordLapTime(GameObject racer, float lapTime)
+    public void RecordLapTime(GameObject racer, float lapTime)
     {
         if (!lapTimes.ContainsKey(racer))
         {
@@ -303,4 +308,5 @@ public class CheckpointManager : MonoBehaviour
             return 0;
         }
     }
+  
 }
