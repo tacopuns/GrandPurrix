@@ -111,10 +111,11 @@ public class DriftManager : MonoBehaviour
             accelerationTimer = 0f; //when player is not moving
         }
 
-        float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+        //float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+        float distanceToCheckpoint = checkpointManager.DistanceToNextCheckpoint(gameObject);
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
-        if (distanceToCheckpoint < 1f)
+        if (distanceToCheckpoint < .5f)
         {
             checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
             currentCheckpointIndex++;

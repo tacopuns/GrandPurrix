@@ -86,6 +86,8 @@ public class RaceStatsHUD : MonoBehaviour
     public Text currentLapText;
     public Text lapTimeText;
     public Text lapTimesListText;
+    public Text racerPositionsText;
+    public Text playerPositionText;
 
     private float raceTime;
     private int previousLapCount;
@@ -94,18 +96,23 @@ public class RaceStatsHUD : MonoBehaviour
     private List<float> lapTimesList = new List<float>();
 
     private CheckpointManager checkpointManager;
+    private RaceManager raceManager;
+
     public GameObject playerObject;
 
     void Start()
     {
         checkpointManager = CheckpointManager.Instance;
-        previousLapCount = checkpointManager.GetLapCount(playerObject); // Initialize previous lap count
+        raceManager = FindObjectOfType<RaceManager>();
+
+        previousLapCount = checkpointManager.GetLapCount(playerObject); 
     }
 
     void Update()
     {
         raceTime = Time.time;
         totalRaceTime.text = RaceTimeFormat(raceTime);
+
 
         int currentLap = checkpointManager.GetLapCount(playerObject);
         currentLapText.text = "LAP " + currentLap;
@@ -116,7 +123,7 @@ public class RaceStatsHUD : MonoBehaviour
             if (currentLap == 1 && !lap1TimeSet)
             {
                 lap1Time = raceTime;
-                lapTimeText.text = "LAP TIME: " + RaceTimeFormat(lap1Time);
+                lapTimeText.text = "LAP TIME: + " + RaceTimeFormat(lap1Time);
                 lap1TimeSet = true;
                 lapTimesList.Add(lap1Time);
                 UpdateLapTimesList();
@@ -124,13 +131,84 @@ public class RaceStatsHUD : MonoBehaviour
             else if (currentLap > 1)
             {
                 float currentLapTime = GetCurrentLapTime(playerObject);
-                lapTimeText.text = "LAP TIME: " + RaceTimeFormat(currentLapTime);
+                lapTimeText.text = "LAP TIME: + " + RaceTimeFormat(currentLapTime);
                 lapTimesList.Add(currentLapTime);
                 UpdateLapTimesList();
             }
 
             // Update previous lap count
             previousLapCount = currentLap;
+        }
+
+        UpdateRacerPositions();
+        UpdatePlayerPosition();
+    }
+
+    void UpdateRacerPositions()
+    {
+        // get positions from UpdateRacerPositions() racemanager and convert to string
+        if (raceManager != null)
+        {
+            List<GameObject> racers = raceManager.racers; 
+
+            
+            racers.Sort(raceManager.CompareRacers);
+
+            
+            string positionsListText = "Racer Positions:\n";
+            for (int i = 0; i < racers.Count; i++)
+            {
+                positionsListText += $"Position {i + 1}: {racers[i].name}\n";
+            }
+
+            
+            racerPositionsText.text = positionsListText;
+        }
+    
+    }
+
+    private void UpdatePlayerPosition()
+    {
+        if (raceManager != null)
+        {
+            List<GameObject> racers = raceManager.racers;
+
+            
+            racers.Sort(raceManager.CompareRacers);
+
+            int playerIndex = racers.FindIndex(racer => racer == playerObject);
+
+            
+            if (playerIndex >= 0)
+            {
+                string ordinalPosition = GetOrdinal(playerIndex + 1); 
+                playerPositionText.text = $"{ordinalPosition} Place";
+            }
+            else
+            {
+                playerPositionText.text = "N/A";
+            }
+        }
+    }
+
+    private string GetOrdinal(int number)
+    {
+        if (number <= 0)
+        {
+            return number.ToString();
+        }
+
+
+        switch (number % 10)
+        {
+            case 1:
+                return number + "ST";
+            case 2:
+                return number + "ND";
+            case 3:
+                return number + "RD";
+            default:
+                return number + "TH";
         }
     }
 

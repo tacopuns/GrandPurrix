@@ -88,13 +88,14 @@ public class TestCarCon : MonoBehaviour
         {
             currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
-            float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+            //float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+            float distanceToCheckpoint = checkpointManager.DistanceToNextCheckpoint(gameObject);
 
-        if (distanceToCheckpoint < 1f)
-        {
-            checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
-            currentCheckpointIndex++;
-        }
+            if (distanceToCheckpoint < .5f)
+            {
+                checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
+                currentCheckpointIndex++;
+            }
         }
 
         Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
