@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 44622321}
   - component: {fileID: 44622320}
   - component: {fileID: 44622318}
+  - component: {fileID: 44622326}
   m_Layer: 0
   m_Name: cube car
   m_TagString: Player
@@ -252,7 +253,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44622316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6cb15496065424bbe9c7c73e688add, type: 3}
   m_Name: 
@@ -274,8 +275,11 @@ MonoBehaviour:
   accelerationTime: 5
   driftDuration: 2
   driftTimer: 0
+  driftXF: {fileID: 0}
+  skidXF: {fileID: 0}
   boostForce: 100
   boostStrength: 200
+  currentCheckpointIndex: 0
 --- !u!65 &44622322
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -366,6 +370,41 @@ Transform:
   - {fileID: 1313068565}
   m_Father: {fileID: 1667925061}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &44622326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44622316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb363342f565b424fae4dd8cc35b97ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theRB: {fileID: 44622317}
+  forwardAccel: 50
+  reverseAccel: 50
+  turnStrength: 20
+  gravityForce: 10
+  dragOnGround: 7
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  groundRayPoint: {fileID: 2117756872}
+  currentSpeed: 0
+  accelerationRate: 0
+  maxSpeed: 260
+  accelerationTimer: 0
+  accelerationTime: 2
+  driftDuration: 2
+  driftTimer: 0
+  driftXF: {fileID: 0}
+  skidXF: {fileID: 0}
+  boostForce: 50
+  boostStrength: 100
+  currentCheckpointIndex: 0
+  driftForce: 10
 --- !u!1 &69020908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1631,10 +1670,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454990cb030fc4a4f85c2782228dead2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 44622325}
-  respawnPoint: {fileID: 1063511542}
-  currentSpeed: 0
-  theRB: {fileID: 44622317}
+  racerRigidbodies: []
+  waypointIndicesPerCheckpoint: 
 --- !u!65 &718822775
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2892,10 +2929,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454990cb030fc4a4f85c2782228dead2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 44622325}
-  respawnPoint: {fileID: 1063511542}
-  currentSpeed: 0
-  theRB: {fileID: 44622317}
+  racerRigidbodies: []
+  waypointIndicesPerCheckpoint: 
 --- !u!65 &1204773680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4065,10 +4100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454990cb030fc4a4f85c2782228dead2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 44622325}
-  respawnPoint: {fileID: 1063511542}
-  currentSpeed: 0
-  theRB: {fileID: 44622317}
+  racerRigidbodies: []
+  waypointIndicesPerCheckpoint: 
 --- !u!65 &1471330997
 BoxCollider:
   m_ObjectHideFlags: 0

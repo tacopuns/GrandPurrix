@@ -6,14 +6,11 @@ public class AICarController : MonoBehaviour
 {
     public Transform[] waypoints; 
     public WaypointContainer waypointContainer;
-    private int currentWaypointIndex = 0;
-    
+    public int currentWaypointIndex = 0;
 
     public float rotationSpeed = 6f;
-
     public float currentSpeed = 0f;
     public float cpuSpeed = 20f;
-
     public Rigidbody aiRB;
 
     private float groundRayLength = .5f;
@@ -34,15 +31,21 @@ public class AICarController : MonoBehaviour
     public float obstacleDetectionDistance = 0f;
     public float obstacleAvoidanceForce = 0f;
 
-    
+    private CheckpointManager checkpointManager;
+    public int currentCheckpointIndex = 0;
+    //public int currentLap = 0;
+
+
     void Start()
     {
         waypoints = waypointContainer.waypoints.ToArray();
         aiRB.transform.parent = null;
         currentWaypointIndex = 0;
         currentSpeed = 0f;
-    }
 
+        checkpointManager = CheckpointManager.Instance;
+        currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+    }
 
     void Update()
     {
@@ -50,25 +53,18 @@ public class AICarController : MonoBehaviour
         
         if (cpuSpeed < maxSpeed)
         {
-            // Calculate the rate of acceleration
             float accelerationRate = maxSpeed / accelerationTime;
-
-            // Increment the acceleration timer
             accelerationTimer += Time.deltaTime;
 
-            // If acceleration timer exceeds the acceleration time, reset it
             if (accelerationTimer > accelerationTime)
             {
                 accelerationTimer = accelerationTime;
             }
 
-            // Apply acceleration to CPU speed
             cpuSpeed += accelerationRate * Time.deltaTime;
-            cpuSpeed = Mathf.Min(cpuSpeed, maxSpeed); // Ensure speed doesn't exceed the maximum
+            cpuSpeed = Mathf.Min(cpuSpeed, maxSpeed);
         }
 
-
-        //Stuck timer
         if (Vector3.Distance(transform.position, waypoints[currentWaypointIndex].position) < waypoints.Length)
         {
             stuckTimer += Time.deltaTime;
@@ -82,71 +78,142 @@ public class AICarController : MonoBehaviour
         {
             stuckTimer = 0f;
         }   
-        
 
         if (currentWaypointIndex >= waypoints.Length)
         {
-            currentWaypointIndex = 0;  // Reset the waypoint index to begin a new lap
-            // Increment a lap count if needed
+            currentWaypointIndex = 0;
         }
-    
-     Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
-    
-    }
-    
-    void FixedUpdate()
-    {
 
         if (currentWaypointIndex < waypoints.Length)
         {
-            Vector3 targetPosition = waypoints[currentWaypointIndex].position;
-            Vector3 moveDirection = (targetPosition - transform.position).normalized;
+            currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            //float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+            float distanceToCheckpoint = checkpointManager.DistanceToNextCheckpoint(gameObject);
 
-            RaycastHit hit;
-            
-            if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
+            if (distanceToCheckpoint < .5f)
             {
-                aiRB.drag = dragOnGround;
-                
-                Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
-                
-                if (hit.normal != Vector3.up)
-                { 
-                    // Apply a force perpendicular to the ground to follow the ramp's inclination
-                    forwardForce += hit.normal * 10f;
-                }
-
-                
-                // Apply the forward force to the Rigidbody
-                aiRB.AddForce(forwardForce, ForceMode.Force);
-                //transform.Translate(Vector3.forward * currentSpeed * Time.deltaTime); speeds car up, breaks flying off ramps
-
+                checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
+                currentCheckpointIndex++;
             }
-            else
-            {
-                // Handling for when the car is not on the ground
-                aiRB.drag = 0.1f;
-                aiRB.AddForce(Vector3.up * -gravityForce * 50f);
-            }
+        }
 
-            // Waypoint handling
-            float distanceToWaypoint = Vector3.Distance(transform.position, targetPosition);
-            if (distanceToWaypoint < 1f)
-            {
-                currentWaypointIndex++;
-            }
-            else if (distanceToWaypoint < cpuSpeed * Time.deltaTime)
-            {
-                // Continue moving until very close to the waypoint
-            }
-
-            
-        }   
-
+        Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
     }
 
+    void FixedUpdate()
+    {
+        if (currentWaypointIndex < waypoints.Length)
+        {
+            MoveTowardsWaypoint();
+            AvoidObstacles();
+        }
+    }
+
+    void MoveTowardsWaypoint()
+{
+    Vector3 targetPosition = waypoints[currentWaypointIndex].position;
+    Vector3 moveDirection = (targetPosition - transform.position).normalized;
+    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+    RaycastHit hit;
+
     
+    if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
+    {
+        
+        aiRB.drag = dragOnGround;
+
+        Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
+
+        if (hit.normal != Vector3.up)
+        {
+            forwardForce += hit.normal * 10f;
+        }
+
+        aiRB.AddForce(forwardForce, ForceMode.Force);
+    }
+    else
+    {
+        HandleMidAir();
+    }
+
+    // Waypoint handling
+    float distanceToWaypoint = Vector3.Distance(transform.position, targetPosition);
+    if (distanceToWaypoint < 1f)
+    {
+        currentWaypointIndex++;
+        
+    }
+    else if (distanceToWaypoint < cpuSpeed * Time.deltaTime)
+    {
+        // Continue moving until very close to the waypoint
+    }
+
+    if (hit.collider != null && hit.collider.CompareTag("Opp"))
+    {
+        AvoidObstacle(hit);
+    }
+    else
+    {
+        
+    }
+}
+
+    void HandleMidAir()
+    {
+    aiRB.drag = 0.1f;
+    aiRB.AddForce(Vector3.up * -gravityForce * 50f);
+    }   
+
+    void AvoidObstacles()
+    {
+        Debug.DrawRay(groundRayPoint.position, transform.forward * obstacleDetectionDistance, Color.red); // Ray in front
+        Debug.DrawRay(groundRayPoint.position, -transform.right * obstacleDetectionDistance / 2, Color.red); // Ray to the left
+        Debug.DrawRay(groundRayPoint.position, transform.right * obstacleDetectionDistance / 2, Color.red); // Ray to the right
+
+        RaycastHit hitFront, hitLeft, hitRight;
+
+        if (Physics.Raycast(groundRayPoint.position, transform.forward, out hitFront, obstacleDetectionDistance))
+        {
+            if (!IsRamp(hitFront.collider))
+            {
+                AvoidObstacle(hitFront);
+            }
+        }
+
+        if (Physics.Raycast(groundRayPoint.position, -transform.right, out hitLeft, obstacleDetectionDistance / 2))
+        {
+            if (!IsRamp(hitLeft.collider))
+            {
+                AvoidObstacle(hitLeft);
+            }
+        }
+
+        if (Physics.Raycast(groundRayPoint.position, transform.right, out hitRight, obstacleDetectionDistance / 2))
+        {
+            if (!IsRamp(hitRight.collider))
+            {
+                AvoidObstacle(hitRight);
+            }
+        }
+    }
+
+    bool IsRamp(Collider collider)
+    {
+        return collider.CompareTag("Ramp");
+    }
+
+    void AvoidObstacle(RaycastHit hit)
+    {
+        Vector3 avoidanceDirection = Vector3.Cross(hit.normal, Vector3.up).normalized;
+        Vector3 newDirection = transform.forward + avoidanceDirection * obstacleAvoidanceForce;
+        transform.rotation = Quaternion.LookRotation(newDirection);
+        aiRB.AddForce(transform.forward * cpuSpeed, ForceMode.Force);
+    }
+
+
+
+
 }

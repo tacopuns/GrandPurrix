@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 33212158}
   - component: {fileID: 33212157}
   m_Layer: 0
-  m_Name: Sphere (85)
+  m_Name: 19 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,28 +275,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40229346}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dee2e8ac39db52d48bd5fd6c6488c188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
   waypointContainer: {fileID: 2050476462}
-  rotationSpeed: 40
+  currentWaypointIndex: 0
+  rotationSpeed: 55
   currentSpeed: 0
-  cpuSpeed: 10
+  cpuSpeed: 4
   aiRB: {fileID: 40229352}
   groundRayPoint: {fileID: 171300368}
   stuckTimer: 0
   maxStuckTime: 0.5
-  accelerationRate: 15
-  maxSpeed: 40
+  accelerationRate: 10
+  maxSpeed: 60
   dragOnGround: 7
   gravityForce: 10
   accelerationTimer: 0
-  accelerationTime: 5
-  obstacleDetectionDistance: 0
-  obstacleAvoidanceForce: 0
+  accelerationTime: 1
+  obstacleDetectionDistance: 8
+  obstacleAvoidanceForce: 0.3
+  currentCheckpointIndex: 0
 --- !u!54 &40229352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -402,7 +404,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40229346}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0206adb83594b0d40a09d893ce41a6f4, type: 3}
   m_Name: 
@@ -424,7 +426,6 @@ MonoBehaviour:
   accelerationTime: 1
   obstacleDetectionDistance: 8
   obstacleAvoidanceForce: 0.3
-  currentCheckpointIndex: 0
 --- !u!114 &40229357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1244,7 +1245,7 @@ GameObject:
   - component: {fileID: 69028977}
   - component: {fileID: 69028976}
   m_Layer: 0
-  m_Name: Sphere (96)
+  m_Name: 30C Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1918,7 +1919,7 @@ GameObject:
   - component: {fileID: 113361276}
   - component: {fileID: 113361275}
   m_Layer: 0
-  m_Name: Sphere (106)
+  m_Name: 40 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2023,7 +2024,7 @@ GameObject:
   - component: {fileID: 113607964}
   - component: {fileID: 113607963}
   m_Layer: 0
-  m_Name: Sphere (56)
+  m_Name: 1C Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2445,7 +2446,7 @@ GameObject:
   - component: {fileID: 126389572}
   - component: {fileID: 126389571}
   m_Layer: 0
-  m_Name: Sphere (92)
+  m_Name: 26 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3073,7 +3074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &175549594
 Transform:
   m_ObjectHideFlags: 0
@@ -3880,7 +3881,7 @@ GameObject:
   - component: {fileID: 249860547}
   - component: {fileID: 249860546}
   m_Layer: 0
-  m_Name: Sphere (69)
+  m_Name: 6 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3985,7 +3986,7 @@ GameObject:
   - component: {fileID: 260720452}
   - component: {fileID: 260720451}
   m_Layer: 0
-  m_Name: Sphere (98)
+  m_Name: 32 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4188,7 +4189,7 @@ GameObject:
   - component: {fileID: 292362312}
   - component: {fileID: 292362311}
   m_Layer: 0
-  m_Name: Sphere (100)
+  m_Name: 34 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4328,11 +4329,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1336510776}
   - {fileID: 1336801415}
   - {fileID: 1603471307}
   - {fileID: 361312231}
   - {fileID: 122804113}
+  - {fileID: 1336510776}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &301714186
@@ -5273,7 +5274,7 @@ GameObject:
   - component: {fileID: 402179184}
   - component: {fileID: 402179183}
   m_Layer: 0
-  m_Name: Sphere (95)
+  m_Name: 29 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5378,7 +5379,7 @@ GameObject:
   - component: {fileID: 414179589}
   - component: {fileID: 414179588}
   m_Layer: 0
-  m_Name: Sphere (87)
+  m_Name: 21C Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5393,7 +5394,7 @@ Transform:
   m_GameObject: {fileID: 414179586}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -136.8, y: 0, z: 76.2}
+  m_LocalPosition: {x: -134.07, y: 0, z: 81.01}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5761,7 +5762,7 @@ GameObject:
   - component: {fileID: 438218164}
   - component: {fileID: 438218163}
   m_Layer: 0
-  m_Name: Sphere (89)
+  m_Name: 23 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5866,7 +5867,7 @@ GameObject:
   - component: {fileID: 453058289}
   - component: {fileID: 453058288}
   m_Layer: 0
-  m_Name: Sphere (99)
+  m_Name: 33 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6031,7 +6032,7 @@ GameObject:
   - component: {fileID: 465214761}
   - component: {fileID: 465214760}
   m_Layer: 0
-  m_Name: Sphere (82)
+  m_Name: 16 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6136,7 +6137,7 @@ GameObject:
   - component: {fileID: 477463126}
   - component: {fileID: 477463125}
   m_Layer: 0
-  m_Name: Sphere (104)
+  m_Name: 38 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11269,28 +11270,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496251840}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dee2e8ac39db52d48bd5fd6c6488c188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
   waypointContainer: {fileID: 2050476462}
+  currentWaypointIndex: 0
   rotationSpeed: 40
   currentSpeed: 0
-  cpuSpeed: 10
+  cpuSpeed: 4
   aiRB: {fileID: 496251843}
   groundRayPoint: {fileID: 1226412144}
   stuckTimer: 0
   maxStuckTime: 0.5
-  accelerationRate: 20
-  maxSpeed: 50
+  accelerationRate: 10
+  maxSpeed: 40
   dragOnGround: 7
   gravityForce: 10
   accelerationTimer: 0
   accelerationTime: 5
-  obstacleDetectionDistance: 0
-  obstacleAvoidanceForce: 0
+  obstacleDetectionDistance: 8
+  obstacleAvoidanceForce: 0.3
+  currentCheckpointIndex: 0
 --- !u!54 &496251843
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11396,7 +11399,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496251840}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0206adb83594b0d40a09d893ce41a6f4, type: 3}
   m_Name: 
@@ -11418,7 +11421,6 @@ MonoBehaviour:
   accelerationTime: 5
   obstacleDetectionDistance: 8
   obstacleAvoidanceForce: 0.3
-  currentCheckpointIndex: 0
 --- !u!114 &496251848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11548,7 +11550,7 @@ GameObject:
   - component: {fileID: 544559735}
   - component: {fileID: 544559734}
   m_Layer: 0
-  m_Name: Sphere (103)
+  m_Name: 37 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11653,7 +11655,7 @@ GameObject:
   - component: {fileID: 557478190}
   - component: {fileID: 557478189}
   m_Layer: 0
-  m_Name: Sphere (101)
+  m_Name: 35 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12748,7 +12750,7 @@ GameObject:
   - component: {fileID: 648759710}
   - component: {fileID: 648759709}
   m_Layer: 0
-  m_Name: Sphere (84)
+  m_Name: 18 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13280,6 +13282,7 @@ GameObject:
   - component: {fileID: 670037957}
   - component: {fileID: 670037956}
   - component: {fileID: 670037960}
+  - component: {fileID: 670037963}
   - component: {fileID: 670037961}
   - component: {fileID: 670037962}
   m_Layer: 0
@@ -13430,7 +13433,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670037952}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0206adb83594b0d40a09d893ce41a6f4, type: 3}
   m_Name: 
@@ -13452,7 +13455,6 @@ MonoBehaviour:
   accelerationTime: 3
   obstacleDetectionDistance: 8
   obstacleAvoidanceForce: 0.3
-  currentCheckpointIndex: 0
 --- !u!114 &670037962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13473,6 +13475,37 @@ MonoBehaviour:
   HiddenSprites8: []
   HiddenSprites4: []
   useMirror: 0
+--- !u!114 &670037963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670037952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dee2e8ac39db52d48bd5fd6c6488c188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints: []
+  waypointContainer: {fileID: 1732890031}
+  currentWaypointIndex: 0
+  rotationSpeed: 45
+  currentSpeed: 0
+  cpuSpeed: 4
+  aiRB: {fileID: 670037956}
+  groundRayPoint: {fileID: 1089254588}
+  stuckTimer: 0
+  maxStuckTime: 0.5
+  accelerationRate: 10
+  maxSpeed: 55
+  dragOnGround: 7
+  gravityForce: 10
+  accelerationTimer: 0
+  accelerationTime: 3
+  obstacleDetectionDistance: 8
+  obstacleAvoidanceForce: 0.3
+  currentCheckpointIndex: 0
 --- !u!1 &674731274
 GameObject:
   m_ObjectHideFlags: 0
@@ -13486,7 +13519,7 @@ GameObject:
   - component: {fileID: 674731277}
   - component: {fileID: 674731276}
   m_Layer: 0
-  m_Name: Sphere (102)
+  m_Name: 36 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13639,7 +13672,7 @@ GameObject:
   - component: {fileID: 680244805}
   - component: {fileID: 680244804}
   m_Layer: 0
-  m_Name: Sphere (77)
+  m_Name: 11 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13744,7 +13777,7 @@ GameObject:
   - component: {fileID: 689238374}
   - component: {fileID: 689238373}
   m_Layer: 0
-  m_Name: Sphere (79)
+  m_Name: 13 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15510,6 +15543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   racerRigidbodies: []
+  waypointIndicesPerCheckpoint: 
 --- !u!1 &737364239
 GameObject:
   m_ObjectHideFlags: 0
@@ -15523,7 +15557,7 @@ GameObject:
   - component: {fileID: 737364242}
   - component: {fileID: 737364241}
   m_Layer: 0
-  m_Name: Sphere (67)
+  m_Name: 4 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16153,7 +16187,7 @@ GameObject:
   - component: {fileID: 817574461}
   - component: {fileID: 817574460}
   m_Layer: 0
-  m_Name: Sphere (80)
+  m_Name: 14 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17187,7 +17221,7 @@ GameObject:
   - component: {fileID: 875623923}
   - component: {fileID: 875623922}
   m_Layer: 0
-  m_Name: Sphere (73)
+  m_Name: 9C Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17426,7 +17460,7 @@ GameObject:
   - component: {fileID: 892887271}
   - component: {fileID: 892887270}
   m_Layer: 0
-  m_Name: Sphere (90)
+  m_Name: 24 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17617,13 +17651,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 895255992}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.29967114, z: -0, w: 0.95404255}
-  m_LocalPosition: {x: -242.9, y: 1.7866192, z: -137.7}
+  m_LocalRotation: {x: -0, y: 0.12169023, z: -0, w: 0.9925682}
+  m_LocalPosition: {x: -78, y: 1.7866192, z: -182.7}
   m_LocalScale: {x: 18.075, y: 18.075, z: 49.90327}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 34.876, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 13.979, z: 0}
 --- !u!114 &895255997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17637,6 +17671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   racerRigidbodies: []
+  waypointIndicesPerCheckpoint: 00000000080000000e000000140000001d000000
 --- !u!1 &897017265
 GameObject:
   m_ObjectHideFlags: 0
@@ -18260,7 +18295,7 @@ GameObject:
   - component: {fileID: 960734453}
   - component: {fileID: 960734452}
   m_Layer: 0
-  m_Name: Sphere (74)
+  m_Name: 10 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18739,6 +18774,7 @@ MonoBehaviour:
   boostForce: 50
   boostStrength: 100
   currentCheckpointIndex: 0
+  driftForce: 10
 --- !u!54 &1004139968
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20041,7 +20077,7 @@ GameObject:
   - component: {fileID: 1105927104}
   - component: {fileID: 1105927103}
   m_Layer: 0
-  m_Name: Sphere (83)
+  m_Name: 17 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21501,7 +21537,7 @@ GameObject:
   - component: {fileID: 1242900895}
   - component: {fileID: 1242900894}
   m_Layer: 0
-  m_Name: Sphere (94)
+  m_Name: 28 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21816,7 +21852,7 @@ GameObject:
   - component: {fileID: 1277185463}
   - component: {fileID: 1277185462}
   m_Layer: 0
-  m_Name: Sphere (81)
+  m_Name: 15C Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22343,8 +22379,8 @@ GameObject:
   - component: {fileID: 1307257921}
   - component: {fileID: 1307257926}
   - component: {fileID: 1307257925}
-  - component: {fileID: 1307257929}
   - component: {fileID: 1307257924}
+  - component: {fileID: 1307257929}
   - component: {fileID: 1307257927}
   - component: {fileID: 1307257928}
   m_Layer: 0
@@ -22384,14 +22420,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307257920}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6cb15496065424bbe9c7c73e688add, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 1307257925}
   forwardAccel: 50
-  reverseAccel: 50
+  reverseAccel: 70
   turnStrength: 20
   gravityForce: 10
   dragOnGround: 7
@@ -22401,7 +22437,7 @@ MonoBehaviour:
   groundRayPoint: {fileID: 282393952}
   currentSpeed: 0
   accelerationRate: 80
-  maxSpeed: 260
+  maxSpeed: 400
   accelerationTimer: 0
   accelerationTime: 2
   driftDuration: 2
@@ -22411,6 +22447,7 @@ MonoBehaviour:
   boostForce: 50
   boostStrength: 100
   currentCheckpointIndex: 0
+  driftForce: 10
 --- !u!54 &1307257925
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22538,14 +22575,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307257920}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb363342f565b424fae4dd8cc35b97ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 1307257925}
   forwardAccel: 50
-  reverseAccel: 50
+  reverseAccel: 70
   turnStrength: 20
   gravityForce: 10
   dragOnGround: 7
@@ -22582,6 +22619,10 @@ PrefabInstance:
     - target: {fileID: 212664092559802857, guid: bc2b53c615d3a8a438381de25411b2aa, type: 3}
       propertyPath: m_Name
       value: Checkpoint 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212664092559802857, guid: bc2b53c615d3a8a438381de25411b2aa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 218476855999751374, guid: bc2b53c615d3a8a438381de25411b2aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -23581,7 +23622,7 @@ GameObject:
   - component: {fileID: 1436745492}
   - component: {fileID: 1436745491}
   m_Layer: 0
-  m_Name: Sphere (66)
+  m_Name: 3 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23717,7 +23758,7 @@ GameObject:
   - component: {fileID: 1443031668}
   - component: {fileID: 1443031667}
   m_Layer: 0
-  m_Name: Sphere (91)
+  m_Name: 25 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24249,7 +24290,7 @@ GameObject:
   - component: {fileID: 1497356601}
   - component: {fileID: 1497356600}
   m_Layer: 0
-  m_Name: Sphere (88)
+  m_Name: 22 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24354,7 +24395,7 @@ GameObject:
   - component: {fileID: 1512728021}
   - component: {fileID: 1512728020}
   m_Layer: 0
-  m_Name: Sphere (105)
+  m_Name: 39 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26675,7 +26716,7 @@ GameObject:
   - component: {fileID: 1720195789}
   - component: {fileID: 1720195788}
   m_Layer: 0
-  m_Name: Sphere (78)
+  m_Name: 12 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27211,7 +27252,7 @@ GameObject:
   - component: {fileID: 1771622947}
   - component: {fileID: 1771622946}
   m_Layer: 0
-  m_Name: Sphere (93)
+  m_Name: 27 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47632,7 +47673,7 @@ GameObject:
   - component: {fileID: 1822880907}
   - component: {fileID: 1822880906}
   m_Layer: 0
-  m_Name: Sphere (76)
+  m_Name: 7 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47737,7 +47778,7 @@ GameObject:
   - component: {fileID: 1825714713}
   - component: {fileID: 1825714712}
   m_Layer: 0
-  m_Name: Sphere (72)
+  m_Name: 8 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51007,6 +51048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   racerRigidbodies: []
+  waypointIndicesPerCheckpoint: 
 --- !u!1 &1849656557
 GameObject:
   m_ObjectHideFlags: 0
@@ -51312,7 +51354,7 @@ GameObject:
   - component: {fileID: 1860603318}
   - component: {fileID: 1860603317}
   m_Layer: 0
-  m_Name: Sphere (86)
+  m_Name: 20 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56627,7 +56669,7 @@ GameObject:
   - component: {fileID: 1943748747}
   - component: {fileID: 1943748746}
   m_Layer: 0
-  m_Name: Sphere (68)
+  m_Name: 5 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60000,7 +60042,7 @@ GameObject:
   - component: {fileID: 2102123701}
   - component: {fileID: 2102123700}
   m_Layer: 0
-  m_Name: Sphere (97)
+  m_Name: 31 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60306,7 +60348,7 @@ GameObject:
   - component: {fileID: 2137132791}
   - component: {fileID: 2137132790}
   m_Layer: 0
-  m_Name: Sphere (65)
+  m_Name: 2 Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
-    public Rigidbody theRB;
+        public Rigidbody theRB;
 
     public float forwardAccel = 50f, reverseAccel = 50f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
     
@@ -20,6 +20,8 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0f;
     public float accelerationRate;
+    float decelerationRate;
+    float deceleration = 30;
     public float maxSpeed = 260f;
 
     [SerializeField]
@@ -45,8 +47,9 @@ public class CarController : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
+    //public int currentLap = 0;
 
-
+    
     private void Awake()
     {
         inputAsset = this.GetComponent<PlayerInput>().actions;
@@ -91,6 +94,7 @@ public class CarController : MonoBehaviour
         accelerationRate = maxSpeed / accelerationTime;
         accelerationTimer += Time.deltaTime;
 
+
         if (accelerationTimer > accelerationTime)
         {
             accelerationTimer = accelerationTime;
@@ -102,23 +106,22 @@ public class CarController : MonoBehaviour
         }
         else if (speedInput < 0)
         {
-            speedInput = -reverseAccel * Time.deltaTime * 100f; //this needs to change, so inconsistent barf
+            speedInput = -reverseAccel;
         }
         else
         {
-            accelerationTimer = 0f; //when player is not moving
+            accelerationTimer = 0f;
         }
 
-        float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+        //float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
+        float distanceToCheckpoint = checkpointManager.DistanceToNextCheckpoint(gameObject);
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
-        if (distanceToCheckpoint < 1f)
+        if (distanceToCheckpoint < .5f)
         {
             checkpointManager.UpdateCheckpoint(gameObject, currentCheckpointIndex);
             currentCheckpointIndex++;
         }
-        
-
 
         
     }
@@ -153,37 +156,27 @@ public class CarController : MonoBehaviour
             theRB.AddForce(Vector3.up * -gravityForce * 50f);
         }
 
-        UpdateDriftBoost();
+        //UpdateDriftBoost();
+        if (isDrifting)
+    {
+        PowerSlide();
+    }
     }
 
-    /*private void HandleMoveForwardInput(float value)
-    {
-        speedInput = value;
-    }
-
-    private void HandleTurnInput(float value)
-    {
-        turnInput = value;
-    }*/
 
     private void StartDrift()
     {
-        isDrifting = true;
-        driftTimer = 0f;
-        float driftForce = 10f; // Adjust this value to control the drift force
-        turnStrength = 50f;
-        theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
+        if (currentSpeed > 20f && (turnInput < -0.1f || turnInput > 0.1f))
+        {
+            isDrifting = true;
+            driftTimer = 0f;
 
-         if (!driftXF.isPlaying)
-         {
-            driftXF.Play();
-            skidXF.SetActive(true);
-         }
-         else
-         {
-            driftXF.Stop();
-            skidXF.SetActive(false);
-         }
+            PlayDriftEffects();
+        }
+        else
+        {
+            StopDrift();
+        }
 
     }
 
@@ -191,7 +184,9 @@ public class CarController : MonoBehaviour
     {
         isDrifting = false;
         driftTimer = 0f;
-        turnStrength = 10f;
+        turnStrength = 40f;
+
+         StopDriftEffects();
 
         if (isBoosting)
         {
@@ -199,15 +194,35 @@ public class CarController : MonoBehaviour
             theRB.AddForce(boostForce, ForceMode.VelocityChange);
         }
 
-        if (driftXF.isPlaying)
-         {
-            driftXF.Stop();
-            skidXF.SetActive(false);
-         }
-
     }
 
-    void UpdateDriftBoost()
+    private void PlayDriftEffects()
+{
+    if (!driftXF.isPlaying)
+    {
+        driftXF.Play();
+    }
+
+    if (!skidXF.activeSelf)
+    {
+        skidXF.SetActive(true);
+    }
+}
+
+private void StopDriftEffects()
+{
+    if (driftXF.isPlaying)
+    {
+        driftXF.Stop();
+    }
+
+    if (skidXF.activeSelf)
+    {
+        skidXF.SetActive(false);
+    }
+}
+
+    /*void UpdateDriftBoost()
     {
         if (isDrifting)
         {
@@ -217,7 +232,7 @@ public class CarController : MonoBehaviour
             if (driftTimer >= driftDuration)
             {
                 driftTimer = driftDuration;
-                ApplySpeedBoost();
+                //ApplySpeedBoost();
             }
         }
         else
@@ -236,6 +251,49 @@ public class CarController : MonoBehaviour
             isBoosting = true;
             Debug.Log("boost");
         }
+    } */
+
+
+    public float driftForce = 10f;
+
+   void PowerSlide()
+    {
+
+            if (turnInput < 0)
+            {
+                ApplyLeftDriftForce();
+
+                
+            }
+            else if (turnInput > 0)
+            {
+                
+                ApplyRightDriftForce();
+
+               
+            }
+            else
+            {
+                StopDrift();
+            }
+        
     }
+    
+
+    void ApplyLeftDriftForce()
+    {
+        theRB.AddForce(-transform.right * driftForce, ForceMode.Acceleration);
+        turnStrength = 50f;
+    }
+
+    void ApplyRightDriftForce()
+    {
+        theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
+        turnStrength = 50f;
+
+    }
+
+        
+        
 
 }
