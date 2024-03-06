@@ -79,15 +79,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RaceStatsHUD : MonoBehaviour
 {
-    public Text totalRaceTime;
-    public Text currentLapText;
-    public Text lapTimeText;
-    public Text lapTimesListText;
-    public Text racerPositionsText;
-    public Text playerPositionText;
+    public TextMeshProUGUI totalRaceTime;
+    public TextMeshProUGUI currentLapText;
+    public TextMeshProUGUI lapTimeText;
+    public TextMeshProUGUI lapTimesListText;
+    public TextMeshProUGUI racerPositionsText;
+    public TextMeshProUGUI playerPositionText;
 
     private float raceTime;
     private int previousLapCount;
@@ -182,7 +183,7 @@ public class RaceStatsHUD : MonoBehaviour
             if (playerIndex >= 0)
             {
                 string ordinalPosition = GetOrdinal(playerIndex + 1); 
-                playerPositionText.text = $"{ordinalPosition} Place";
+                playerPositionText.text = $"{ordinalPosition}";
             }
             else
             {

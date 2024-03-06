@@ -108,9 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Cubest-Bold
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1187090238
   material: {fileID: -7423338473217447453}
-  materialHashCode: 0
+  materialHashCode: -1899010722
   m_Version: 1.1.0
   m_SourceFontFileGUID: a5ef177ee1452ac41abb3812ed0f3f1b
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: a5ef177ee1452ac41abb3812ed0f3f1b, type: 3}

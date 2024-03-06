@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: MEF-Display
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 431228153
   material: {fileID: 1067932328209630973}
-  materialHashCode: 0
+  materialHashCode: 386321081
   m_Version: 1.1.0
   m_SourceFontFileGUID: 9d0c4a38fd64f0040b9d0fbcd74dbe91
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 9d0c4a38fd64f0040b9d0fbcd74dbe91, type: 3}
@@ -39,7 +39,7 @@ MonoBehaviour:
     m_SubscriptSize: 0.5
     m_UnderlineOffset: -9.5
     m_UnderlineThickness: 4.75
-    m_StrikethroughOffset: 0
+    m_StrikethroughOffset: 28
     m_StrikethroughThickness: 4.75
     m_TabWidth: 57
   m_GlyphTable:
