@@ -1,69 +1,143 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PaparazziCarCon : MonoBehaviour
 {
-    public Transform target;
-    public GameObject playerObject;
+    public enum PaparazziState { Waiting, FollowingPlayer, Leaving, Interviewing }
+
+    public PaparazziState currentState;
+
+    public Transform player;
+
+    public Transform paparazzi;
+
+    public Transform waitAreaInitial;
+    public Transform waitAreaFinal;
 
     public float rotationSpeed = 6f;
-
     public float paparazziSpeed = 20f;
-    public float accelerationRate = 5.0f;
-    public float maxSpeed = 40.0f;
-    public float matchSpeedDistance = 5f;
-    public Rigidbody aiRB;
+    public float dragOnGround = 7f;
 
-    private float groundRayLength = .5f;
+    public float matchSpeedDistance = 5f;
+
+    public float groundRayLength = .5f;
     public Transform groundRayPoint;
 
-    public float dragOnGround = 7f, gravityForce = 10f;
+    public Rigidbody aiRB;
+    public Rigidbody plRB;
 
-    private bool isSticking = false;
-    private float stickingTimer = 0f;
+    public Collider triggerZone;
 
-    public float currentSpd = 0f;
+    public float interviewDuration = 10f;
+    public float interviewTimer;
+    public bool startInterview = false;
+    public bool followingTarget = false;
 
     void Start()
     {
-        if (target == null)
-        {
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            if (player != null)
-            {
-                target = player.transform;
-            }
-            else
-            {
-                Debug.LogError("Paparazzi target is not assigned, and no player found in the scene.");
-            }
-        }
-
-        aiRB.transform.parent = null;
-    }
-
-    void Update()
-    {
-        currentSpd = aiRB.velocity.magnitude;
+        currentState = PaparazziState.Waiting;
+        interviewTimer = interviewDuration;
+        
     }
 
     void FixedUpdate()
     {
-        if (target != null)
+        switch (currentState)
+        {
+            case PaparazziState.Waiting:
+                UpdateWaitingState();
+                break;
+            case PaparazziState.FollowingPlayer:
+                MoveTowards(player.position);
+                followingTarget = true;
+                break;
+            case PaparazziState.Leaving:
+                MoveTowards(waitAreaFinal.position);
+                GoHome();
+                break;
+            case PaparazziState.Interviewing:
+                MoveTowards(player.position);
+                Interview();
+                TalkingTimer();
+                break;
+        }
+
+    }
+
+
+    void UpdateWaitingState()
     {
-        Vector3 moveDirection = (target.position - transform.position).normalized;
+
+        if (triggerZone != null && triggerZone.bounds.Contains(player.position))
+        {
+            aiRB.isKinematic = false;
+            ChangeState(PaparazziState.FollowingPlayer);
+            Destroy(triggerZone);
+        }
+
+        if (waitAreaFinal.GetComponent<Collider>().bounds.Contains(aiRB.position))
+        {
+            aiRB.isKinematic = true;
+        }
+        
+    }
+
+    void MoveTowards(Vector3 targetPosition)
+    {
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        
+        
+        RotateTowards(moveDirection);
+
+        
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (currentState == PaparazziState.FollowingPlayer || currentState == PaparazziState.Interviewing)
+        {
+            Debug.Log("followingg");
+            
+            if (distanceToPlayer < matchSpeedDistance)
+            {
+                aiRB.velocity = plRB.GetComponent<Rigidbody>().velocity;
+
+                
+                if (!startInterview)
+                {
+                    startInterview = true;
+                    ChangeState(PaparazziState.Interviewing);
+
+                    Interview();
+                }
+            }
+            else
+            {
+                ApplyForwardForce();
+            }
+        }
+
+        if(currentState == PaparazziState.Leaving)
+        {
+            aiRB.velocity = aiRB.GetComponent<Rigidbody>().velocity;
+            ApplyForwardForce();
+            Debug.Log("GO HOME");
+            GoHome();
+            
+
+        }
+    
+    }
+
+    void RotateTowards(Vector3 moveDirection)
+    {
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+    }
 
-        float distanceToPlayer = Vector3.Distance(transform.position, target.position);
-
+    void ApplyForwardForce()
+    {
         RaycastHit hit;
-
         if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
         {
             aiRB.drag = dragOnGround;
-
             Vector3 forwardForce = transform.forward * paparazziSpeed * 50f;
 
             if (hit.normal != Vector3.up)
@@ -72,58 +146,72 @@ public class PaparazziCarCon : MonoBehaviour
             }
 
             aiRB.AddForce(forwardForce, ForceMode.Force);
+        }
+    }
 
-    
-            if (distanceToPlayer < matchSpeedDistance)
-            {
-                MatchPlayerSpeed();
-                rotationSpeed = 10f;
-            }
-            else
-            {
-                AccelerateTowardsPlayer();
-                rotationSpeed = 200f;
-            }
+
+   
+   /*void UpdateInterviewState()
+    {
+        interviewTimer = interviewDuration;
+        interviewTimer -= Time.deltaTime;
+        Debug.Log("interviewing");
+
+        if (interviewTimer <= 0f)
+        {
+           
+            ChangeState(PaparazziState.Leaving);
+            Debug.Log("ok am done");
         }
         else
         {
-            HandleMidAir();
+            // Interview logic goes here
+            // For example, displaying interview UI, handling dialogue, etc.
         }
+    }*/
 
-        Debug.DrawRay(transform.position, target.position - transform.position, Color.yellow);
-    }
-    }
-
-    void AccelerateTowardsPlayer()
+    void Interview()
     {
-        Vector3 desiredVelocity = (target.position - transform.position).normalized * maxSpeed;
-        Vector3 velocityChange = desiredVelocity - aiRB.velocity;
+        //interviewTimer = interviewDuration;
+        TalkingTimer();
+        
+        Debug.Log("interviewing");
 
-        aiRB.AddForce(velocityChange * accelerationRate, ForceMode.Acceleration);
+        if (interviewTimer <= 0f)
+        {
+            Debug.Log("am done");
+            ChangeState(PaparazziState.Leaving);
+            Debug.Log("ok am done");
+        }
+        else
+        {
+            //TalkingTimer();
+            //interviewTimer -= Time.deltaTime;
+            // displaying interview UI, handling dialogue, etc.
+        }
     }
 
-    void StartSticking()
+    void TalkingTimer()
     {
-        isSticking = true;
-        stickingTimer = 0f;
-        //Debug.Log("sticking");
-        StickToPlayer();
+        interviewTimer -= Time.deltaTime;
     }
 
-    void StickToPlayer()
+    void GoHome()
     {
-        stickingTimer += Time.deltaTime;
-    }
+        Debug.Log("IM GOING");
+        float distanceToFinal = Vector3.Distance(aiRB.position, waitAreaFinal.position);
+        Debug.Log("Distance to final: " + distanceToFinal);
 
-    void HandleMidAir()
-    {
-        aiRB.drag = 0.1f;
-        aiRB.AddForce(Vector3.up * -gravityForce * 50f);
+        if (distanceToFinal < 3f)
+        {
+            ChangeState(PaparazziState.Waiting);
+        }
     }
-
-    void MatchPlayerSpeed()
+   
+   
+    void ChangeState(PaparazziState newState)
     {
-        aiRB.velocity = playerObject.GetComponent<Rigidbody>().velocity;
-        StartSticking();
+        currentState = newState;
     }
+    
 }
