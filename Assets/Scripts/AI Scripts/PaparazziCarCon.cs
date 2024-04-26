@@ -32,10 +32,15 @@ public class PaparazziCarCon : MonoBehaviour
     public bool startInterview = false;
     public bool followingTarget = false;
 
+    public InterviewHolder interviewHolder;
+
+
     void Start()
     {
         currentState = PaparazziState.Waiting;
         interviewTimer = interviewDuration;
+        
+        interviewHolder = GetComponent<InterviewHolder>();
         
     }
 
@@ -93,7 +98,6 @@ public class PaparazziCarCon : MonoBehaviour
 
         if (currentState == PaparazziState.FollowingPlayer || currentState == PaparazziState.Interviewing)
         {
-            Debug.Log("followingg");
             
             if (distanceToPlayer < matchSpeedDistance)
             {
@@ -118,7 +122,7 @@ public class PaparazziCarCon : MonoBehaviour
         {
             aiRB.velocity = aiRB.GetComponent<Rigidbody>().velocity;
             ApplyForwardForce();
-            Debug.Log("GO HOME");
+            
             GoHome();
             
 
@@ -150,30 +154,19 @@ public class PaparazziCarCon : MonoBehaviour
     }
 
 
-   
-   /*void UpdateInterviewState()
+    void Interview()
     {
-        interviewTimer = interviewDuration;
-        interviewTimer -= Time.deltaTime;
-        Debug.Log("interviewing");
-
         if (interviewTimer <= 0f)
         {
-           
             ChangeState(PaparazziState.Leaving);
-            Debug.Log("ok am done");
+            Debug.Log("Interview ended.");
         }
         else
         {
-            // Interview logic goes here
-            // For example, displaying interview UI, handling dialogue, etc.
+            TalkingTimer();
         }
-    }*/
-
-    void Interview()
-    {
-        //interviewTimer = interviewDuration;
-        TalkingTimer();
+        
+        /*TalkingTimer();
         
         Debug.Log("interviewing");
 
@@ -188,7 +181,7 @@ public class PaparazziCarCon : MonoBehaviour
             //TalkingTimer();
             //interviewTimer -= Time.deltaTime;
             // displaying interview UI, handling dialogue, etc.
-        }
+        }*/
     }
 
     void TalkingTimer()
@@ -198,9 +191,8 @@ public class PaparazziCarCon : MonoBehaviour
 
     void GoHome()
     {
-        Debug.Log("IM GOING");
+        
         float distanceToFinal = Vector3.Distance(aiRB.position, waitAreaFinal.position);
-        Debug.Log("Distance to final: " + distanceToFinal);
 
         if (distanceToFinal < 3f)
         {
@@ -208,7 +200,17 @@ public class PaparazziCarCon : MonoBehaviour
         }
     }
    
-   
+
+    public void EndInterview()
+    {
+        interviewTimer = 0f;
+        ChangeState(PaparazziState.Leaving);
+        Debug.Log("Interview ended early.");
+    }
+
+    
+
+
     void ChangeState(PaparazziState newState)
     {
         currentState = newState;

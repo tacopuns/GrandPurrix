@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using TMPro;
 
 public class PaparazziInterviewUI : MonoBehaviour
 {
@@ -15,10 +17,16 @@ public class PaparazziInterviewUI : MonoBehaviour
 
     private PaparazziCarCon paparazziController;
 
+    private Button[] answerButtons;
+
+    public Slider timerSlider;
+    
+
+
     void Start()
     {
         
-        hiddenPosition = new Vector3(panel.localPosition.x, -695, panel.localPosition.z);
+        hiddenPosition = new Vector3(panel.localPosition.x, -742, panel.localPosition.z);
         shownPosition = panel.localPosition;
 
         
@@ -26,6 +34,13 @@ public class PaparazziInterviewUI : MonoBehaviour
 
         
         paparazziController = FindObjectOfType<PaparazziCarCon>();
+
+        answerButtons = panel.GetComponentsInChildren<Button>();
+        foreach (Button button in answerButtons)
+        {
+            button.onClick.AddListener(() => OnAnswerSelected(button));
+        }
+
     }
 
     void Update()
@@ -34,6 +49,7 @@ public class PaparazziInterviewUI : MonoBehaviour
         if (paparazziController.currentState == PaparazziCarCon.PaparazziState.Interviewing)
         {
             ShowPanel();
+            UpdateTimerSlider();
         }
         else
         {
@@ -49,6 +65,22 @@ public class PaparazziInterviewUI : MonoBehaviour
     public void HidePanel()
     {
         panel.DOLocalMoveY(hiddenPosition.y, slideDuration).SetEase(easingType);
+    }
+
+    private void OnAnswerSelected(Button selectedButton)
+    {
+        string selectedAnswer = selectedButton.GetComponentInChildren<TextMeshProUGUI>().text;
+        Debug.Log("Player selected answer: " + selectedAnswer);
+
+        // End the interview and hide the panel
+        paparazziController.EndInterview();
+        HidePanel();
+    }
+
+    private void UpdateTimerSlider()
+    {
+        float timeRemainingRatio = paparazziController.interviewTimer / paparazziController.interviewDuration;
+        timerSlider.value = timeRemainingRatio;
     }
 }
 

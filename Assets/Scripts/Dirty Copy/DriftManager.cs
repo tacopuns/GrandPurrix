@@ -20,8 +20,8 @@ public class DriftManager : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0f;
     public float accelerationRate;
-    float decelerationRate;
-    float deceleration = 30;
+    //float decelerationRate;
+    //float deceleration = 30;
     public float maxSpeed = 260f;
 
     [SerializeField]
