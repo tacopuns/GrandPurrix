@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class CarController : MonoBehaviour
 {
-        public Rigidbody theRB;
+    public Rigidbody theRB;
 
-    public float forwardAccel = 50f, reverseAccel = 50f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
+    public float reverseAccel = 50f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
     
     public LayerMask whatIsGround; //anything set as ground, the car will be able to move on
     private float groundRayLength = .5f;
@@ -19,18 +19,16 @@ public class CarController : MonoBehaviour
     
     [SerializeField]
     private float currentSpeed = 0f;
-    public float accelerationRate;
-    //float decelerationRate;
-    //float deceleration = 30;
+    private float accelerationRate;
     public float maxSpeed = 260f;
 
     [SerializeField]
     private float accelerationTimer = 0.0f;
-    public float accelerationTime = 2.0f; //time needed to reach max speed
+    private float accelerationTime = 2.0f; //time needed to reach max speed
 
     private bool isDrifting = false;
-    public float driftDuration = 2.0f;
-    public float driftTimer = 0.0f;
+    //private float driftDuration = 2.0f;
+    private float driftTimer = 0.0f;
 
     public ParticleSystem driftXF;
     public GameObject skidXF;
@@ -47,7 +45,7 @@ public class CarController : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
-    //public int currentLap = 0;
+    
 
     
     private void Awake()
@@ -108,9 +106,18 @@ public class CarController : MonoBehaviour
         {
             speedInput = -reverseAccel;
         }
-        else
+        else if (speedInput == 0)
         {
             accelerationTimer = 0f;
+            
+            if(currentSpeed > 15)
+            {
+                theRB.drag = 2;
+            }
+            else
+            {
+                speedInput = 0;
+            }
         }
 
         //float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
@@ -209,7 +216,7 @@ public class CarController : MonoBehaviour
     }
 }
 
-private void StopDriftEffects()
+    private void StopDriftEffects()
 {
     if (driftXF.isPlaying)
     {
@@ -256,7 +263,7 @@ private void StopDriftEffects()
 
     public float driftForce = 10f;
 
-   void PowerSlide()
+    void PowerSlide()
     {
 
             if (turnInput < 0)

@@ -20,8 +20,13 @@ public class DriftManager : MonoBehaviour
     [SerializeField]
     private float currentSpeed = 0f;
     public float accelerationRate;
-    //float decelerationRate;
-    //float deceleration = 30;
+
+    public float decelerationRate;
+    public float decelerateTime = 5f;
+    public float decelerateTimer = 0;
+
+    public float maxDecelerationRate = 50;
+    
     public float maxSpeed = 260f;
 
     [SerializeField]
@@ -47,8 +52,8 @@ public class DriftManager : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
-    //public int currentLap = 0;
-
+    
+    public float speedModify = 0.3f;
     
     private void Awake()
     {
@@ -103,14 +108,29 @@ public class DriftManager : MonoBehaviour
         if (speedInput > 0)
         {
             speedInput = accelerationRate * accelerationTimer;
+            decelerateTimer = 0f;
+            theRB.drag = dragOnGround;
         }
         else if (speedInput < 0)
         {
             speedInput = -reverseAccel;
         }
-        else
+        else if (speedInput == 0)
         {
             accelerationTimer = 0f;
+            //DecelerateThings();
+            
+            if(currentSpeed > 15)
+            {
+                theRB.drag = 2;
+            }
+            else
+            {
+                speedInput = 0;
+            }
+
+                
+
         }
 
         //float distanceToCheckpoint = Vector3.Distance(transform.position, checkpointManager.checkpoints[currentCheckpointIndex].position);
@@ -125,6 +145,7 @@ public class DriftManager : MonoBehaviour
 
         
     }
+
 
     private void FixedUpdate() 
     {
@@ -142,7 +163,7 @@ public class DriftManager : MonoBehaviour
 
         if (grounded)
         {   
-            theRB.drag = dragOnGround;
+            //theRB.drag = dragOnGround;
             
 
             if (Mathf.Abs(speedInput) > 0)
@@ -209,7 +230,7 @@ public class DriftManager : MonoBehaviour
     }
 }
 
-private void StopDriftEffects()
+    private void StopDriftEffects()
 {
     if (driftXF.isPlaying)
     {
@@ -256,7 +277,7 @@ private void StopDriftEffects()
 
     public float driftForce = 10f;
 
-   void PowerSlide()
+    void PowerSlide()
     {
 
             if (turnInput < 0)
@@ -295,7 +316,6 @@ private void StopDriftEffects()
 
         
         
-
 }
 /*
  public Rigidbody theRB;

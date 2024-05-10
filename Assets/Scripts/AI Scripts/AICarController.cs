@@ -33,7 +33,10 @@ public class AICarController : MonoBehaviour
 
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
-    //public int currentLap = 0;
+    
+    private Alpha_2D_Character_In_3D_World SpriteAnim;
+
+
 
 
     void Start()
@@ -45,6 +48,8 @@ public class AICarController : MonoBehaviour
 
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
+        SpriteAnim = GetComponent<Alpha_2D_Character_In_3D_World>();
     }
 
     void Update()
@@ -111,55 +116,59 @@ public class AICarController : MonoBehaviour
     }
 
     void MoveTowardsWaypoint()
-{
-    Vector3 targetPosition = waypoints[currentWaypointIndex].position;
-    Vector3 moveDirection = (targetPosition - transform.position).normalized;
-    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-    RaycastHit hit;
-
-    
-    if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
     {
+        SpriteAnim.enabled = true;
+
+        Vector3 targetPosition = waypoints[currentWaypointIndex].position;
+        Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        RaycastHit hit;
+
         
-        aiRB.drag = dragOnGround;
-
-        Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
-
-        if (hit.normal != Vector3.up)
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
         {
-            forwardForce += hit.normal * 10f;
+            
+            aiRB.drag = dragOnGround;
+
+            Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
+
+            if (hit.normal != Vector3.up)
+            {
+                forwardForce += hit.normal * 10f;
+                SpriteAnim.enabled = false;
+            }
+
+            aiRB.AddForce(forwardForce, ForceMode.Force);
+        }
+        else
+        {
+            HandleMidAir();
+            SpriteAnim.enabled = true;
         }
 
-        aiRB.AddForce(forwardForce, ForceMode.Force);
-    }
-    else
-    {
-        HandleMidAir();
-    }
+        // Waypoint handling
+        float distanceToWaypoint = Vector3.Distance(transform.position, targetPosition);
+        if (distanceToWaypoint < 1f)
+        {
+            currentWaypointIndex++;
+            
+        }
+        else if (distanceToWaypoint < cpuSpeed * Time.deltaTime)
+        {
+            // Continue moving until very close to the waypoint
+        }
 
-    // Waypoint handling
-    float distanceToWaypoint = Vector3.Distance(transform.position, targetPosition);
-    if (distanceToWaypoint < 1f)
-    {
-        currentWaypointIndex++;
-        
+        if (hit.collider != null && hit.collider.CompareTag("Opp"))
+        {
+            AvoidObstacle(hit);
+        }
+        else
+        {
+            
+        }
     }
-    else if (distanceToWaypoint < cpuSpeed * Time.deltaTime)
-    {
-        // Continue moving until very close to the waypoint
-    }
-
-    if (hit.collider != null && hit.collider.CompareTag("Opp"))
-    {
-        AvoidObstacle(hit);
-    }
-    else
-    {
-        
-    }
-}
 
     void HandleMidAir()
     {
