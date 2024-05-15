@@ -15,7 +15,8 @@ public class PaparazziCarCon : MonoBehaviour
 
     public float rotationSpeed = 6f;
     public float paparazziSpeed = 20f;
-    public float dragOnGround = 7f;
+    public float dragOnGround = 5f;
+    public float gravityForce = 10f;
 
     public float matchSpeedDistance = 5f;
 
@@ -151,7 +152,17 @@ public class PaparazziCarCon : MonoBehaviour
 
             aiRB.AddForce(forwardForce, ForceMode.Force);
         }
+        else
+        {
+            HandleMidAir();
+        }
     }
+
+    void HandleMidAir()
+    {
+        aiRB.drag = 0.1f;
+        aiRB.AddForce(Vector3.up * -gravityForce * 50f);
+    }   
 
 
     void Interview()

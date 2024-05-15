@@ -40,7 +40,7 @@ public class CheckpointManager : MonoBehaviour
             IncrementLap(racer);
         }
 
-        if (GetLapCount(racer) >= 2)
+        if (GetLapCount(racer) >= 1)
         {
             MarkRaceFinished(racer);
         }
@@ -162,7 +162,7 @@ public class CheckpointManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Racer has not passed any checkpoints.");
+            //Debug.LogError("Racer has not passed any checkpoints.");
             //return Mathf.Infinity;
             return 100;
         }

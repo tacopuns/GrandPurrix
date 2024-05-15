@@ -34,7 +34,7 @@ public class AICarController : MonoBehaviour
     private CheckpointManager checkpointManager;
     public int currentCheckpointIndex = 0;
     
-    private Alpha_2D_Character_In_3D_World SpriteAnim;
+    //private Alpha_2D_Character_In_3D_World SpriteAnim;
 
 
 
@@ -49,7 +49,7 @@ public class AICarController : MonoBehaviour
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
-        SpriteAnim = GetComponent<Alpha_2D_Character_In_3D_World>();
+        //SpriteAnim = GetComponent<Alpha_2D_Character_In_3D_World>();
     }
 
     void Update()
@@ -117,7 +117,7 @@ public class AICarController : MonoBehaviour
 
     void MoveTowardsWaypoint()
     {
-        SpriteAnim.enabled = true;
+        //SpriteAnim.enabled = true;
 
         Vector3 targetPosition = waypoints[currentWaypointIndex].position;
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
@@ -137,7 +137,7 @@ public class AICarController : MonoBehaviour
             if (hit.normal != Vector3.up)
             {
                 forwardForce += hit.normal * 10f;
-                SpriteAnim.enabled = false;
+                //SpriteAnim.enabled = false;
             }
 
             aiRB.AddForce(forwardForce, ForceMode.Force);
@@ -145,7 +145,7 @@ public class AICarController : MonoBehaviour
         else
         {
             HandleMidAir();
-            SpriteAnim.enabled = true;
+            //SpriteAnim.enabled = true;
         }
 
         // Waypoint handling
@@ -172,8 +172,8 @@ public class AICarController : MonoBehaviour
 
     void HandleMidAir()
     {
-    aiRB.drag = 0.1f;
-    aiRB.AddForce(Vector3.up * -gravityForce * 50f);
+        aiRB.drag = 0.1f;
+        aiRB.AddForce(Vector3.up * -gravityForce * 50f);
     }   
 
     void AvoidObstacles()

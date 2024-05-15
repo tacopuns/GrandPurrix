@@ -76,7 +76,7 @@ public class CarController : MonoBehaviour
     
     void Start()
     {
-        //theRB.transform.parent = null;
+        theRB.transform.parent = null;
 
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
@@ -101,6 +101,7 @@ public class CarController : MonoBehaviour
         if (speedInput > 0)
         {
             speedInput = accelerationRate * accelerationTimer;
+            theRB.drag = dragOnGround;
         }
         else if (speedInput < 0)
         {
@@ -149,7 +150,7 @@ public class CarController : MonoBehaviour
 
         if (grounded)
         {   
-            theRB.drag = dragOnGround;
+            //theRB.drag = dragOnGround;
             
 
             if (Mathf.Abs(speedInput) > 0)

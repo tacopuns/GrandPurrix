@@ -137,7 +137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1876691649654709494}
   - component: {fileID: 4500614988013758630}
-  - component: {fileID: 7274327108102043228}
   - component: {fileID: 7537944277888620108}
   m_Layer: 6
   m_Name: cm
@@ -173,28 +172,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7274327108102043228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176597852737670427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa7155796051b734daa718462081dc5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BindingMode: 3
-  m_FollowOffset: {x: 0, y: 2, z: -6.32}
-  m_XDamping: 0.7
-  m_YDamping: 0
-  m_ZDamping: 0
-  m_AngularDampingMode: 0
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
-  m_AngularDamping: 0
 --- !u!114 &7537944277888620108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5129,7 +5106,6 @@ GameObject:
   m_Component:
   - component: {fileID: 211098993031617631}
   - component: {fileID: 3201706107966088941}
-  - component: {fileID: 7928833573742096080}
   m_Layer: 6
   m_Name: Virtual Camera
   m_TagString: Untagged
@@ -5192,24 +5168,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1876691649654709494}
---- !u!114 &7928833573742096080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2701734688070902062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2588cc5dedbb75e49a44aada63f7b939, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AimCollisionFilter:
-    serializedVersion: 2
-    m_Bits: 1
-  IgnoreTag: 
-  AimDistance: 200
-  AimTargetReticle: {fileID: 0}
 --- !u!1 &3126273046864659487
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,7 +5434,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 4403042704414977256}
-  forwardAccel: 50
   reverseAccel: 70
   turnStrength: 20
   gravityForce: 10
@@ -5486,12 +5443,8 @@ MonoBehaviour:
     m_Bits: 8
   groundRayPoint: {fileID: 2801096160178933629}
   currentSpeed: 0
-  accelerationRate: 80
   maxSpeed: 370
   accelerationTimer: 0
-  accelerationTime: 2
-  driftDuration: 2
-  driftTimer: 0
   driftXF: {fileID: 7010338811545004875}
   skidXF: {fileID: 4283978688640214334}
   boostForce: 50
@@ -5522,6 +5475,10 @@ MonoBehaviour:
   groundRayPoint: {fileID: 2801096160178933629}
   currentSpeed: 0
   accelerationRate: 80
+  decelerationRate: 0
+  decelerateTime: 5
+  decelerateTimer: 0
+  maxDecelerationRate: 50
   maxSpeed: 400
   accelerationTimer: 0
   accelerationTime: 4
@@ -5532,6 +5489,7 @@ MonoBehaviour:
   boostForce: 50
   boostStrength: 100
   currentCheckpointIndex: 0
+  speedModify: 0.3
   driftForce: 10
 --- !u!114 &123979497502077086
 MonoBehaviour:
