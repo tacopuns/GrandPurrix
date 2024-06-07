@@ -15,6 +15,8 @@ public class CheckpointManager : MonoBehaviour
 
     private float lapTime;
 
+    public float totalLaps = 3;
+
     public Dictionary<GameObject, float> lapStartTimes = new Dictionary<GameObject, float>();
 
     private void Awake()
@@ -40,7 +42,7 @@ public class CheckpointManager : MonoBehaviour
             IncrementLap(racer);
         }
 
-        if (GetLapCount(racer) >= 1)
+        if (GetLapCount(racer) >= totalLaps)
         {
             MarkRaceFinished(racer);
         }

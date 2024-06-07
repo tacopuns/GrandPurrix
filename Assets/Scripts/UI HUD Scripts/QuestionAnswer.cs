@@ -8,5 +8,7 @@ public class QuestionAnswer
     public string interviewerName;
     public string question;
     public string[] answers;
+
+    public int favor;
 }
 

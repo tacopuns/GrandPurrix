@@ -10,9 +10,12 @@ public class RaceFinishUI : MonoBehaviour
     public TextMeshProUGUI qualifiedText;
     public TextMeshProUGUI gameoverText;
 
+    public Button toResultsBtn;
+    
     public RectTransform endPanel;
 
     private RaceCompletion raceCompletion;
+
 
 
     void Start()
@@ -35,11 +38,29 @@ public class RaceFinishUI : MonoBehaviour
     private void ShowQualifiedText()
     {
         qualifiedText.gameObject.SetActive(true);
-        qualifiedText.transform.DOScale(Vector3.one * 1.2f, 0.5f).SetEase(Ease.OutBounce)
-            .OnComplete(() => qualifiedText.transform.DOScale(Vector3.one, 0.2f));
+        //qualifiedText.transform.DOScale(Vector3.one * 2f, .7f).SetEase(Ease.OutBack);
+        Sequence sequence = DOTween.Sequence();
+
+        sequence.Append(qualifiedText.transform.DOScale(Vector3.one * 2f, 0.7f).SetEase(Ease.OutBack))
+                .AppendInterval(2f) // Wait for 2 seconds before showing the button
+                .AppendCallback(() => toResultsBtn.gameObject.SetActive(true)) // Activate the button
+                .Append(toResultsBtn.GetComponent<CanvasGroup>().DOFade(1f, 0.5f)); // Fade in the button
+
+        sequence.Play();
         
-        // Set raceCompletion.finishRace to false to avoid repeatedly showing the text
-        //raceCompletion.finishRace = false;
+        
+    }
+
+    public void ShowResults()
+    {
+        //endpanel set active and transition in
+        endPanel.gameObject.SetActive(true); // Ensure the panel is active
+
+        // Move the panel from off-screen (assuming the screen width is 1920 for this example)
+        endPanel.anchoredPosition = new Vector2(0, 1080); // Set the initial position off-screen to the left
+
+        // Animate the panel to slide in from the left
+        endPanel.DOAnchorPos(Vector2.zero, .6f).SetEase(Ease.OutQuad);
     }
 
     

@@ -38,6 +38,7 @@ public class RaceCompletion : MonoBehaviour
         {
             SwitchToCamera(finishCamera);
             finishRace = true;
+            FindObjectOfType<RaceStatsHUD>().FreezeRaceStats();
         }
     }
 
