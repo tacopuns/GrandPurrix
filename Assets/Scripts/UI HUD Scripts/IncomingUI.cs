@@ -14,11 +14,13 @@ public class IncomingUI : MonoBehaviour
     private Vector3 originalPosition; 
 
     public CanvasGroup canvasGroup;
-    private PaparazziCarCon paparazziController;
+    private List<PaparazziCarCon> paparazziControllers;
+
+    public bool isFollowingPlayer = false;
     
     void Start()
     {
-        paparazziController = FindObjectOfType<PaparazziCarCon>();
+        paparazziControllers = new List<PaparazziCarCon>(FindObjectsOfType<PaparazziCarCon>());
         
         originalPosition = panel.localPosition;
 
@@ -34,12 +36,26 @@ public class IncomingUI : MonoBehaviour
     void Update()
     {
         
-        if (paparazziController.currentState == PaparazziCarCon.PaparazziState.FollowingPlayer)
+        if (!isFollowingPlayer)
         {
-            
-            ShowIncoming();
+        foreach (var paparazziController in paparazziControllers)
+        {
+            if (paparazziController.currentState == PaparazziCarCon.PaparazziState.FollowingPlayer)
+            {
+                isFollowingPlayer = true;
+                break;
+            }
+
+
             
         }
+
+        if (isFollowingPlayer)
+        {
+            ShowIncoming();
+        }
+        }
+        
     }
 
     public void ShowIncoming()
@@ -63,6 +79,7 @@ public class IncomingUI : MonoBehaviour
             {
                 
                 HideIncoming();
+               
             });
         });
     }
@@ -73,6 +90,8 @@ public class IncomingUI : MonoBehaviour
         panel.localPosition = new Vector3(Screen.width + panel.rect.width, originalPosition.y, originalPosition.z);
         
         canvasGroup.alpha = 0f;
+
+        isFollowingPlayer = false;
     }
     
 }

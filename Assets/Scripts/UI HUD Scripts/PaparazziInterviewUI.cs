@@ -15,7 +15,7 @@ public class PaparazziInterviewUI : MonoBehaviour
     private Vector3 hiddenPosition;
     private Vector3 shownPosition;
 
-    private PaparazziCarCon paparazziController;
+    public PaparazziCarCon paparazziController;
 
     private Button[] answerButtons;
 
@@ -33,7 +33,8 @@ public class PaparazziInterviewUI : MonoBehaviour
         HidePanel();
 
         
-        paparazziController = FindObjectOfType<PaparazziCarCon>();
+        //paparazziController = FindObjectOfType<PaparazziCarCon>();
+
 
         answerButtons = panel.GetComponentsInChildren<Button>();
         foreach (Button button in answerButtons)

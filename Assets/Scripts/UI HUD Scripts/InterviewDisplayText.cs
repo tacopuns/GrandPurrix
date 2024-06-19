@@ -6,6 +6,7 @@ using TMPro;
 public class InterviewDisplayText : MonoBehaviour
 {
     public PaparazziCarCon paparazziController;
+    public FavorSystem favorSystem;
 
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI questionText;
@@ -20,7 +21,6 @@ public class InterviewDisplayText : MonoBehaviour
             if (!isQuestionDisplayed)
             {
                 DisplayRandomQuestion();
-                
                 isQuestionDisplayed = true;
             }
         }
@@ -32,18 +32,16 @@ public class InterviewDisplayText : MonoBehaviour
 
     private void DisplayRandomQuestion()
     {
-       if (paparazziController != null && paparazziController.interviewHolder != null &&
-        paparazziController.interviewHolder.interviewQuestions != null &&
-        paparazziController.interviewHolder.interviewQuestions.Count > 0)
+        if (paparazziController != null && paparazziController.interviewHolder != null &&
+            paparazziController.interviewHolder.interviewQuestions != null &&
+            paparazziController.interviewHolder.interviewQuestions.Count > 0)
         {
-            // rng question
             int randomIndex = Random.Range(0, paparazziController.interviewHolder.interviewQuestions.Count);
             QuestionAnswer selectedQuestion = paparazziController.interviewHolder.interviewQuestions[randomIndex];
-            
-            
-            nameText.text = selectedQuestion.interviewerName;
-            
-            
+
+            nameText.text = paparazziController.paparazziName; // Assuming paparazziController has paparazziName
+            favorSystem.SetCurrentPaparazzi(paparazziController.paparazziName);
+
             questionText.text = selectedQuestion.question;
 
             for (int i = 0; i < answerTexts.Length && i < selectedQuestion.answers.Length; i++)
@@ -53,4 +51,3 @@ public class InterviewDisplayText : MonoBehaviour
         }
     }
 }
-

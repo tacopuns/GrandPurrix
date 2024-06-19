@@ -35,6 +35,8 @@ public class PaparazziCarCon : MonoBehaviour
 
     public InterviewHolder interviewHolder;
 
+    public string paparazziName;
+
 
     void Start()
     {

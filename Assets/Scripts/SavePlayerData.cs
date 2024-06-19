@@ -7,62 +7,75 @@ public class SavePlayerData : MonoBehaviour
 {
     public PlayerData playerData;
     string saveFilePath;
-
     public FavorSystem favorSystem;
 
-    
     void Awake()
     {
-        playerData = new PlayerData(); 
-        
         saveFilePath = Application.persistentDataPath + "/PlayerData.json";
-        
-        favorSystem.Initialize(playerData);
+
+        favorSystem = FindObjectOfType<FavorSystem>();
+        if (favorSystem != null)
+        {
+            favorSystem.Setup(playerData);
+        }
     }
-    
+
     void Start()
     {
-        
-        playerData.level = 0;
-        playerData.rating = 0;
-        playerData.favor = 5;
+        //InitializePlayerData();
+        LoadGame();
 
-        
         Debug.Log(Application.persistentDataPath);
+    }
+
+    private void InitializePlayerData()
+    {
+        playerData = new PlayerData
+        {
+            level = 0,
+            rating = 0
+        };
     }
 
     public void SaveGame()
     {
         string saveGameData = JsonUtility.ToJson(playerData);
         File.WriteAllText(saveFilePath, saveGameData);
-
         Debug.Log("Save file created at: " + saveFilePath);
     }
 
     public void LoadGame()
     {
-        if(File.Exists(saveFilePath))
+        if (File.Exists(saveFilePath))
         {
             string loadGameData = File.ReadAllText(saveFilePath);
             playerData = JsonUtility.FromJson<PlayerData>(loadGameData);
-
             Debug.Log("Load game complete!");
 
-            favorSystem.Initialize(playerData);
+            if (favorSystem != null)
+            {
+                favorSystem.Setup(playerData);
+            }
         }
         else
         {
             Debug.Log("There is no save file to load!");
+            //InitializePlayerData();
         }
     }
 
     public void DeleteSaveFile()
     {
-        if(File.Exists(saveFilePath))
+        if (File.Exists(saveFilePath))
         {
             File.Delete(saveFilePath);
+            Debug.Log("Save file DELETED!");
 
-            Debug.Log("Save file DELETED!"); 
+            // Re-initialize player data after deletion
+            InitializePlayerData();
+
+            // Optionally save the reset state immediately
+            //SaveGame();
         }
         else
         {
@@ -70,10 +83,9 @@ public class SavePlayerData : MonoBehaviour
         }
     }
 
-
     public void SavePlayerDataToFile()
     {
         SaveGame();
     }
-
 }
+
