@@ -389,7 +389,7 @@ public class RaceStatsHUD : MonoBehaviour
 
     public GameObject playerObject;
 
-    private bool raceFrozen = false;
+    public bool raceFrozen = false;
 
     void Start()
     {

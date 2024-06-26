@@ -172,7 +172,7 @@ public class PaparazziCarCon : MonoBehaviour
         if (interviewTimer <= 0f)
         {
             ChangeState(PaparazziState.Leaving);
-            Debug.Log("Interview ended.");
+            //Debug.Log("Interview ended.");
         }
         else
         {
@@ -218,7 +218,7 @@ public class PaparazziCarCon : MonoBehaviour
     {
         interviewTimer = 0f;
         ChangeState(PaparazziState.Leaving);
-        Debug.Log("Interview ended early.");
+        //Debug.Log("Interview ended early.");
     }
 
     

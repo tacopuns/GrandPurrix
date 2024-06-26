@@ -71,7 +71,7 @@ public class PaparazziInterviewUI : MonoBehaviour
     private void OnAnswerSelected(Button selectedButton)
     {
         string selectedAnswer = selectedButton.GetComponentInChildren<TextMeshProUGUI>().text;
-        Debug.Log("Player selected answer: " + selectedAnswer);
+        //Debug.Log("Player selected answer: " + selectedAnswer);
 
         // End the interview and hide the panel
         paparazziController.EndInterview();

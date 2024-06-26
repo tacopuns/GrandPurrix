@@ -66,7 +66,7 @@ public class CheckpointManager : MonoBehaviour
         {
             lapStartTimes[racer] = Time.time;
 
-            Debug.Log(racer.name + " completed lap 1 in " + FormatLapTime(Time.time));
+            //Debug.Log(racer.name + " completed lap 1 in " + FormatLapTime(Time.time));
 
         
             lapsCompleted[racer] = 1;
@@ -75,13 +75,13 @@ public class CheckpointManager : MonoBehaviour
 
         if (lapsCompleted[racer] > 1)
         {
-            Debug.Log(racer.name + " completed lap " + lapsCompleted[racer] + " in " + FormatLapTime(lapTime));
+            //Debug.Log(racer.name + " completed lap " + lapsCompleted[racer] + " in " + FormatLapTime(lapTime));
         }
 
         //THIS ONE BAD FOR LAP 1 ONLY Debug.Log(racer.name + " completed lap " + lapsCompleted[racer] + " in " + FormatLapTime(lapTime));
         
         
-        Debug.Log(racer.name + " completed lap " + lapsCompleted[racer] + ". Race time is currently " + FormatLapTime(Time.time));
+        //Debug.Log(racer.name + " completed lap " + lapsCompleted[racer] + ". Race time is currently " + FormatLapTime(Time.time));
 
     
     }

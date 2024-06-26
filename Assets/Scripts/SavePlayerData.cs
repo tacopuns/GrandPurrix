@@ -9,6 +9,7 @@ public class SavePlayerData : MonoBehaviour
     string saveFilePath;
     public FavorSystem favorSystem;
 
+
     void Awake()
     {
         saveFilePath = Application.persistentDataPath + "/PlayerData.json";
@@ -23,7 +24,7 @@ public class SavePlayerData : MonoBehaviour
     void Start()
     {
         //InitializePlayerData();
-        LoadGame();
+        //LoadGame();
 
         Debug.Log(Application.persistentDataPath);
     }
@@ -33,7 +34,9 @@ public class SavePlayerData : MonoBehaviour
         playerData = new PlayerData
         {
             level = 0,
-            rating = 0
+            rating = 0,
+            paparazziList = new List<Paparazzi>(),
+            racerPositions = new List<RacerData>()
         };
     }
 
@@ -55,6 +58,11 @@ public class SavePlayerData : MonoBehaviour
             if (favorSystem != null)
             {
                 favorSystem.Setup(playerData);
+            }
+
+            if (playerData.racerPositions == null)
+            {
+                playerData.racerPositions = new List<RacerData>();
             }
         }
         else
@@ -87,5 +95,71 @@ public class SavePlayerData : MonoBehaviour
     {
         SaveGame();
     }
+
+    public void SaveRacerPositions(List<GameObject> racers)
+    {
+        playerData.racerPositions.Clear();
+
+        foreach (GameObject racer in racers)
+        {
+            RacerComponent data = racer.GetComponent<RacerComponent>();
+            if (data != null)
+            {
+                RacerData racerData = new RacerData
+                {
+                    racerName = data.racerName,
+                    previousRacePosition = data.previousRacePosition,
+                    defaultRacePosition = data.defaultRacePosition
+                };
+                playerData.racerPositions.Add(racerData);
+            }
+        }
+        SaveGame();
+    }
+
+    public void LoadRacerPositions(List<GameObject> racers)
+    {
+        Debug.Log("Loading racer positions...");
+
+        if (playerData == null)
+        {
+            Debug.LogError("LoadedPlayerData is null!");
+            return;
+        }
+
+        if (playerData.racerPositions == null)
+        {
+            Debug.LogError("loadedPlayerData.racerPositions is null!");
+            return;
+        }
+
+        foreach (GameObject racer in racers)
+        {
+            RacerComponent data = racer.GetComponent<RacerComponent>();
+            if (data != null)
+            {
+                //Debug.Log($"Attempting to load position for racer: {data.racerName}");
+                RacerData savedData = playerData.racerPositions.Find(p => p.racerName == data.racerName);
+                if (savedData != null)
+                {
+                    data.previousRacePosition = savedData.previousRacePosition;
+                    data.defaultRacePosition = savedData.defaultRacePosition;
+                    //Debug.Log($"Loaded position: {data.previousRacePosition} for racer: {data.racerName}");
+                }
+                else
+                {
+                    data.previousRacePosition = data.defaultRacePosition;
+                    //Debug.Log($"No saved position found for racer: {data.racerName}. Using default position: {data.defaultRacePosition}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"No RacerComponent found on {racer.name}");
+            }
+        }
+    }
+    
+
+
 }
 

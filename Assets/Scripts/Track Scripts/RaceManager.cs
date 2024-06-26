@@ -6,9 +6,13 @@ public class RaceManager : MonoBehaviour
     private CheckpointManager checkpointManager;
     public List<GameObject> racers;
 
+    public RaceInitializer raceInitializer;
+    //public GameManager gameManager;
+
     private void Start()
     {
         checkpointManager = CheckpointManager.Instance;
+        //raceInitializer.InitializeStartingPositions();
     }
 
     private void Update()
@@ -65,5 +69,11 @@ public class RaceManager : MonoBehaviour
         int virtualCheckpointIndex = lapCount * totalCheckpoints + checkpointIndex;
 
         return virtualCheckpointIndex;
+    }
+
+    public void FinishRace()
+    {
+        // Assuming the racers list is sorted by their final positions
+        raceInitializer.SaveRaceResults(racers);
     }
 }

@@ -12,10 +12,15 @@ public class RaceCompletion : MonoBehaviour
 
     private CheckpointManager checkpointManager;
 
+    public RaceManager raceManager;
+
+    public Collider finishCollider;
+
     void Start()
     {
         checkpointManager = CheckpointManager.Instance;
         finishRace = false;
+        
         SwitchToCamera(playerCamera);
     }
 
@@ -39,10 +44,12 @@ public class RaceCompletion : MonoBehaviour
             SwitchToCamera(finishCamera);
             finishRace = true;
             FindObjectOfType<RaceStatsHUD>().FreezeRaceStats();
+            RemoveCollider();
+            raceManager.FinishRace();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) //this updates even tho the race is completed. needs to happen only once
     {
         if (other.CompareTag("Player"))
         {
@@ -50,5 +57,10 @@ public class RaceCompletion : MonoBehaviour
             CheckRaceCompletion(other.gameObject);
             
         }
+    }
+
+    private void RemoveCollider()
+    {
+        finishCollider.enabled = false;
     }
 }
