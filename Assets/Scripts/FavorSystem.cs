@@ -5,13 +5,13 @@ using UnityEngine;
 public class FavorSystem : MonoBehaviour
 {
     private PlayerData playerData;
-    private SavePlayerData savePlayerData;
+    //private SavePlayerData savePlayerData;
     private Paparazzi currentPaparazzi;
 
     public void Setup(PlayerData data)
     {
         playerData = data;
-        savePlayerData = FindObjectOfType<SavePlayerData>();
+        //savePlayerData = FindObjectOfType<SavePlayerData>();
     }
 
     public void SetCurrentPaparazzi(string paparazziName)
@@ -46,10 +46,13 @@ public class FavorSystem : MonoBehaviour
 
     private void SaveFavorPoints()
     {
-        if (savePlayerData != null)
+        /*if (savePlayerData != null)
         {
-            savePlayerData.SavePlayerDataToFile();
-        }
+            //savePlayerData.SavePlayerDataToFile();
+            
+        }*/
+
+        PersistenceManager.Instance.SaveGame();
     }
 }
 

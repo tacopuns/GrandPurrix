@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 
     public PreRaceHandler preRaceHandler;
 
-    public SavePlayerData savePlayerData;
+    //public SavePlayerData savePlayerData;
 
-    public RaceManager raceManager;
+    //public RaceManager raceManager;
 
     public void StartNewRace()
     {

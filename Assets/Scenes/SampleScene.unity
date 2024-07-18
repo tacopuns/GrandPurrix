@@ -837,6 +837,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &46737525
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 46737527}
+  - component: {fileID: 46737526}
+  m_Layer: 0
+  m_Name: Data Persistence
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &46737526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46737525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791807f0a2c05204d849000c1fcd73be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &46737527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46737525}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -375.38776, y: -56.472694, z: -77.1557}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &51541598
 GameObject:
   m_ObjectHideFlags: 0
@@ -6747,16 +6791,16 @@ MonoBehaviour:
     - name: miss paparatti
       favorPoints: 0
     racerPositions:
-    - racerName: Plant
+    - racerName: PLANT
       previousRacePosition: 3
       defaultRacePosition: 3
-    - racerName: McTrucker
+    - racerName: MCTRUCKER
       previousRacePosition: 0
       defaultRacePosition: 0
-    - racerName: Glorp
+    - racerName: GLORP
       previousRacePosition: 1
       defaultRacePosition: 1
-    - racerName: Kitty
+    - racerName: KITTY
       previousRacePosition: 2
       defaultRacePosition: 2
   favorSystem: {fileID: 1361724036}
@@ -6769,11 +6813,11 @@ Transform:
   m_GameObject: {fileID: 406392140}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -792.844, y: -549.7639, z: -6.66565}
+  m_LocalPosition: {x: -399.83084, y: 5.6220093, z: -8.16332}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1921960871}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &406917298
 GameObject:
@@ -19324,6 +19368,123 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633908000}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &635082735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 635082736}
+  - component: {fileID: 635082737}
+  - component: {fileID: 635082739}
+  - component: {fileID: 635082738}
+  - component: {fileID: 635082740}
+  m_Layer: 5
+  m_Name: Standings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &635082736
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635082735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 877943873}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &635082737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635082735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a59267cf97081224dbcec636fb0b65d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resultsPanel: {fileID: 635082735}
+  racerStandingPrefab: {fileID: 4057541906354422908, guid: c9a47b2e4705d554a872c5daf7119b3b, type: 3}
+--- !u!114 &635082738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635082735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.754717, g: 0.754717, b: 0.754717, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 7c24b068f90e3c041a149e9ab8211511, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &635082739
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635082735}
+  m_CullTransparentMesh: 1
+--- !u!114 &635082740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635082735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: -600
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 3
+  m_Spacing: -900
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &636570709
 GameObject:
   m_ObjectHideFlags: 0
@@ -20567,6 +20728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b500531f5e4ff374fa9d77655400da5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SceneA: 1
+  SceneB: 2
 --- !u!114 &706453091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39973,6 +40136,7 @@ RectTransform:
   m_Children:
   - {fileID: 1629826009}
   - {fileID: 883589776}
+  - {fileID: 635082736}
   m_Father: {fileID: 45322264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -39996,6 +40160,7 @@ MonoBehaviour:
   gameoverText: {fileID: 883589777}
   toResultsBtn: {fileID: 1511873359}
   endPanel: {fileID: 1550984411}
+  standingsManager: {fileID: 635082737}
 --- !u!1 &880866706
 GameObject:
   m_ObjectHideFlags: 0
@@ -48362,8 +48527,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raceInitializer: {fileID: 1511431127}
   preRaceHandler: {fileID: 1874580261}
-  savePlayerData: {fileID: 406392141}
-  raceManager: {fileID: 1307089630}
 --- !u!1 &1345694426
 GameObject:
   m_ObjectHideFlags: 0
@@ -49589,8 +49752,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 406392141}
-        m_TargetAssemblyTypeName: SavePlayerData, Assembly-CSharp
+      - m_Target: {fileID: 46737526}
+        m_TargetAssemblyTypeName: PersistenceManager, Assembly-CSharp
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -50682,7 +50845,6 @@ MonoBehaviour:
   - {fileID: 947168645}
   - {fileID: 1527494950}
   - {fileID: 384797933}
-  savePlayerData: {fileID: 406392141}
 --- !u!4 &1511431128
 Transform:
   m_ObjectHideFlags: 0
@@ -50783,8 +50945,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 406392141}
-        m_TargetAssemblyTypeName: SavePlayerData, Assembly-CSharp
+      - m_Target: {fileID: 46737526}
+        m_TargetAssemblyTypeName: PersistenceManager, Assembly-CSharp
         m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
@@ -50795,9 +50957,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 694892777}
-        m_TargetAssemblyTypeName: SceneHandler, Assembly-CSharp
-        m_MethodName: RestartScene
+      - m_Target: {fileID: 635082735}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 877943874}
+        m_TargetAssemblyTypeName: RaceFinishUI, Assembly-CSharp
+        m_MethodName: ShowStandings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -50805,7 +50979,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1511873360
 MonoBehaviour:
@@ -53737,8 +53911,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 406392141}
-        m_TargetAssemblyTypeName: SavePlayerData, Assembly-CSharp
+      - m_Target: {fileID: 46737526}
+        m_TargetAssemblyTypeName: PersistenceManager, Assembly-CSharp
         m_MethodName: LoadGame
         m_Mode: 1
         m_Arguments:
@@ -77813,7 +77987,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 406392142}
   - {fileID: 1361724035}
   - {fileID: 1511431128}
   - {fileID: 1343056998}
@@ -83620,8 +83793,10 @@ SceneRoots:
   - {fileID: 45322264}
   - {fileID: 1119383069}
   - {fileID: 558076768}
+  - {fileID: 406392142}
   - {fileID: 1921960871}
   - {fileID: 1049566478}
   - {fileID: 962220628}
   - {fileID: 1960015877}
   - {fileID: 934282581}
+  - {fileID: 46737527}

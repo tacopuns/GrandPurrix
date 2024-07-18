@@ -5,6 +5,8 @@ using System.IO;
 
 public class SavePlayerData : MonoBehaviour
 {
+    public static SavePlayerData Instance;
+    
     public PlayerData playerData;
     string saveFilePath;
     public FavorSystem favorSystem;
@@ -12,6 +14,16 @@ public class SavePlayerData : MonoBehaviour
 
     void Awake()
     {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+
         saveFilePath = Application.persistentDataPath + "/PlayerData.json";
 
         favorSystem = FindObjectOfType<FavorSystem>();
@@ -79,10 +91,10 @@ public class SavePlayerData : MonoBehaviour
             File.Delete(saveFilePath);
             Debug.Log("Save file DELETED!");
 
-            // Re-initialize player data after deletion
+            
             InitializePlayerData();
 
-            // Optionally save the reset state immediately
+            
             //SaveGame();
         }
         else

@@ -8,7 +8,7 @@ public class RaceInitializer : MonoBehaviour
     private Dictionary<GameObject, int> previousRaceResults;
     private RaceManager raceManager;
 
-    public SavePlayerData savePlayerData;
+    //public SavePlayerData savePlayerData;
 
     void Awake()
     {
@@ -18,7 +18,7 @@ public class RaceInitializer : MonoBehaviour
 
         //InitializeStartingPositions();
 
-        savePlayerData = FindObjectOfType<SavePlayerData>();
+        //savePlayerData = FindObjectOfType<SavePlayerData>();
 
         
     }
@@ -26,16 +26,16 @@ public class RaceInitializer : MonoBehaviour
     public void InitializeStartingPositions()
     {
         
-        
-        // Get the list of racers from RaceManager
         List<GameObject> racers = raceManager.racers;
         
-        savePlayerData.LoadRacerPositions(raceManager.racers);
+        //savePlayerData.LoadRacerPositions(raceManager.racers);
 
-        // Sort racers based on previous race results
+        PersistenceManager.Instance.LoadRacerPositions(racers);
+
+        
         //racers.Sort(CompareRacersByPreviousResult);
 
-        // Sort racers based on previous race positions
+       
         raceManager.racers.Sort((r1, r2) => 
         {
             RacerComponent data1 = r1.GetComponent<RacerComponent>();
@@ -43,7 +43,7 @@ public class RaceInitializer : MonoBehaviour
             return data1.previousRacePosition.CompareTo(data2.previousRacePosition);
         });
 
-        // Assign racers to starting positions
+        
         /*for (int i = 0; i < racers.Count; i++)
         {
             racers[i].transform.position = startingPositions[i].position;
@@ -57,7 +57,7 @@ public class RaceInitializer : MonoBehaviour
             racer.transform.position = startPos.position;
             racer.transform.rotation = startPos.rotation;
 
-            // Debug log to show which racer is assigned to which position
+            
             Debug.Log($"Racer {racer.name} is assigned to position {i}");
         }
 
@@ -80,7 +80,7 @@ public class RaceInitializer : MonoBehaviour
 
         List<GameObject> racers = raceManager.racers;
 
-        // Sort racers by current race position (first, second, etc.)
+        
         racers.Sort(raceManager.CompareRacers);
 
         for (int i = 0; i < racers.Count; i++)
@@ -90,23 +90,25 @@ public class RaceInitializer : MonoBehaviour
 
             if (data != null)
             {
-                data.previousRacePosition = i; //+ 1; // Save the finishing position
-                // Debug log to show which position was saved for which racer
+                data.previousRacePosition = i; //+ 1;
+                
                 Debug.Log($"Racer {racer.name} finished in position {i}");
             }
         }
 
-        savePlayerData.SaveRacerPositions(raceManager.racers);
+        //savePlayerData.SaveRacerPositions(raceManager.racers);
+
+        PersistenceManager.Instance.SaveRacerPositions(racers);
     }
 
     public void ResetRaceData()
     {
         /*previousRaceResults.Clear();
 
-        // Get the list of racers from RaceManager
+        
         List<GameObject> racers = raceManager.racers;
 
-        // Set default positions, e.g., player last
+        
         for (int i = 0; i < racers.Count; i++)
         {
             if (racers[i].tag == "Player")
@@ -132,7 +134,9 @@ public class RaceInitializer : MonoBehaviour
             }
         }
         
-        savePlayerData.SaveRacerPositions(racers);
+        //savePlayerData.SaveRacerPositions(racers);
+
+        PersistenceManager.Instance.SaveRacerPositions(racers);
     }
 
     private int CompareRacersByPreviousResult(GameObject racer1, GameObject racer2)
@@ -141,7 +145,7 @@ public class RaceInitializer : MonoBehaviour
         int result2 = previousRaceResults.ContainsKey(racer2) ? previousRaceResults[racer2] : raceManager.racers.Count;
         return result1.CompareTo(result2);*/
 
-        // Assume that each racer has a unique identifier and race result data stored
+        
         RacerComponent data1 = racer1.GetComponent<RacerComponent>();
         RacerComponent data2 = racer2.GetComponent<RacerComponent>();
 
@@ -150,6 +154,6 @@ public class RaceInitializer : MonoBehaviour
             return data1.previousRacePosition.CompareTo(data2.previousRacePosition);
         }
 
-        return 0; // If no data is found, consider them equal
+        return 0;
     }
 }
