@@ -22,20 +22,28 @@ public class CarController : MonoBehaviour
     private float accelerationRate;
     public float maxSpeed = 260f;
 
-    [SerializeField]
+    
     private float accelerationTimer = 0.0f;
+    [SerializeField]
     private float accelerationTime = 2.0f; //time needed to reach max speed
 
     private bool isDrifting = false;
     //private float driftDuration = 2.0f;
     private float driftTimer = 0.0f;
 
-    public ParticleSystem driftXF;
-    public GameObject skidXF;
+    private ParticleSystem driftXF;
+    private GameObject skidXF;
     
     private bool isBoosting = false;
-    public float boostForce = 50;
-    public float boostStrength = 100f;
+    private float boostForce = 50;
+    private float boostStrength = 100f;
+
+    public List<WheelMove> wheels = new List<WheelMove>();
+
+    public List<WheelMove> steeringWheels = new List<WheelMove>();
+    public List<WheelMove> drivingWheels = new List<WheelMove>();
+
+    public Vector3 centerOfMass;
     
     private InputActionAsset inputAsset;
     private InputActionMap gameplay;
@@ -44,7 +52,7 @@ public class CarController : MonoBehaviour
     private InputAction Drift;
 
     private CheckpointManager checkpointManager;
-    public int currentCheckpointIndex = 0;
+    private int currentCheckpointIndex = 0;
     
 
     
@@ -81,8 +89,9 @@ public class CarController : MonoBehaviour
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
 
-        driftXF = GetComponentInChildren<ParticleSystem>();
-        skidXF.SetActive(false);
+        //driftXF = GetComponentInChildren<ParticleSystem>();
+        //skidXF.SetActive(false);
+        StartWheelMove();
     }
 
     void Update()
@@ -136,6 +145,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        
         grounded = false;
         RaycastHit hit;
 
@@ -166,9 +176,11 @@ public class CarController : MonoBehaviour
 
         //UpdateDriftBoost();
         if (isDrifting)
-    {
-        PowerSlide();
-    }
+        {
+            PowerSlide();
+        }
+
+        DoWheelMove();
     }
 
 
@@ -179,7 +191,7 @@ public class CarController : MonoBehaviour
             isDrifting = true;
             driftTimer = 0f;
 
-            PlayDriftEffects();
+            //PlayDriftEffects();
         }
         else
         {
@@ -194,7 +206,7 @@ public class CarController : MonoBehaviour
         driftTimer = 0f;
         turnStrength = 40f;
 
-         StopDriftEffects();
+        //StopDriftEffects();
 
         if (isBoosting)
         {
@@ -262,7 +274,7 @@ public class CarController : MonoBehaviour
     } */
 
 
-    public float driftForce = 10f;
+    private float driftForce = 10f;
 
     void PowerSlide()
     {
@@ -300,6 +312,67 @@ public class CarController : MonoBehaviour
         turnStrength = 50f;
 
     }
+
+    void StartWheelMove()
+    {
+        theRB.centerOfMass = centerOfMass;
+
+        foreach (WheelMove wheels in wheels)
+        {
+            if(wheels.canSteer)
+            {
+                steeringWheels.Add(wheels);
+            }
+        }
+        foreach (WheelMove wheels in wheels)
+        {
+            if(wheels.canDrive)
+            {
+                drivingWheels.Add(wheels);
+            }
+        }
+    }
+
+    void DoWheelMove()
+    {
+        float forwardSpeed = Vector3.Dot(transform.forward, theRB.velocity);
+        float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed);
+        
+        float currentMotorTorque = Mathf.Lerp(reverseAccel, 0, speedFactor);
+        float currentSteerRange = Mathf.Lerp(turnStrength, turnStrength / 2, speedFactor);
+        bool isAccelerating = Mathf.Sign(speedInput) == Mathf.Sign(forwardSpeed);
+
+        foreach (WheelMove wheel in drivingWheels)
+        {
+            if (isAccelerating)
+            {
+                wheel.wheelCollider.motorTorque = speedInput * currentMotorTorque;
+                wheel.wheelCollider.brakeTorque = 0;
+                bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+                //wheel.wheelCollider.motorTorque = 0;
+                //wheel.UpdateWheel(isLeftWheel);
+            }
+            else
+            {
+                wheel.wheelCollider.brakeTorque = Mathf.Abs(speedInput) * wheel.wheelCollider.brakeTorque;
+                wheel.wheelCollider.motorTorque = 0;
+            }
+        }
+
+        foreach (WheelMove wheel in wheels)
+        {
+            bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            //wheel.wheelCollider.brakeTorque = 0;
+            wheel.UpdateWheel(isLeftWheel);
+        }
+
+        foreach (WheelMove wheel in steeringWheels)
+        {
+            bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            wheel.wheelCollider.steerAngle = turnInput * currentSteerRange;
+            //wheel.UpdateWheel(isLeftWheel);
+        }
+    } 
 
         
         

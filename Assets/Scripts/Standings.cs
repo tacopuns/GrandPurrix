@@ -12,10 +12,10 @@ public class Standings : MonoBehaviour
     public void PopulateResults(List<RacerData> racerDataList)
     {
 
-        foreach (Transform child in resultsPanel.transform)
+        /*foreach (Transform child in resultsPanel.transform)
         {
             Destroy(child.gameObject);
-        }
+        }*/
 
         
         racerDataList.Sort((r1, r2) => r1.previousRacePosition.CompareTo(r2.previousRacePosition));
