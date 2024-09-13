@@ -94,6 +94,7 @@ public class RaceFinishUI : MonoBehaviour
         }
 
         standingsManager.PopulateResults(racerDataList);
+        standingsManager.PopulateTopThreeBanners(racerDataList);
     }
     
 }

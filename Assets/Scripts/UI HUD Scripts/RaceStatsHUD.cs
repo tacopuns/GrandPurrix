@@ -372,7 +372,7 @@ public class RaceStatsHUD : MonoBehaviour
     public TextMeshProUGUI currentLapText;
     public TextMeshProUGUI lapTimeText;
     public TextMeshProUGUI lapTimesListText;
-    public TextMeshProUGUI racerPositionsText;
+    //public TextMeshProUGUI racerPositionsText;
     public TextMeshProUGUI playerPositionText;
 
     public float popScale = 1.2f;
@@ -455,7 +455,7 @@ public class RaceStatsHUD : MonoBehaviour
                 positionsListText += $"Position {i + 1}: {racers[i].name}\n";
             }
 
-            racerPositionsText.text = positionsListText;
+            //racerPositionsText.text = positionsListText;
         }
     }
 
