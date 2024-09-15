@@ -365,6 +365,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System;
 
 public class RaceStatsHUD : MonoBehaviour
 {
@@ -397,13 +398,18 @@ public class RaceStatsHUD : MonoBehaviour
         raceManager = FindObjectOfType<RaceManager>();
 
         previousLapCount = checkpointManager.GetLapCount(playerObject); 
+
+        raceTime = 0;
     }
 
     void Update()
     {
         if (!raceFrozen)
         {
-            raceTime = Time.time;
+            raceTime = raceTime + Time.deltaTime;
+            
+            TimeSpan time = TimeSpan.FromSeconds(raceTime);
+
             totalRaceTime.text = RaceTimeFormat(raceTime);
 
             int currentLap = checkpointManager.GetLapCount(playerObject);
