@@ -31,8 +31,8 @@ public class CarController : MonoBehaviour
     //private float driftDuration = 2.0f;
     private float driftTimer = 0.0f;
 
-    private ParticleSystem driftXF;
-    private GameObject skidXF;
+    //private ParticleSystem driftXF;
+    //private GameObject skidXF;
     
     private bool isBoosting = false;
     private float boostForce = 50;
@@ -54,7 +54,16 @@ public class CarController : MonoBehaviour
     private CheckpointManager checkpointManager;
     private int currentCheckpointIndex = 0;
     
+    public Animator animator;
+    int dL = 0;
+    int dR = 0;
 
+    public bool isSteering = false;
+    public bool canDrift = false;
+
+
+    public WheelCollider leftWheel;
+    public WheelCollider rightWheel;
     
     private void Awake()
     {
@@ -84,7 +93,7 @@ public class CarController : MonoBehaviour
     
     void Start()
     {
-        theRB.transform.parent = null;
+        //theRB.transform.parent = null;
 
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
@@ -92,6 +101,10 @@ public class CarController : MonoBehaviour
         //driftXF = GetComponentInChildren<ParticleSystem>();
         //skidXF.SetActive(false);
         StartWheelMove();
+        //animator = GetComponent<Animator>();
+
+        animator = GetComponentInChildren<Animator>();
+        animator.enabled = true;
     }
 
     void Update()
@@ -140,7 +153,8 @@ public class CarController : MonoBehaviour
             currentCheckpointIndex++;
         }
 
-        
+        animator.SetInteger("driftL",dL);
+        animator.SetInteger("driftR",dR);
     }
 
     private void FixedUpdate() 
@@ -153,6 +167,15 @@ public class CarController : MonoBehaviour
         {
             grounded = true;
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * turnStrength * Time.deltaTime, 0f));
+                if (turnInput < -0.1f || turnInput > 0.1f)
+                {
+                    isSteering = true;
+                    DriftEnable();
+                }
+                else
+                {
+                    isSteering = false;
+                }
         
             Quaternion newRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
             transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, 100f);
@@ -184,15 +207,30 @@ public class CarController : MonoBehaviour
     }
 
 
+    private void DriftEnable()
+    {
+    
+        if(currentSpeed > 20f)
+        {
+            canDrift = true;
+        }
+        
+    }
+
     private void StartDrift()
     {
-        if (currentSpeed > 20f && (turnInput < -0.1f || turnInput > 0.1f))
+        if (canDrift)
+        {
+            isDrifting = true;
+        }
+
+        /*if (currentSpeed > 20f && (turnInput < -0.1f || turnInput > 0.1f))
         {
             isDrifting = true;
             driftTimer = 0f;
 
             //PlayDriftEffects();
-        }
+        }*/
         else
         {
             StopDrift();
@@ -200,11 +238,18 @@ public class CarController : MonoBehaviour
 
     }
 
+
     private void StopDrift()
     {
         isDrifting = false;
         driftTimer = 0f;
-        turnStrength = 40f;
+        turnStrength = 20f;
+        dL = 0;
+        dR = 0;
+        
+        ResetDriftFriction(leftWheel);
+        ResetDriftFriction(rightWheel);
+        
 
         //StopDriftEffects();
 
@@ -216,31 +261,31 @@ public class CarController : MonoBehaviour
 
     }
 
-    private void PlayDriftEffects()
-{
-    if (!driftXF.isPlaying)
+    /*private void PlayDriftEffects()
     {
-        driftXF.Play();
-    }
+        if (!driftXF.isPlaying)
+        {
+            driftXF.Play();
+        }
 
-    if (!skidXF.activeSelf)
-    {
-        skidXF.SetActive(true);
+        if (!skidXF.activeSelf)
+        {
+            skidXF.SetActive(true);
+        }
     }
-}
 
     private void StopDriftEffects()
-{
-    if (driftXF.isPlaying)
     {
-        driftXF.Stop();
-    }
+        if (driftXF.isPlaying)
+        {
+            driftXF.Stop();
+        }
 
-    if (skidXF.activeSelf)
-    {
-        skidXF.SetActive(false);
-    }
-}
+        if (skidXF.activeSelf)
+        {
+            skidXF.SetActive(false);
+        }
+    }*/
 
     /*void UpdateDriftBoost()
     {
@@ -282,6 +327,8 @@ public class CarController : MonoBehaviour
             if (turnInput < 0)
             {
                 ApplyLeftDriftForce();
+                dL = 1;
+                dR = 0;
 
                 
             }
@@ -289,28 +336,42 @@ public class CarController : MonoBehaviour
             {
                 
                 ApplyRightDriftForce();
+                dL = 0;
+                dR = 1;
 
                
             }
             else
             {
                 StopDrift();
+                dL = 0;
+                dR = 0;
             }
         
     }
+    
+    
+
     
 
     void ApplyLeftDriftForce()
     {
         theRB.AddForce(-transform.right * driftForce, ForceMode.Acceleration);
-        turnStrength = 50f;
+        turnStrength = 25f;
+
+        
+        ApplyDriftFriction(leftWheel);
     }
 
     void ApplyRightDriftForce()
     {
         theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
-        turnStrength = 50f;
-
+        turnStrength = 25f;
+        
+        
+    
+        ApplyDriftFriction(rightWheel);
+        
     }
 
     void StartWheelMove()
@@ -374,7 +435,37 @@ public class CarController : MonoBehaviour
         }
     } 
 
-        
-        
+    
+    void ApplyDriftFriction(WheelCollider wheel)
+    {
+        if (wheel.GetGroundHit(out var hit))
+        {
+            wheel.forwardFriction = UpdateFriction(wheel.forwardFriction);
+            wheel.sidewaysFriction = UpdateFriction(wheel.sidewaysFriction);
+        }
+    }
+
+    WheelFrictionCurve UpdateFriction(WheelFrictionCurve friction) 
+    {
+        friction.stiffness = 10f;
+        //friction.
+        return friction;
+    }
+
+    WheelFrictionCurve DefaultFriction (WheelFrictionCurve friction) 
+    {
+        friction.stiffness = 1f;
+        //friction.
+        return friction;
+    }
+    
+    public WheelFrictionCurve originalForwardFriction;
+    public WheelFrictionCurve originalSidewaysFriction;
+    
+    void ResetDriftFriction(WheelCollider wheel)
+    {
+        wheel.forwardFriction = DefaultFriction(wheel.forwardFriction);
+        wheel.sidewaysFriction = DefaultFriction(wheel.sidewaysFriction);
+    }
 
 }
