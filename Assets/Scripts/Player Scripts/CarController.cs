@@ -7,7 +7,7 @@ public class CarController : MonoBehaviour
 {
     public Rigidbody theRB;
 
-    public float reverseAccel = 50f, turnStrength = 20f, gravityForce = 10f, dragOnGround = 7f;
+    public float reverseAccel = 50f, turnStrength = 15f, gravityForce = 10f, dragOnGround = 7f;
     
     public LayerMask whatIsGround; //anything set as ground, the car will be able to move on
     private float groundRayLength = .5f;
@@ -43,7 +43,7 @@ public class CarController : MonoBehaviour
     public List<WheelMove> steeringWheels = new List<WheelMove>();
     public List<WheelMove> drivingWheels = new List<WheelMove>();
 
-    public Vector3 centerOfMass;
+    private Vector3 centerOfMass;
     
     private InputActionAsset inputAsset;
     private InputActionMap gameplay;
@@ -175,6 +175,7 @@ public class CarController : MonoBehaviour
                 else
                 {
                     isSteering = false;
+                    canDrift = false;
                 }
         
             Quaternion newRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
@@ -243,7 +244,7 @@ public class CarController : MonoBehaviour
     {
         isDrifting = false;
         driftTimer = 0f;
-        turnStrength = 20f;
+        turnStrength = 15f;
         dL = 0;
         dR = 0;
         
@@ -357,7 +358,7 @@ public class CarController : MonoBehaviour
     void ApplyLeftDriftForce()
     {
         theRB.AddForce(-transform.right * driftForce, ForceMode.Acceleration);
-        turnStrength = 25f;
+        turnStrength = 7f;
 
         
         ApplyDriftFriction(leftWheel);
@@ -366,7 +367,7 @@ public class CarController : MonoBehaviour
     void ApplyRightDriftForce()
     {
         theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
-        turnStrength = 25f;
+        turnStrength = 7f;
         
         
     
@@ -409,7 +410,7 @@ public class CarController : MonoBehaviour
             {
                 wheel.wheelCollider.motorTorque = speedInput * currentMotorTorque;
                 wheel.wheelCollider.brakeTorque = 0;
-                bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+                //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
                 //wheel.wheelCollider.motorTorque = 0;
                 //wheel.UpdateWheel(isLeftWheel);
             }
@@ -422,14 +423,14 @@ public class CarController : MonoBehaviour
 
         foreach (WheelMove wheel in wheels)
         {
-            bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
             //wheel.wheelCollider.brakeTorque = 0;
-            wheel.UpdateWheel(isLeftWheel);
+            wheel.UpdateWheel();
         }
 
         foreach (WheelMove wheel in steeringWheels)
         {
-            bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
             wheel.wheelCollider.steerAngle = turnInput * currentSteerRange;
             //wheel.UpdateWheel(isLeftWheel);
         }

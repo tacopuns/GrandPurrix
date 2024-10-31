@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ship glass
+  m_Name: cadallic glass
   m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -27,8 +27,7 @@ Material:
   stringTagMap:
     IgnoreProjection: False
     RenderType: TransparentCutout
-  disabledShaderPasses:
-  - ALWAYS
+  disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -225,7 +224,7 @@ Material:
     m_Floats:
     - _1st2nd_Shades_Feather: 0.0001
     - _1st_ShadeColor_Feather: 0.0001
-    - _1st_ShadeColor_Step: 0.371
+    - _1st_ShadeColor_Step: 0.332
     - _2nd_ShadeColor_Feather: 0.0001
     - _2nd_ShadeColor_Step: 0
     - _AORemapMax: 1
@@ -255,7 +254,7 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.371
+    - _BaseColor_Step: 0.332
     - _BaseShade_Feather: 0.0001
     - _Base_Speed: 0
     - _BlendMode: 0
@@ -266,11 +265,11 @@ Material:
     - _CameraRolling_Stabilizer: 0
     - _ClippingMatteMode: 0
     - _ClippingMode: 2
-    - _Clipping_Level: 0
+    - _Clipping_Level: 0.177
     - _CoatMask: 0
     - _ColorShift_Speed: 0
     - _ComposerMaskMode: 0
-    - _CullMode: 1
+    - _CullMode: 0
     - _CullModeForward: 2
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
@@ -325,7 +324,7 @@ Material:
     - _HeightPoMAmplitude: 2
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
-    - _HighColor_Power: 0
+    - _HighColor_Power: 0.699
     - _HighlightOverridden: 0
     - _HighlightVisible: 1
     - _InvTilingScale: 1
@@ -338,7 +337,7 @@ Material:
     - _IsBaseMapAlphaAsClippingMask: 0
     - _Is_BLD: 0
     - _Is_BakedNormal: 0
-    - _Is_BlendAddToHiColor: 0
+    - _Is_BlendAddToHiColor: 1
     - _Is_BlendAddToMatCap: 1
     - _Is_BlendBaseColor: 0
     - _Is_ColorShift: 0
@@ -360,7 +359,7 @@ Material:
     - _Is_Ortho: 0
     - _Is_OutlineTex: 0
     - _Is_PingPong_Base: 0
-    - _Is_SpecularToHighColor: 0
+    - _Is_SpecularToHighColor: 1
     - _Is_UseTweakHighColorOnShadow: 1
     - _Is_UseTweakMatCapOnShadow: 0
     - _Is_ViewCoord_Scroll: 0
@@ -451,16 +450,16 @@ Material:
     - _TransparentSortPriority: 0
     - _TransparentWritingMotionVec: 0
     - _TransparentZWrite: 0
-    - _TweakHighColorOnShadow: 0
+    - _TweakHighColorOnShadow: 0.459
     - _TweakMatCapOnShadow: 0
-    - _Tweak_HighColorMaskLevel: -1
+    - _Tweak_HighColorMaskLevel: -0.14
     - _Tweak_LightDirection_MaskLevel: 0
     - _Tweak_MatCapUV: 0
     - _Tweak_MatcapMaskLevel: 0
     - _Tweak_RimLightMaskLevel: 0
     - _Tweak_ShadingGradeMapLevel: 0
     - _Tweak_SystemShadowsLevel: 0
-    - _Tweak_transparency: -0.16
+    - _Tweak_transparency: -0.08
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
@@ -484,15 +483,15 @@ Material:
     - _utsVersionY: 9
     - _utsVersionZ: 5
     m_Colors:
-    - _1st_ShadeColor: {r: 0.39515838, g: 0.48586202, b: 0.9433962, a: 1}
-    - _2nd_ShadeColor: {r: 0.77791893, g: 0.63584906, b: 1, a: 1}
+    - _1st_ShadeColor: {r: 0.7887148, g: 0.990566, b: 0.9693185, a: 1}
+    - _2nd_ShadeColor: {r: 0.17522249, g: 0.8679245, b: 0.84306765, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.3622641, g: 0.5896356, b: 1, a: 1}
+    - _BaseColor: {r: 0.61698115, g: 1, b: 0.96014154, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.3622641, g: 0.5896356, b: 1, a: 1}
+    - _Color: {r: 0.61698115, g: 1, b: 0.96014154, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

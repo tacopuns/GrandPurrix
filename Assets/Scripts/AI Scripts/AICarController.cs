@@ -36,6 +36,13 @@ public class AICarController : MonoBehaviour
     
     //private Alpha_2D_Character_In_3D_World SpriteAnim;
 
+    public List<WheelMove> wheels = new List<WheelMove>();
+
+    public List<WheelMove> steeringWheels = new List<WheelMove>();
+    public List<WheelMove> drivingWheels = new List<WheelMove>();
+
+    private Vector3 centerOfMass;
+
 
 
 
@@ -48,6 +55,8 @@ public class AICarController : MonoBehaviour
 
         checkpointManager = CheckpointManager.Instance;
         currentCheckpointIndex = checkpointManager.GetLastPassedCheckpointIndex(gameObject);
+
+        StartWheelMove();
 
         //SpriteAnim = GetComponent<Alpha_2D_Character_In_3D_World>();
     }
@@ -113,6 +122,8 @@ public class AICarController : MonoBehaviour
             MoveTowardsWaypoint();
             AvoidObstacles();
         }
+
+        DoWheelMove();
     }
 
     void MoveTowardsWaypoint()
@@ -224,5 +235,65 @@ public class AICarController : MonoBehaviour
 
 
 
+    void StartWheelMove()
+    {
+        aiRB.centerOfMass = centerOfMass;
+
+        foreach (WheelMove wheels in wheels)
+        {
+            if(wheels.canSteer)
+            {
+                steeringWheels.Add(wheels);
+            }
+        }
+        foreach (WheelMove wheels in wheels)
+        {
+            if(wheels.canDrive)
+            {
+                drivingWheels.Add(wheels);
+            }
+        }
+    }
+
+    void DoWheelMove()
+    {
+        float forwardSpeed = Vector3.Dot(transform.forward, aiRB.velocity);
+        float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed);
+        
+        float currentMotorTorque = Mathf.Lerp(cpuSpeed, 0, speedFactor);
+        float currentSteerRange = Mathf.Lerp(rotationSpeed, rotationSpeed / 2, speedFactor);
+        bool isAccelerating = Mathf.Sign(cpuSpeed) == Mathf.Sign(forwardSpeed);
+
+        foreach (WheelMove wheel in drivingWheels)
+        {
+            if (isAccelerating)
+            {
+                wheel.wheelCollider.motorTorque = cpuSpeed * currentMotorTorque;
+                wheel.wheelCollider.brakeTorque = 0;
+                //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+                //wheel.wheelCollider.motorTorque = 0;
+                //wheel.UpdateWheel(isLeftWheel);
+            }
+            else
+            {
+                wheel.wheelCollider.brakeTorque = Mathf.Abs(cpuSpeed) * wheel.wheelCollider.brakeTorque;
+                wheel.wheelCollider.motorTorque = 0;
+            }
+        }
+
+        foreach (WheelMove wheel in wheels)
+        {
+            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            //wheel.wheelCollider.brakeTorque = 0;
+            wheel.UpdateWheel();
+        }
+
+        foreach (WheelMove wheel in steeringWheels)
+        {
+            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            wheel.wheelCollider.steerAngle = rotationSpeed * currentSteerRange;
+            //wheel.UpdateWheel(isLeftWheel);
+        }
+    } 
 
 }

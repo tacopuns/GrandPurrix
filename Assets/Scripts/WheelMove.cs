@@ -12,7 +12,7 @@ public class WheelMove
 
     //public bool isLeftWheel;
 
-    public void UpdateWheel(bool isLeftWheel)
+    public void UpdateWheel()
     {
         Vector3 position;
         Quaternion rotation;
@@ -22,7 +22,7 @@ public class WheelMove
         wheelMesh.rotation = rotation;
 
         // Apply rotation correction based on whether the wheel is on the left or right
-        if (isLeftWheel)
+        /*if (isLeftWheel)
         {
             // Adjust for left wheels
             wheelMesh.Rotate(new Vector3(0f, -90f, 0f));
@@ -32,6 +32,6 @@ public class WheelMove
         {
             // Adjust for right wheels
             wheelMesh.Rotate(new Vector3(0f, 90f, 0f));
-        }   
+        } */
     }
 }

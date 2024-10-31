@@ -7,28 +7,25 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ship glass
+  m_Name: pink
   m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _DISABLE_OUTLINE
   - _EMISSIVE_SIMPLE
   - _IS_ANGELRING_OFF
-  - _IS_CLIPPING_TRANSMODE
-  - _IS_OUTLINE_CLIPPING_YES
+  - _IS_CLIPPING_OFF
+  - _IS_OUTLINE_CLIPPING_NO
   - _OUTLINE_NML
-  m_InvalidKeywords:
-  - _ALPHABLEND_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
     IgnoreProjection: False
-    RenderType: TransparentCutout
-  disabledShaderPasses:
-  - ALWAYS
+    RenderType: Opaque
+  disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -225,7 +222,7 @@ Material:
     m_Floats:
     - _1st2nd_Shades_Feather: 0.0001
     - _1st_ShadeColor_Feather: 0.0001
-    - _1st_ShadeColor_Step: 0.371
+    - _1st_ShadeColor_Step: 0.5
     - _2nd_ShadeColor_Feather: 0.0001
     - _2nd_ShadeColor_Step: 0
     - _AORemapMax: 1
@@ -255,7 +252,7 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.371
+    - _BaseColor_Step: 0.5
     - _BaseShade_Feather: 0.0001
     - _Base_Speed: 0
     - _BlendMode: 0
@@ -265,12 +262,12 @@ Material:
     - _BumpScaleMatcap: 1
     - _CameraRolling_Stabilizer: 0
     - _ClippingMatteMode: 0
-    - _ClippingMode: 2
+    - _ClippingMode: 0
     - _Clipping_Level: 0
     - _CoatMask: 0
     - _ColorShift_Speed: 0
     - _ComposerMaskMode: 0
-    - _CullMode: 1
+    - _CullMode: 0
     - _CullModeForward: 2
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
@@ -299,7 +296,7 @@ Material:
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
-    - _DstBlend: 10
+    - _DstBlend: 0
     - _EMISSIVE: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
@@ -361,7 +358,7 @@ Material:
     - _Is_OutlineTex: 0
     - _Is_PingPong_Base: 0
     - _Is_SpecularToHighColor: 0
-    - _Is_UseTweakHighColorOnShadow: 1
+    - _Is_UseTweakHighColorOnShadow: 0
     - _Is_UseTweakMatCapOnShadow: 0
     - _Is_ViewCoord_Scroll: 0
     - _Is_ViewShift: 0
@@ -370,7 +367,7 @@ Material:
     - _MatCap: 0
     - _MaterialID: 1
     - _Metallic: 0
-    - _Mode: 2
+    - _Mode: 0
     - _Nearest_Distance: 0.5
     - _NormalMapSpace: 0
     - _NormalScale: 1
@@ -417,7 +414,7 @@ Material:
     - _SpecularAAThreshold: 0.2
     - _SpecularHighlights: 1
     - _SpecularOcclusionMode: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _StencilComp: 0
     - _StencilMode: 0
     - _StencilNo: 1
@@ -453,14 +450,14 @@ Material:
     - _TransparentZWrite: 0
     - _TweakHighColorOnShadow: 0
     - _TweakMatCapOnShadow: 0
-    - _Tweak_HighColorMaskLevel: -1
+    - _Tweak_HighColorMaskLevel: 0
     - _Tweak_LightDirection_MaskLevel: 0
     - _Tweak_MatCapUV: 0
     - _Tweak_MatcapMaskLevel: 0
     - _Tweak_RimLightMaskLevel: 0
     - _Tweak_ShadingGradeMapLevel: 0
     - _Tweak_SystemShadowsLevel: 0
-    - _Tweak_transparency: -0.16
+    - _Tweak_transparency: 0
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
@@ -475,7 +472,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestModeDistortion: 8
     - _ZTestTransparent: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     - _ZWriteMode: 1
     - _isUnityToonshader: 1
     - _simpleUI: 0
@@ -484,24 +481,24 @@ Material:
     - _utsVersionY: 9
     - _utsVersionZ: 5
     m_Colors:
-    - _1st_ShadeColor: {r: 0.39515838, g: 0.48586202, b: 0.9433962, a: 1}
-    - _2nd_ShadeColor: {r: 0.77791893, g: 0.63584906, b: 1, a: 1}
+    - _1st_ShadeColor: {r: 1, g: 0.5981132, b: 0.95587134, a: 1}
+    - _2nd_ShadeColor: {r: 1, g: 1, b: 1, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 0.3622641, g: 0.5896356, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0.56037736, b: 0.98103577, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.3622641, g: 0.5896356, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.56037736, b: 0.98103577, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
-    - _Emissive_Color: {r: 0.01794841, g: 0.01794841, b: 0.01794841, a: 1}
+    - _Emissive_Color: {r: 0, g: 0, b: 0, a: 1}
     - _FirstShadeMaskColor: {r: 0, g: 1, b: 1, a: 1}
-    - _HighColor: {r: 1, g: 1, b: 1, a: 1}
+    - _HighColor: {r: 0, g: 0, b: 0, a: 1}
     - _HighlightMaskColor: {r: 1, g: 1, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
