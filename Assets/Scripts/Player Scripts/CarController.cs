@@ -64,6 +64,10 @@ public class CarController : MonoBehaviour
 
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
+
+    private float driftForce = 10f;
+
+    private int driftDirection = 0;
     
     private void Awake()
     {
@@ -155,6 +159,8 @@ public class CarController : MonoBehaviour
 
         animator.SetInteger("driftL",dL);
         animator.SetInteger("driftR",dR);
+
+        DriftEnable();
     }
 
     private void FixedUpdate() 
@@ -170,12 +176,12 @@ public class CarController : MonoBehaviour
                 if (turnInput < -0.1f || turnInput > 0.1f)
                 {
                     isSteering = true;
-                    DriftEnable();
+                    
                 }
                 else
                 {
                     isSteering = false;
-                    canDrift = false;
+                    //canDrift = false;
                 }
         
             Quaternion newRotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
@@ -223,6 +229,7 @@ public class CarController : MonoBehaviour
         if (canDrift)
         {
             isDrifting = true;
+            driftDirection = turnInput < 0 ? -1 : 1;
         }
 
         /*if (currentSpeed > 20f && (turnInput < -0.1f || turnInput > 0.1f))
@@ -234,7 +241,7 @@ public class CarController : MonoBehaviour
         }*/
         else
         {
-            StopDrift();
+            //StopDrift();
         }
 
     }
@@ -244,6 +251,7 @@ public class CarController : MonoBehaviour
     {
         isDrifting = false;
         driftTimer = 0f;
+        driftDirection = 0;
         turnStrength = 15f;
         dL = 0;
         dR = 0;
@@ -320,12 +328,28 @@ public class CarController : MonoBehaviour
     } */
 
 
-    private float driftForce = 10f;
+    
 
     void PowerSlide()
     {
 
-            if (turnInput < 0)
+        float dynamicDriftForce = driftForce * Mathf.Abs(turnInput); // Modulate force with turnInput
+
+        if (driftDirection == -1) {
+            theRB.AddForce(-transform.right * dynamicDriftForce, ForceMode.Acceleration);
+            turnStrength = 7f;
+            ApplyDriftFriction(leftWheel);
+            dL = 1;
+            dR = 0;
+        } 
+        else if (driftDirection == 1) {
+            theRB.AddForce(transform.right * dynamicDriftForce, ForceMode.Acceleration);
+            turnStrength = 7f;
+            ApplyDriftFriction(rightWheel);
+            dL = 0;
+            dR = 1;
+
+            /*if (turnInput < 0)
             {
                 ApplyLeftDriftForce();
                 dL = 1;
@@ -347,15 +371,16 @@ public class CarController : MonoBehaviour
                 StopDrift();
                 dL = 0;
                 dR = 0;
-            }
-        
+            }*/
+            
+        }
     }
     
     
 
     
 
-    void ApplyLeftDriftForce()
+    /*void ApplyLeftDriftForce()
     {
         theRB.AddForce(-transform.right * driftForce, ForceMode.Acceleration);
         turnStrength = 7f;
@@ -373,7 +398,7 @@ public class CarController : MonoBehaviour
     
         ApplyDriftFriction(rightWheel);
         
-    }
+    }*/
 
     void StartWheelMove()
     {
