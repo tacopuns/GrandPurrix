@@ -42,6 +42,9 @@ public class AICarController : MonoBehaviour
     public List<WheelMove> drivingWheels = new List<WheelMove>();
 
     private Vector3 centerOfMass;
+    public LayerMask whatIsGround;
+    private bool grounded;
+    public float weightMultiplier;
 
 
 
@@ -123,12 +126,13 @@ public class AICarController : MonoBehaviour
             AvoidObstacles();
         }
 
-        DoWheelMove();
+        //DoWheelMove();
     }
 
     void MoveTowardsWaypoint()
     {
         //SpriteAnim.enabled = true;
+        grounded = false;
 
         Vector3 targetPosition = waypoints[currentWaypointIndex].position;
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
@@ -138,9 +142,10 @@ public class AICarController : MonoBehaviour
         RaycastHit hit;
 
         
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength))
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, whatIsGround))
         {
             
+            grounded = true;
             aiRB.drag = dragOnGround;
 
             Vector3 forwardForce = transform.forward * cpuSpeed * 50f;
@@ -153,11 +158,28 @@ public class AICarController : MonoBehaviour
 
             aiRB.AddForce(forwardForce, ForceMode.Force);
         }
+        
+        if (grounded)
+        {   
+            aiRB.drag = dragOnGround;
+            
+
+            if (Mathf.Abs(currentSpeed) < maxSpeed)
+            {
+                aiRB.AddForce(transform.forward * currentSpeed, ForceMode.Acceleration);
+            }
+        }
         else
+        {
+            aiRB.drag = 0.1f;
+            aiRB.AddForce(Vector3.up * -gravityForce * weightMultiplier);
+        }
+        
+        /*else
         {
             HandleMidAir();
             //SpriteAnim.enabled = true;
-        }
+        }*/
 
         // Waypoint handling
         float distanceToWaypoint = Vector3.Distance(transform.position, targetPosition);
@@ -179,12 +201,16 @@ public class AICarController : MonoBehaviour
         {
             
         }
+
+        DoWheelMove();
     }
+
+    
 
     void HandleMidAir()
     {
         aiRB.drag = 0.1f;
-        aiRB.AddForce(Vector3.up * -gravityForce * 50f);
+        aiRB.AddForce(Vector3.up * -gravityForce * weightMultiplier);
     }   
 
     void AvoidObstacles()
