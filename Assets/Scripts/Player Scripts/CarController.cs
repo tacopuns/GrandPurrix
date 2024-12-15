@@ -479,9 +479,7 @@ public class CarController : MonoBehaviour
             {
                 wheel.wheelCollider.motorTorque = speedInput * currentMotorTorque;
                 wheel.wheelCollider.brakeTorque = 0;
-                //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
-                //wheel.wheelCollider.motorTorque = 0;
-                //wheel.UpdateWheel(isLeftWheel);
+                
             }
             else
             {
@@ -492,16 +490,15 @@ public class CarController : MonoBehaviour
 
         foreach (WheelMove wheel in wheels)
         {
-            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
-            //wheel.wheelCollider.brakeTorque = 0;
+            
             wheel.UpdateWheel();
         }
 
         foreach (WheelMove wheel in steeringWheels)
         {
-            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
+            
             wheel.wheelCollider.steerAngle = turnInput * currentSteerRange;
-            //wheel.UpdateWheel(isLeftWheel);
+            
         }
     } 
 
@@ -537,5 +534,15 @@ public class CarController : MonoBehaviour
         wheel.forwardFriction = DefaultFriction(wheel.forwardFriction);
         wheel.sidewaysFriction = DefaultFriction(wheel.sidewaysFriction);
     }
+
+    /*private void PretendSpeed()
+    {
+        //camera = better cam
+
+        if(currentSpeed > 20)
+        {
+            
+        }
+    }*/
 
 }

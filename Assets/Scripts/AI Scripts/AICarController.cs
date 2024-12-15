@@ -41,10 +41,14 @@ public class AICarController : MonoBehaviour
     public List<WheelMove> steeringWheels = new List<WheelMove>();
     public List<WheelMove> drivingWheels = new List<WheelMove>();
 
-    private Vector3 centerOfMass;
+    public Vector3 centerOfMass;
     public LayerMask whatIsGround;
     private bool grounded;
     public float weightMultiplier;
+
+    private bool isSteering;
+
+    //private Vector3 moveDirection;
 
 
 
@@ -115,7 +119,9 @@ public class AICarController : MonoBehaviour
             }
         }
 
-        Debug.DrawRay(transform.position, waypoints[currentWaypointIndex].position - transform.position, Color.yellow);
+        
+
+        
     }
 
     void FixedUpdate()
@@ -136,6 +142,8 @@ public class AICarController : MonoBehaviour
 
         Vector3 targetPosition = waypoints[currentWaypointIndex].position;
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
+        //Vector3 moveDirection = Vector3.ProjectOnPlane(waypoints[currentWaypointIndex].position - transform.position, transform.up).normalized;
+
         Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
@@ -203,6 +211,7 @@ public class AICarController : MonoBehaviour
         }
 
         DoWheelMove();
+        
     }
 
     
@@ -215,9 +224,9 @@ public class AICarController : MonoBehaviour
 
     void AvoidObstacles()
     {
-        Debug.DrawRay(groundRayPoint.position, transform.forward * obstacleDetectionDistance, Color.red); // Ray in front
-        Debug.DrawRay(groundRayPoint.position, -transform.right * obstacleDetectionDistance / 2, Color.red); // Ray to the left
-        Debug.DrawRay(groundRayPoint.position, transform.right * obstacleDetectionDistance / 2, Color.red); // Ray to the right
+        //Debug.DrawRay(groundRayPoint.position, transform.forward * obstacleDetectionDistance, Color.red); // Ray in front
+        //Debug.DrawRay(groundRayPoint.position, -transform.right * obstacleDetectionDistance / 2, Color.red); // Ray to the left
+        //Debug.DrawRay(groundRayPoint.position, transform.right * obstacleDetectionDistance / 2, Color.red); // Ray to the right
 
         RaycastHit hitFront, hitLeft, hitRight;
 
@@ -263,7 +272,7 @@ public class AICarController : MonoBehaviour
 
     void StartWheelMove()
     {
-        aiRB.centerOfMass = centerOfMass;
+        centerOfMass = aiRB.centerOfMass;
 
         foreach (WheelMove wheels in wheels)
         {
@@ -283,12 +292,21 @@ public class AICarController : MonoBehaviour
 
     void DoWheelMove()
     {
+        
+        
+        Vector3 steerDirection = Vector3.ProjectOnPlane(waypoints[currentWaypointIndex].position - transform.position, transform.up).normalized;
+        float steeringAngle = Vector3.SignedAngle(transform.forward, steerDirection, Vector3.up);
+
+
         float forwardSpeed = Vector3.Dot(transform.forward, aiRB.velocity);
         float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed);
         
         float currentMotorTorque = Mathf.Lerp(cpuSpeed, 0, speedFactor);
-        float currentSteerRange = Mathf.Lerp(rotationSpeed, rotationSpeed / 2, speedFactor);
+        float currentSteerRange = Mathf.Lerp(steeringAngle, rotationSpeed / 2, speedFactor);
         bool isAccelerating = Mathf.Sign(cpuSpeed) == Mathf.Sign(forwardSpeed);
+        
+        float clampedSteeringAngle = Mathf.Clamp(steeringAngle, -40f, 40f);
+
 
         foreach (WheelMove wheel in drivingWheels)
         {
@@ -296,9 +314,7 @@ public class AICarController : MonoBehaviour
             {
                 wheel.wheelCollider.motorTorque = cpuSpeed * currentMotorTorque;
                 wheel.wheelCollider.brakeTorque = 0;
-                //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
-                //wheel.wheelCollider.motorTorque = 0;
-                //wheel.UpdateWheel(isLeftWheel);
+        
             }
             else
             {
@@ -309,17 +325,18 @@ public class AICarController : MonoBehaviour
 
         foreach (WheelMove wheel in wheels)
         {
-            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
-            //wheel.wheelCollider.brakeTorque = 0;
             wheel.UpdateWheel();
         }
 
         foreach (WheelMove wheel in steeringWheels)
         {
-            //bool isLeftWheel = wheel.wheelMesh.localPosition.x < 0;
-            wheel.wheelCollider.steerAngle = rotationSpeed * currentSteerRange;
-            //wheel.UpdateWheel(isLeftWheel);
+            
+            //wheel.wheelCollider.steerAngle = rotationSpeed * currentSteerRange;
+
+            wheel.wheelCollider.steerAngle = clampedSteeringAngle;
+            
         }
-    } 
+    }
+
 
 }

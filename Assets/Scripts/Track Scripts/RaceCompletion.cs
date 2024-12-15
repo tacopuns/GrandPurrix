@@ -16,24 +16,50 @@ public class RaceCompletion : MonoBehaviour
 
     public Collider finishCollider;
 
+    public List<CinemachineVirtualCamera> spectatorCameras;
+    private int currentCameraIndex = -1;
+    public List<Collider> spectatorTriggers;
+
+
+
+
     void Start()
     {
         checkpointManager = CheckpointManager.Instance;
         finishRace = false;
         
-        SwitchToCamera(playerCamera);
+        SwitchToCamera(-1);
     }
 
     
-    private void SwitchToCamera(CinemachineVirtualCamera targetCamera)
+    private void SwitchToCamera(int cameraIndex)
     {
-        /*foreach (CinemachineVirtualCamera camera in virtualCameras)
-        {
-            camera.enabled = camera == targetCamera;
-        }*/
 
-        playerCamera.enabled = targetCamera == playerCamera;
-        finishCamera.enabled = targetCamera == finishCamera;
+        playerCamera.enabled = false;
+        finishCamera.enabled = false;
+        foreach (var cam in spectatorCameras)
+        {
+            cam.enabled = false;
+        }
+
+        // Enable the appropriate camera based on the index
+        if (cameraIndex == -1)
+        {
+            playerCamera.enabled = true;
+            Debug.Log("Player camera enabled.");
+        }
+        else if (cameraIndex == -2)
+        {
+            finishCamera.enabled = true;
+            Debug.Log("Finish camera enabled.");
+        }
+        else if (cameraIndex >= 0 && cameraIndex < spectatorCameras.Count)
+        {
+            spectatorCameras[cameraIndex].enabled = true;
+            Debug.Log($"Spectator camera {cameraIndex} enabled: {spectatorCameras[cameraIndex].name}");
+        }
+
+        currentCameraIndex = cameraIndex;
         
     }
 
@@ -41,7 +67,7 @@ public class RaceCompletion : MonoBehaviour
     {
         if (checkpointManager.raceFinished.ContainsKey(racer))
         {
-            SwitchToCamera(finishCamera);
+            SwitchToCamera(-2);
             finishRace = true;
             FindObjectOfType<RaceStatsHUD>().FreezeRaceStats();
             RemoveCollider();
@@ -53,9 +79,7 @@ public class RaceCompletion : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
-            CheckRaceCompletion(other.gameObject);
-            
+            CheckRaceCompletion(other.gameObject); 
         }
     }
 
@@ -63,4 +87,13 @@ public class RaceCompletion : MonoBehaviour
     {
         finishCollider.enabled = false;
     }
+
+    public void HandleSpectatorCamera(int cameraIndex)
+    {
+        if (finishRace)
+        {
+            SwitchToCamera(cameraIndex);
+        }
+    }
+
 }
