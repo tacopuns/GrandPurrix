@@ -27,7 +27,7 @@ public class CarController : MonoBehaviour
     [SerializeField]
     private float accelerationTime = 2.0f; //time needed to reach max speed
 
-    private bool isDrifting = false;
+    public bool isDrifting = false;
     //private float driftDuration = 2.0f;
     private float driftTimer = 0.0f;
 
@@ -60,7 +60,7 @@ public class CarController : MonoBehaviour
 
     public bool isSteering = false;
     public bool canDrift = false;
-
+    
 
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
@@ -248,29 +248,7 @@ public class CarController : MonoBehaviour
     }
 
 
-    private void StopDrift()
-    {
-        isDrifting = false;
-    driftTimer = 0f;
-    turnStrength = 15f;
-    dL = 0;
-    dR = 0;
-
-    // Reset friction for both wheels
-    ResetDriftFriction(leftWheel);
-    ResetDriftFriction(rightWheel);
-
-        
-
-        //StopDriftEffects();
-
-        if (isBoosting)
-        {
-            Vector3 boostForce = transform.forward * boostStrength;
-            theRB.AddForce(boostForce, ForceMode.VelocityChange);
-        }
-
-    }
+    
 
     /*private void PlayDriftEffects()
     {
@@ -331,93 +309,114 @@ public class CarController : MonoBehaviour
 
 
     
+    private float driftSwitchBuffer = 0.3f;
+    private float driftSwitchTimer = 0f;
 
     void PowerSlide()
     {
-        if (turnInput != 0)
-    {
-        // Recalculate drift direction dynamically based on turn input
-        driftDirection = turnInput < 0 ? -1 : 1;
+        
+        driftSwitchTimer -= Time.deltaTime;
 
-        // Apply drift force in the current drift direction
-        theRB.AddForce(transform.right * driftForce * driftDirection, ForceMode.Acceleration);
-
-        // Update drift animation states
-        dL = driftDirection == -1 ? 1 : 0;
-        dR = driftDirection == 1 ? 1 : 0;
-
-        // Adjust turning strength for drifting
-        turnStrength = 7f;
-
-        // Apply drift friction to the appropriate wheel
-        if (driftDirection == -1)
+        
+        if (turnInput != 0 && driftSwitchTimer <= 0f)
         {
-            ApplyDriftFriction(leftWheel);
-            ResetDriftFriction(rightWheel); // Reset the other wheel for smoother transitions
-        }
-        else
-        {
-            ApplyDriftFriction(rightWheel);
-            ResetDriftFriction(leftWheel); // Reset the other wheel for smoother transitions
-        }
-    }
-    else
-    {
-        // Stop drifting only if there's no turn input (player isn't steering)
-        StopDrift();
-    }
+           
+            int newDriftDirection = turnInput < 0 ? -1 : 1;
 
-        /*float dynamicDriftForce = driftForce * Mathf.Abs(turnInput); // Modulate force with turnInput
-        Debug.Log(dynamicDriftForce + "dyn drift force, " + driftDirection + "drift dir");
-
-        if (driftDirection == -1) 
-        {
-            theRB.AddForce(-transform.right * dynamicDriftForce, ForceMode.Acceleration);
-            turnStrength = 7f;
-            ApplyDriftFriction(leftWheel);
-            dL = 1;
-            dR = 0;
-        } 
-        if (driftDirection == 1) 
-        {
-            theRB.AddForce(transform.right * dynamicDriftForce, ForceMode.Acceleration);
-            turnStrength = 7f;
-            ApplyDriftFriction(rightWheel);
-            dL = 0;
-            dR = 1;
-        }
-        else if (turnInput == 0)
-        {
-            driftDirection = 0;
-            dL = 0;
-            dR = 0;
-            turnStrength = 15f;
-        }*/
-            /*if (turnInput < 0)
+            
+            if (newDriftDirection != driftDirection)
             {
-                ApplyLeftDriftForce();
-                dL = 1;
-                dR = 0;
-
-                
+                driftDirection = newDriftDirection;
+                driftSwitchTimer = driftSwitchBuffer; 
             }
-            else if (turnInput > 0)
-            {
-                
-                ApplyRightDriftForce();
-                dL = 0;
-                dR = 1;
 
-               
+            
+            theRB.AddForce(transform.right * driftForce * driftDirection, ForceMode.Acceleration);
+
+            
+            dL = driftDirection == -1 ? 1 : 0;
+            dR = driftDirection == 1 ? 1 : 0;
+
+            
+            if (driftDirection == -1)
+            {
+                ApplyDriftFriction(leftWheel);
+                ResetDriftFriction(rightWheel);
             }
             else
             {
-                StopDrift();
-                dL = 0;
-                dR = 0;
-            }*/
+                ApplyDriftFriction(rightWheel);
+                ResetDriftFriction(leftWheel);
+            }
+
+            turnStrength = 7f; 
+        }
+        
+        else if (turnInput == 0)
+        {
+            
+            StopDrift();
+        }
+        
+        
+        /*if (turnInput != 0)
+        {
+            
+            driftDirection = turnInput < 0 ? -1 : 1;
+
+            
+            theRB.AddForce(transform.right * driftForce * driftDirection, ForceMode.Acceleration);
+
+            
+            dL = driftDirection == -1 ? 1 : 0;
+            dR = driftDirection == 1 ? 1 : 0;
+
+            
+            turnStrength = 7f;
+
+            
+            if (driftDirection == -1)
+            {
+                ApplyDriftFriction(leftWheel);
+                ResetDriftFriction(rightWheel); 
+            }
+            else
+            {
+                ApplyDriftFriction(rightWheel);
+                ResetDriftFriction(leftWheel); 
+            }
+        }
+        else
+        {
+            
+            StopDrift();
+        }*/
             
         
+    }
+
+    private void StopDrift()
+    {
+        isDrifting = false;
+        driftTimer = 0f;
+        turnStrength = 15f;
+        dL = 0;
+        dR = 0;
+
+        // Reset friction for both wheels
+        ResetDriftFriction(leftWheel);
+        ResetDriftFriction(rightWheel);
+
+        
+
+        //StopDriftEffects();
+
+        if (isBoosting)
+        {
+            Vector3 boostForce = transform.forward * boostStrength;
+            theRB.AddForce(boostForce, ForceMode.VelocityChange);
+        }
+
     }
     
     
