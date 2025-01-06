@@ -107,7 +107,7 @@ public class CarController : MonoBehaviour
         StartWheelMove();
         //animator = GetComponent<Animator>();
 
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>(); //might change this to set manually. idk if its possible to have 2 diff animators? one for player one for npc
         animator.enabled = true;
     }
 
@@ -421,27 +421,7 @@ public class CarController : MonoBehaviour
     
     
 
-    
 
-    /*void ApplyLeftDriftForce()
-    {
-        theRB.AddForce(-transform.right * driftForce, ForceMode.Acceleration);
-        turnStrength = 7f;
-
-        
-        ApplyDriftFriction(leftWheel);
-    }
-
-    void ApplyRightDriftForce()
-    {
-        theRB.AddForce(transform.right * driftForce, ForceMode.Acceleration);
-        turnStrength = 7f;
-        
-        
-    
-        ApplyDriftFriction(rightWheel);
-        
-    }*/
 
     void StartWheelMove()
     {
@@ -534,14 +514,5 @@ public class CarController : MonoBehaviour
         wheel.sidewaysFriction = DefaultFriction(wheel.sidewaysFriction);
     }
 
-    /*private void PretendSpeed()
-    {
-        //camera = better cam
-
-        if(currentSpeed > 20)
-        {
-            
-        }
-    }*/
 
 }
