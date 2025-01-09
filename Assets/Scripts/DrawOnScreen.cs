@@ -6,7 +6,7 @@ public class DrawOnScreen : MonoBehaviour
 {
     public Camera cam; 
     public RectTransform canvasRect;
-    public RawImage drawArea;
+    public RawImage drawOutput;
 
     // Canvas dimensions
     public int textureWidth = 1024;
@@ -32,7 +32,7 @@ public class DrawOnScreen : MonoBehaviour
         colorMap = new Color[textureWidth * textureHeight];
         generatedTexture = new Texture2D(textureWidth, textureHeight, TextureFormat.RGBA32, false);
         generatedTexture.filterMode = FilterMode.Point;
-        drawArea.texture = generatedTexture; 
+        drawOutput.texture = generatedTexture; 
         ResetColor();
     }
 
@@ -67,8 +67,7 @@ public class DrawOnScreen : MonoBehaviour
 
     void ChangePixelsAroundPoint()
     {
-        // Cap the distance to prevent huge jumps causing blobs
-        const int maxInterpolationDistance = 50;
+       const int maxInterpolationDistance = 100;
 
         if (useInterpolation && pressedLastFrame)
         {
