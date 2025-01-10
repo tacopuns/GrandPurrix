@@ -36,12 +36,18 @@ public class DrawOnScreen : MonoBehaviour
         ResetColor();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButton(0))
+        {
             CalculatePixel();
+        }   
+
         else
+        {
             pressedLastFrame = false;
+        }
+            
     }
 
     void CalculatePixel()
@@ -67,7 +73,8 @@ public class DrawOnScreen : MonoBehaviour
 
     void ChangePixelsAroundPoint()
     {
-       const int maxInterpolationDistance = 100;
+       const int baseInterpolationDistance = 100;
+       int maxInterpolationDistance = (int)(baseInterpolationDistance * Time.deltaTime * 60); // adjust with frame rate so u can still "draw" on lower fps
 
         if (useInterpolation && pressedLastFrame)
         {
