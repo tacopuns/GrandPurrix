@@ -56,7 +56,7 @@ public class AICarController : MonoBehaviour
     void Start()
     {
         waypoints = waypointContainer.waypoints.ToArray();
-        aiRB.transform.parent = null;
+        //aiRB.transform.parent = null;
         currentWaypointIndex = 0;
         currentSpeed = 0f;
 

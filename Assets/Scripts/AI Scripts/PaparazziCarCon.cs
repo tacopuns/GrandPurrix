@@ -97,12 +97,12 @@ public class PaparazziCarCon : MonoBehaviour
         RotateTowards(moveDirection);
 
         
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
-        if (currentState == PaparazziState.FollowingPlayer || currentState == PaparazziState.Interviewing)
+        if (currentState == PaparazziState.FollowingPlayer || currentState == PaparazziState.Interviewing) //follow player
         {
             
-            if (distanceToPlayer < matchSpeedDistance)
+            if (distanceToTarget < matchSpeedDistance)
             {
                 aiRB.velocity = plRB.GetComponent<Rigidbody>().velocity;
 
@@ -127,9 +127,9 @@ public class PaparazziCarCon : MonoBehaviour
             ApplyForwardForce();
             
             GoHome();
-            
-
         }
+
+        
     
     }
 
@@ -179,22 +179,6 @@ public class PaparazziCarCon : MonoBehaviour
             TalkingTimer();
         }
         
-        /*TalkingTimer();
-        
-        Debug.Log("interviewing");
-
-        if (interviewTimer <= 0f)
-        {
-            Debug.Log("am done");
-            ChangeState(PaparazziState.Leaving);
-            Debug.Log("ok am done");
-        }
-        else
-        {
-            //TalkingTimer();
-            //interviewTimer -= Time.deltaTime;
-            // displaying interview UI, handling dialogue, etc.
-        }*/
     }
 
     void TalkingTimer()
