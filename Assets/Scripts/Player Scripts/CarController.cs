@@ -312,6 +312,14 @@ public class CarController : MonoBehaviour
     private float driftSwitchBuffer = 0.3f;
     private float driftSwitchTimer = 0f;
 
+
+    public float currentDriftForce = 0f; // Current drift force, starts at 0
+    private float driftForceIncreaseRate = 1f; // Rate at which drift force increases
+    private float maxDriftForce = 15f; // Maximum drift force
+
+    public float driftFriction = 10f; // High friction value for drifting
+public float defaultFriction = 1f;
+
     void PowerSlide()
     {
         
@@ -331,23 +339,43 @@ public class CarController : MonoBehaviour
             }
 
             
-            theRB.AddForce(transform.right * driftForce * driftDirection, ForceMode.Acceleration);
+           // theRB.AddForce(transform.right * driftForce * driftDirection, ForceMode.Acceleration);
+
+            // Gradually increase the drift force
+            currentDriftForce += driftForceIncreaseRate * Time.deltaTime;
+            currentDriftForce = Mathf.Clamp(currentDriftForce, 0f, maxDriftForce);
+
+            // Apply the gradually increasing drift force
+            theRB.AddForce(transform.right * currentDriftForce * driftDirection, ForceMode.Acceleration);
 
             
             dL = driftDirection == -1 ? 1 : 0;
             dR = driftDirection == 1 ? 1 : 0;
 
             
+        if (driftDirection != 0)
+        {
+            //Debug.Log($"Drift Direction: {driftDirection}");
+
             if (driftDirection == -1)
             {
-                ApplyDriftFriction(leftWheel);
+                //Debug.Log("Applying drift friction to left wheel.");
+                ApplyDriftFriction(leftWheel, driftFriction);
                 ResetDriftFriction(rightWheel);
             }
-            else
+            else if (driftDirection == 1)
             {
-                ApplyDriftFriction(rightWheel);
+                //Debug.Log("Applying drift friction to right wheel.");
+                ApplyDriftFriction(rightWheel, driftFriction);
                 ResetDriftFriction(leftWheel);
             }
+        }
+        else
+        {
+            //Debug.Log("No drift detected, resetting both wheels.");
+            ResetDriftFriction(leftWheel);
+            ResetDriftFriction(rightWheel);
+        }
 
             turnStrength = 7f; 
         }
@@ -397,6 +425,7 @@ public class CarController : MonoBehaviour
 
     private void StopDrift()
     {
+        currentDriftForce = 0f;
         isDrifting = false;
         driftTimer = 0f;
         turnStrength = 15f;
@@ -482,36 +511,37 @@ public class CarController : MonoBehaviour
     } 
 
     
-    void ApplyDriftFriction(WheelCollider wheel)
+    void ApplyDriftFriction(WheelCollider wheel, float targetFriction)
     {
+        //Debug.Log($"Applying drift friction to: {wheel.name} with target friction: {targetFriction}");
         if (wheel.GetGroundHit(out var hit))
         {
-            wheel.forwardFriction = UpdateFriction(wheel.forwardFriction);
-            wheel.sidewaysFriction = UpdateFriction(wheel.sidewaysFriction);
+            wheel.forwardFriction = UpdateFriction(wheel.forwardFriction, targetFriction);
+            wheel.sidewaysFriction = UpdateFriction(wheel.sidewaysFriction, targetFriction);
+        }
+        else
+        {
+            Debug.Log($"Wheel {wheel.name} is not grounded.");
         }
     }
 
-    WheelFrictionCurve UpdateFriction(WheelFrictionCurve friction) 
+    WheelFrictionCurve UpdateFriction(WheelFrictionCurve friction, float targetFriction)
     {
-        friction.stiffness = 10f;
-        //friction.
+        //Debug.Log($"Current stiffness: {friction.stiffness}, Target stiffness: {targetFriction}");
+        friction.stiffness = Mathf.Lerp(friction.stiffness, targetFriction, Time.deltaTime * 5f);
         return friction;
     }
 
-    WheelFrictionCurve DefaultFriction (WheelFrictionCurve friction) 
-    {
-        friction.stiffness = 1f;
-        //friction.
-        return friction;
-    }
-    
-    public WheelFrictionCurve originalForwardFriction;
-    public WheelFrictionCurve originalSidewaysFriction;
-    
     void ResetDriftFriction(WheelCollider wheel)
     {
         wheel.forwardFriction = DefaultFriction(wheel.forwardFriction);
         wheel.sidewaysFriction = DefaultFriction(wheel.sidewaysFriction);
+    }
+
+    WheelFrictionCurve DefaultFriction(WheelFrictionCurve friction)
+    {
+        friction.stiffness = defaultFriction; // Use the default friction value
+        return friction;
     }
 
 
