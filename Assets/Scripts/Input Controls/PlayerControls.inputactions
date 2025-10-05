@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Flashbang",
+                    "type": "Value",
+                    "id": "992cfaa4-2241-4f9a-81d8-202c3abfe23f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -390,6 +399,17 @@
                     "action": "ChangeSprite",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9ea9fa23-9954-4053-b029-c8b70e6a6d52",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Flashbang",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

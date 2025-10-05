@@ -80,6 +80,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Flashbang"",
+                    ""type"": ""Value"",
+                    ""id"": ""992cfaa4-2241-4f9a-81d8-202c3abfe23f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -412,6 +421,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""ChangeSprite"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ea9fa23-9954-4053-b029-c8b70e6a6d52"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Flashbang"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -449,6 +469,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Drift = m_Gameplay.FindAction("Drift", throwIfNotFound: true);
         m_Gameplay_CoOp = m_Gameplay.FindAction("Co-Op", throwIfNotFound: true);
         m_Gameplay_ChangeSprite = m_Gameplay.FindAction("ChangeSprite", throwIfNotFound: true);
+        m_Gameplay_Flashbang = m_Gameplay.FindAction("Flashbang", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -516,6 +537,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Drift;
     private readonly InputAction m_Gameplay_CoOp;
     private readonly InputAction m_Gameplay_ChangeSprite;
+    private readonly InputAction m_Gameplay_Flashbang;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -526,6 +548,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Drift => m_Wrapper.m_Gameplay_Drift;
         public InputAction @CoOp => m_Wrapper.m_Gameplay_CoOp;
         public InputAction @ChangeSprite => m_Wrapper.m_Gameplay_ChangeSprite;
+        public InputAction @Flashbang => m_Wrapper.m_Gameplay_Flashbang;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -553,6 +576,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChangeSprite.started += instance.OnChangeSprite;
             @ChangeSprite.performed += instance.OnChangeSprite;
             @ChangeSprite.canceled += instance.OnChangeSprite;
+            @Flashbang.started += instance.OnFlashbang;
+            @Flashbang.performed += instance.OnFlashbang;
+            @Flashbang.canceled += instance.OnFlashbang;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -575,6 +601,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @ChangeSprite.started -= instance.OnChangeSprite;
             @ChangeSprite.performed -= instance.OnChangeSprite;
             @ChangeSprite.canceled -= instance.OnChangeSprite;
+            @Flashbang.started -= instance.OnFlashbang;
+            @Flashbang.performed -= instance.OnFlashbang;
+            @Flashbang.canceled -= instance.OnFlashbang;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -618,5 +647,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnDrift(InputAction.CallbackContext context);
         void OnCoOp(InputAction.CallbackContext context);
         void OnChangeSprite(InputAction.CallbackContext context);
+        void OnFlashbang(InputAction.CallbackContext context);
     }
 }

@@ -57,6 +57,7 @@ public class CarController : MonoBehaviour
     public Animator animator;
     int dL = 0;
     int dR = 0;
+    int fB = 0;
 
     public bool isSteering = false;
     public bool canDrift = false;
@@ -68,6 +69,11 @@ public class CarController : MonoBehaviour
     private float driftForce = 10f;
 
     private int driftDirection = 0;
+
+    public Camera flashCamera; 
+    public float detectionRange = 10f;
+
+    public GameObject camUI;
     
     private void Awake()
     {
@@ -77,10 +83,12 @@ public class CarController : MonoBehaviour
         gameplay.FindAction("MoveForward").started += ctx => speedInput = ctx.ReadValue<float>();
         gameplay.FindAction("Turn").started += ctx => turnInput = ctx.ReadValue<float>();
         gameplay.FindAction("Drift").started += ctx => StartDrift();
+        gameplay.FindAction("Flashbang").started += ctx => Flashbang();
 
         gameplay.FindAction("MoveForward").canceled += ctx => speedInput = 0f;
         gameplay.FindAction("Turn").canceled += ctx => turnInput = 0f;
         gameplay.FindAction("Drift").canceled += ctx => StopDrift();
+        gameplay.FindAction("Flashbang").canceled += ctx => CamOff();
     }
 
     private void OnEnable()
@@ -109,6 +117,8 @@ public class CarController : MonoBehaviour
 
         animator = GetComponentInChildren<Animator>(); //might change this to set manually. idk if its possible to have 2 diff animators? one for player one for npc
         animator.enabled = true;
+
+        camUI.SetActive(false);
     }
 
     void Update()
@@ -159,8 +169,12 @@ public class CarController : MonoBehaviour
 
         animator.SetInteger("driftL",dL);
         animator.SetInteger("driftR",dR);
+        animator.SetInteger("flashBang", fB);
 
         DriftEnable();
+
+        Debug.DrawRay(flashCamera.transform.position, flashCamera.transform.forward * detectionRange, Color.red);
+
 
     }
 
@@ -292,7 +306,7 @@ public class CarController : MonoBehaviour
         else
         {
             isBoosting = false;
-            driftTimer = 0.0f; //reset time when drift stop or not drifting
+            driftTimer = 0.0f;
             
         }
     }
@@ -313,12 +327,12 @@ public class CarController : MonoBehaviour
     private float driftSwitchTimer = 0f;
 
 
-    public float currentDriftForce = 0f; // Current drift force, starts at 0
-    private float driftForceIncreaseRate = 1f; // Rate at which drift force increases
-    private float maxDriftForce = 15f; // Maximum drift force
+    public float currentDriftForce = 0f; 
+    private float driftForceIncreaseRate = 1f;
+    private float maxDriftForce = 15f;
 
-    public float driftFriction = 10f; // High friction value for drifting
-public float defaultFriction = 1f;
+    public float driftFriction = 10f;
+    public float defaultFriction = 1f;
 
     void PowerSlide()
     {
@@ -341,11 +355,11 @@ public float defaultFriction = 1f;
             
            // theRB.AddForce(transform.right * driftForce * driftDirection, ForceMode.Acceleration);
 
-            // Gradually increase the drift force
+            
             currentDriftForce += driftForceIncreaseRate * Time.deltaTime;
             currentDriftForce = Mathf.Clamp(currentDriftForce, 0f, maxDriftForce);
 
-            // Apply the gradually increasing drift force
+            
             theRB.AddForce(transform.right * currentDriftForce * driftDirection, ForceMode.Acceleration);
 
             
@@ -432,7 +446,7 @@ public float defaultFriction = 1f;
         dL = 0;
         dR = 0;
 
-        // Reset friction for both wheels
+        
         ResetDriftFriction(leftWheel);
         ResetDriftFriction(rightWheel);
 
@@ -445,6 +459,32 @@ public float defaultFriction = 1f;
             Vector3 boostForce = transform.forward * boostStrength;
             theRB.AddForce(boostForce, ForceMode.VelocityChange);
         }
+
+    }
+
+    
+    
+    private void Flashbang()
+    {
+        fB = 1;
+
+        Ray ray = new Ray(flashCamera.transform.position, flashCamera.transform.forward);
+        //Debug.DrawRay(ray.origin, ray.direction * detectionRange, Color.red, 2f); // Draws a red ray for 2 seconds
+
+        if (Physics.Raycast(ray, out RaycastHit hit, detectionRange))
+        {
+            Debug.Log("FlashCamera Detected Object: " + hit.collider.gameObject.name);
+        }
+        
+        camUI.SetActive(true);
+
+    }
+
+    private void CamOff()
+    {
+        camUI.SetActive(false);
+
+        fB = 0;
 
     }
     
@@ -540,7 +580,7 @@ public float defaultFriction = 1f;
 
     WheelFrictionCurve DefaultFriction(WheelFrictionCurve friction)
     {
-        friction.stiffness = defaultFriction; // Use the default friction value
+        friction.stiffness = defaultFriction;
         return friction;
     }
 
