@@ -75,10 +75,17 @@ public class PreRaceHandler : MonoBehaviour
             return;
         }
 
-        AICarController aiCarController = racer.GetComponent<AICarController>();
+        /*AICarController aiCarController = racer.GetComponent<AICarController>();
         if (aiCarController != null)
         {
             aiCarController.enabled = false;
+            return;
+        }*/
+
+        CPUController cPUController = racer.GetComponent<CPUController>();
+        if (cPUController != null)
+        {
+            cPUController.enabled = false;
             return;
         }
     }
@@ -92,10 +99,17 @@ public class PreRaceHandler : MonoBehaviour
             return;
         }
 
-        AICarController aiCarController = racer.GetComponent<AICarController>();
+        /*AICarController aiCarController = racer.GetComponent<AICarController>();
         if (aiCarController != null)
         {
             aiCarController.enabled = true;
+            return;
+        }*/
+
+        CPUController cPUController = racer.GetComponent<CPUController>();
+        if (cPUController != null)
+        {
+            cPUController.enabled = true;
             return;
         }
     }

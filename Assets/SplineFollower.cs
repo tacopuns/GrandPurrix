@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.Splines;
+
+using UnityEngine.Splines;
 
 public class SplineFollower : MonoBehaviour
 {
-    /*public SplineContainer splineContainer;
-    public float speed = 5f;
-    private float distanceTravelled = 0f;
+    public SplineContainer spline;
+    public float speed = 1f;
+    float distancePercentage = 0f;
 
+    float splineLength;
+
+    private void Start()
+    {
+        splineLength = spline.CalculateLength();
+    }
+
+    // Update is called once per frame
     void Update()
     {
-        if (splineContainer != null)
+        distancePercentage += speed * Time.deltaTime / splineLength;
+
+        Vector3 currentPosition = spline.EvaluatePosition(distancePercentage);
+        transform.position = currentPosition;
+
+        if (distancePercentage > 1f)
         {
-            // Calculate the distance travelled this frame
-            distanceTravelled += speed * Time.deltaTime;
-
-            // Determine the total length of the spline
-            float totalLength = splineContainer.CalculateLength();
-
-            // Calculate the normalized position (0 to 1) along the entire spline path
-            // Use the modulo operator for looping behavior
-            float normalizedDistance = Mathf.Repeat(distanceTravelled, totalLength);
-
-            // Get the position and tangent (forward direction) at the current distance
-            Vector3 position = splineContainer.EvaluatePosition(normalizedDistance);
-            Vector3 forward = splineContainer.EvaluateTangent(normalizedDistance);
-
-            // Update the object's position and rotation
-            transform.position = position;
-            // Use Quaternion.LookRotation to align the object's forward direction with the spline's tangent
-            transform.rotation = Quaternion.LookRotation(forward);
+            distancePercentage = 0f;
         }
-    }*/
+
+        Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
+        Vector3 direction = nextPosition - currentPosition;
+        transform.rotation = Quaternion.LookRotation(direction, transform.up);
+    }
 }

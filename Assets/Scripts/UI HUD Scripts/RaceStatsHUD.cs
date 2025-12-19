@@ -8,6 +8,8 @@ using System;
 
 public class RaceStatsHUD : MonoBehaviour
 {
+    public static RaceStatsHUD Instance;
+    
     public TextMeshProUGUI totalRaceTime;
     public TextMeshProUGUI currentLapText;
     public TextMeshProUGUI lapTimeText;
@@ -18,7 +20,7 @@ public class RaceStatsHUD : MonoBehaviour
     public float popScale = 1.2f;
     public float popDuration = 0.2f;
 
-    private float raceTime;
+    public float raceTime;
     private int previousLapCount;
     private bool lap1TimeSet = false;
     private float lap1Time;
@@ -34,6 +36,7 @@ public class RaceStatsHUD : MonoBehaviour
     void Start()
     {
         checkpointManager = CheckpointManager.Instance;
+        Instance = this;
         raceManager = FindObjectOfType<RaceManager>();
 
         previousLapCount = checkpointManager.GetLapCount(playerObject); 

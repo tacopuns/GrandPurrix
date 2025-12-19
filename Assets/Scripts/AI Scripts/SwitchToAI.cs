@@ -10,12 +10,15 @@ public class SwitchToAI : MonoBehaviour
     //private PlayerInput playerInput;
     private AICarController aiCarController;
 
+    private CPUController cPUController;
+
     void Start()
     {
         raceCompletion = FindObjectOfType<RaceCompletion>();
         carController = GetComponent<CarController>();
         //playerInput = GetComponent<PlayerInput>();
         aiCarController = GetComponent<AICarController>();
+        cPUController = GetComponent<CPUController>();
     }
 
     
@@ -31,7 +34,8 @@ public class SwitchToAI : MonoBehaviour
     {
         carController.enabled = false;
         //playerInput.enabled = false;
-        aiCarController.enabled = true;
+        //aiCarController.enabled = true;
+        cPUController.enabled = true;
     }
 
     

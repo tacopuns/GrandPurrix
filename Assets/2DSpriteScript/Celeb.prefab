@@ -2335,13 +2335,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfae31bf3203591458f7c7f0b6aa42b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  waypointContainer: {fileID: 0}
-  waypoints: []
+  rotationSpeed: 6
+  currentSpeed: 0
+  cpuSpeed: 20
   aiRB: {fileID: 6867780518287684775}
+  groundRayPoint: {fileID: 8439710432809816554}
+  stuckTimer: 0
+  maxStuckTime: 0.5
+  accelerationRate: 5
+  maxSpeed: 40
   dragOnGround: 7
   gravityForce: 10
-  groundRayPoint: {fileID: 8439710432809816554}
+  accelerationTimer: 0
+  accelerationTime: 5
+  obstacleDetectionDistance: 0
+  obstacleAvoidanceForce: 0
+  currentCheckpointIndex: 0
+  wheels: []
+  steeringWheels: []
+  drivingWheels: []
+  centerOfMass: {x: 0, y: 0, z: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
+  weightMultiplier: 0
+  splineContainer: {fileID: 0}
+  splineProgress: 0
+  lookAheadDistance: 5
+  splineLength: 0
+  drawDebug: 1
+  laneOffset: 0
+  maxLaneOffset: 1.5
+  randomizeLaneOnStart: 1
+  currentLaneOffset: 0
+  desiredLaneOffset: 0
+  laneChangeSpeed: 2.5
+  laneChangeCooldown: 1.5
+  useSplineRotation: 1
+  rotationFollowSpeed: 8
+  rotationOffsetDegrees: 0
+  overtakeDistance: 8
+  laneCommitTime: 1.25
+  debugOvertaking: 1
+  boostSpeed: 800
+  boostAccelerationTime: 0.6
+  overtakeStartDelay: 4
+  overtakeEnabled: 0
 --- !u!114 &6067796908732192615
 MonoBehaviour:
   m_ObjectHideFlags: 0

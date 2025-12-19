@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class RaceManager : MonoBehaviour
 {
+    public static RaceManager Instance;
     private CheckpointManager checkpointManager;
     public List<GameObject> racers;
 
