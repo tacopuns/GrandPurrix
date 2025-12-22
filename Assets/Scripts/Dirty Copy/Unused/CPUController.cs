@@ -61,9 +61,6 @@ public class CPUController : MonoBehaviour
     public float splineLength;
     private float lastSplineProgress;
 
-    [Header("Debug")]
-    public bool drawDebug = true;
-
 
     [Header("Lane Offset")]
     public float laneOffset = 0f;        
@@ -78,12 +75,6 @@ public class CPUController : MonoBehaviour
 
     private float laneChangeTimer = 0f;
 
-
-    [Header("Spline Rotation")]
-    public bool useSplineRotation = true;
-    public float rotationFollowSpeed = 8f;
-    public float rotationOffsetDegrees = 0f;
-
     [Header("Overtaking")]
     public float overtakeDistance = 8f;    //in spline meters
     public float laneCommitTime = 1.25f;    
@@ -91,12 +82,6 @@ public class CPUController : MonoBehaviour
     private float laneCommitTimer = 0f;
 
     public bool debugOvertaking = true;
-
-    private RaceManager raceManager;
-    private RaceStatsHUD raceStatsHUD;
-
-    //public static List<GameObject> Racers;
-    public static List<CPUController> allRacers;
 
     [Header("Overtake Boost")]
     public float boostSpeed = 800f;
@@ -109,6 +94,15 @@ public class CPUController : MonoBehaviour
 
     public float overtakeStartDelay = 4f;
     public bool overtakeEnabled = false;
+
+    public RaceManager raceManager;
+    public RaceStatsHUD raceStatsHUD;
+
+    //public static List<GameObject> Racers;
+    public static List<CPUController> allRacers;
+
+    [Header("Debug")]
+    public bool drawDebug = true;
 
 
 
@@ -133,12 +127,12 @@ public class CPUController : MonoBehaviour
 
         allRacers = new List<CPUController>();
 
-        /*foreach (GameObject racer in raceManager.racers)
+        foreach (GameObject racer in raceManager.racers)
         {
             CPUController ai = racer.GetComponent<CPUController>();
             if (ai != null)
                 allRacers.Add(ai);
-        }*/
+        }
     }
 
     void Update()
@@ -276,34 +270,9 @@ public class CPUController : MonoBehaviour
         Vector3 targetPosition = GetSteerTarget();
         Vector3 moveDirection = (targetPosition - transform.position).normalized;
 
-        if (useSplineRotation)
-        {
-            Vector3 splineForward = GetSplineForward(splineProgress);
-
-            Quaternion targetRotation = Quaternion.LookRotation(
-                splineForward,
-                transform.up
-            );
-
-            
-            targetRotation *= Quaternion.Euler(0f, rotationOffsetDegrees, 0f);
-
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation,
-                targetRotation,
-                rotationFollowSpeed * Time.deltaTime
-            );
-        }
-        else
-        {
-            // fallback to old behavior
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
-                targetRotation,
-                rotationSpeed * Time.deltaTime
-            );
-        }
+        Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        
 
         RaycastHit hit;
         if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, whatIsGround))
@@ -466,6 +435,8 @@ public class CPUController : MonoBehaviour
         }
     }
 
+
+    public float steeringStrength = 1.2f;
     void DoWheelMove()
     {
         
@@ -510,7 +481,11 @@ public class CPUController : MonoBehaviour
             
             //wheel.wheelCollider.steerAngle = rotationSpeed * currentSteerRange;
 
-            wheel.wheelCollider.steerAngle = clampedSteeringAngle;
+            //wheel.wheelCollider.steerAngle = clampedSteeringAngle;
+
+            float steer = steeringAngle * steeringStrength;
+            steer = Mathf.Clamp(steer, -40f, 40f);
+            wheel.wheelCollider.steerAngle = steer;
             
         }
     }
