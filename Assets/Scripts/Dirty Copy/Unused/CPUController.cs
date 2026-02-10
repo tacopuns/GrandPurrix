@@ -61,6 +61,8 @@ public class CPUController : MonoBehaviour
     public float splineLength;
     private float lastSplineProgress;
 
+    public int currentSplineIndex;
+
 
     [Header("Lane Offset")]
     public float laneOffset = 0f;        
@@ -293,6 +295,54 @@ public class CPUController : MonoBehaviour
             aiRB.drag = 0.1f;
             aiRB.AddForce(Vector3.up * -gravityForce * weightMultiplier);
         }
+    }
+
+    public void EnterJunction(Junction junction)
+    {
+        if (junction.availableSplines.Count == 0)
+            return;
+
+        int chosenIndex = junction.availableSplines[
+            Random.Range(0, junction.availableSplines.Count)
+        ];
+
+        SwitchSpline(junction.splineContainer, chosenIndex);
+    }
+
+    void SwitchSpline(SplineContainer newContainer, int newSplineIndex)
+    {
+        splineContainer = newContainer;
+        currentSplineIndex = newSplineIndex;
+
+        Spline newSpline = splineContainer.Splines[currentSplineIndex];
+
+        float t = FindClosestTOnSpline(newSpline, transform.position);
+        splineProgress = t;
+    }
+
+    float FindClosestTOnSpline(Spline spline, Vector3 worldPos)
+    {
+        float closestT = 0f;
+        float closestDist = float.MaxValue;
+
+        const int samples = 20;
+
+        for (int i = 0; i <= samples; i++)
+        {
+            float t = i / (float)samples;
+            Vector3 p = splineContainer.transform.TransformPoint(
+                spline.EvaluatePosition(t)
+            );
+
+            float d = Vector3.Distance(worldPos, p);
+            if (d < closestDist)
+            {
+                closestDist = d;
+                closestT = t;
+            }
+        }
+
+        return closestT;
     }
 
     public void RequestLaneChange(float newOffset)

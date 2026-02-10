@@ -2363,6 +2363,7 @@ MonoBehaviour:
   splineProgress: 0
   lookAheadDistance: 5
   splineLength: 0
+  currentSplineIndex: 0
   laneOffset: 0
   maxLaneOffset: 1.5
   randomizeLaneOnStart: 1

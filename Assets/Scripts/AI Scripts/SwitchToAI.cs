@@ -12,6 +12,8 @@ public class SwitchToAI : MonoBehaviour
 
     private CPUController cPUController;
 
+    private Alpha_2D_Character_In_3D_World spriteSwaps;
+
     void Start()
     {
         raceCompletion = FindObjectOfType<RaceCompletion>();
@@ -19,6 +21,8 @@ public class SwitchToAI : MonoBehaviour
         //playerInput = GetComponent<PlayerInput>();
         aiCarController = GetComponent<AICarController>();
         cPUController = GetComponent<CPUController>();
+
+        spriteSwaps = GetComponent<Alpha_2D_Character_In_3D_World>();
     }
 
     
@@ -36,6 +40,7 @@ public class SwitchToAI : MonoBehaviour
         //playerInput.enabled = false;
         //aiCarController.enabled = true;
         cPUController.enabled = true;
+        spriteSwaps.enabled = true;
     }
 
     

@@ -29,14 +29,15 @@ public class CarController : MonoBehaviour
 
     public bool isDrifting = false;
     //private float driftDuration = 2.0f;
-    private float driftTimer = 0.0f;
+    //private float driftTimer = 0.0f;
+    //private float driftForce = 10f;
 
     //private ParticleSystem driftXF;
     //private GameObject skidXF;
     
-    private bool isBoosting = false;
-    private float boostForce = 50;
-    private float boostStrength = 100f;
+    //private bool isBoosting = false;
+    //private float boostForce = 50;
+    //private float boostStrength = 100f;
 
     public List<WheelMove> wheels = new List<WheelMove>();
 
@@ -66,7 +67,6 @@ public class CarController : MonoBehaviour
     public WheelCollider leftWheel;
     public WheelCollider rightWheel;
 
-    private float driftForce = 10f;
 
     private int driftDirection = 0;
 
@@ -441,7 +441,7 @@ public class CarController : MonoBehaviour
     {
         currentDriftForce = 0f;
         isDrifting = false;
-        driftTimer = 0f;
+        //driftTimer = 0f;
         turnStrength = 15f;
         dL = 0;
         dR = 0;
@@ -454,11 +454,11 @@ public class CarController : MonoBehaviour
 
         //StopDriftEffects();
 
-        if (isBoosting)
+        /*if (isBoosting)
         {
             Vector3 boostForce = transform.forward * boostStrength;
             theRB.AddForce(boostForce, ForceMode.VelocityChange);
-        }
+        }*/
 
     }
 

@@ -15,11 +15,11 @@ Material:
   - _EMISSIVE_SIMPLE
   - _IS_ANGELRING_OFF
   - _IS_OUTLINE_CLIPPING_YES
-  - _IS_TRANSCLIPPING_OFF
+  - _IS_TRANSCLIPPING_ON
   - _OUTLINE_POS
   - _SHADINGGRADEMAP
-  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_InvalidKeywords:
+  - _ALPHAPREMULTIPLY_ON
   - _GLOSSYREFLECTIONS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -27,7 +27,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap:
     IgnoreProjection: False
-    RenderType: Opaque
+    RenderType: TransparentCutout
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -273,14 +273,14 @@ Material:
     - _BumpScaleMatcap: 1
     - _CameraRolling_Stabilizer: 0
     - _ClippingMatteMode: 0
-    - _ClippingMode: 0
-    - _Clipping_Level: 0.238
+    - _ClippingMode: 1
+    - _Clipping_Level: 0.32
     - _CoatMask: 0
     - _ColorShift_Speed: 0
     - _ComposerMaskMode: 0
-    - _CullMode: 2
+    - _CullMode: 0
     - _CullModeForward: 2
-    - _Cutoff: 1
+    - _Cutoff: 0.783
     - _DepthOffsetEnable: 0
     - _DetailAlbedoScale: 1
     - _DetailNormalMapScale: 1
@@ -307,7 +307,7 @@ Material:
     - _DistortionVectorScale: 2
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
-    - _DstBlend: 0
+    - _DstBlend: 10
     - _EMISSIVE: 0
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
@@ -320,8 +320,8 @@ Material:
     - _Farthest_Distance: 100
     - _FirstShadeOverridden: 0
     - _FirstShadeVisible: 1
-    - _GI_Intensity: 0
-    - _GlossMapScale: 0.16
+    - _GI_Intensity: 0.14
+    - _GlossMapScale: 0.216
     - _Glossiness: 0.263
     - _GlossyReflections: 0
     - _HeightAmplitude: 0.02
@@ -337,13 +337,13 @@ Material:
     - _HighlightOverridden: 0
     - _HighlightVisible: 1
     - _InvTilingScale: 1
-    - _Inverse_Clipping: 1
+    - _Inverse_Clipping: 0
     - _Inverse_MatcapMask: 0
     - _Inverse_Z_Axis_BLD: 1
     - _Ior: 1
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
-    - _IsBaseMapAlphaAsClippingMask: 0
+    - _IsBaseMapAlphaAsClippingMask: 1
     - _Is_BLD: 0
     - _Is_BakedNormal: 0
     - _Is_BlendAddToHiColor: 1
@@ -377,8 +377,8 @@ Material:
     - _LinkDetailsWithBase: 1
     - _MatCap: 0
     - _MaterialID: 1
-    - _Metallic: 0.457
-    - _Mode: 0
+    - _Metallic: 0.471
+    - _Mode: 3
     - _Nearest_Distance: 0.5
     - _NormalMapSpace: 0
     - _NormalScale: 1
@@ -421,7 +421,7 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
-    - _SmoothnessTextureChannel: 1
+    - _SmoothnessTextureChannel: 0
     - _SpecularAAScreenSpaceVariance: 0.1
     - _SpecularAAThreshold: 0.2
     - _SpecularHighlights: 1
@@ -479,7 +479,7 @@ Material:
     - _Tweak_RimLightMaskLevel: 0
     - _Tweak_ShadingGradeMapLevel: 0
     - _Tweak_SystemShadowsLevel: 0
-    - _Tweak_transparency: -0.39
+    - _Tweak_transparency: -0.48
     - _UVBase: 0
     - _UVDetail: 0
     - _UVEmissive: 0
@@ -494,7 +494,7 @@ Material:
     - _ZTestGBuffer: 4
     - _ZTestModeDistortion: 8
     - _ZTestTransparent: 4
-    - _ZWrite: 1
+    - _ZWrite: 0
     - _ZWriteMode: 1
     - _isUnityToonshader: 1
     - _simpleUI: 0
