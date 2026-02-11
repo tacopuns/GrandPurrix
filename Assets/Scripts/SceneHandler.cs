@@ -6,20 +6,26 @@ using UnityEngine.SceneManagement;
 public class SceneHandler : MonoBehaviour
 {
 
-    public int SceneA = 1;
-    public int SceneB = 2;
+    private readonly int sceneA = 1;
+    private readonly int sceneB = 2;
+    private readonly int sceneC = 3;
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void GoToAScene(int SceneA)
+    public void GoToAScene()
     {
-        SceneManager.LoadScene(SceneA);
+        SceneManager.LoadScene(sceneA);
     }
 
-    public void GoToBScene(int SceneB)
+    public void GoToBScene()
     {
-        SceneManager.LoadScene(SceneB);
+        SceneManager.LoadScene(sceneB);
+    }
+
+    public void GoToCScene()
+    {
+        SceneManager.LoadScene(sceneC);
     }
 }

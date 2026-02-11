@@ -43,8 +43,8 @@
   <Project Path="Unity.TextMeshPro.csproj" />
   <Project Path="Unity.Performance.Profile-Analyzer.Editor.csproj" />
   <Project Path="Unity.Toonshader.csproj" />
-  <Project Path="Unity.InputSystem.TestFramework.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="Unity.InputSystem.TestFramework.csproj" />
   <Project Path="Unity.VSCode.Editor.csproj" />
   <Project Path="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.csproj" />
   <Project Path="Unity.2D.Sprite.Editor.csproj" />
