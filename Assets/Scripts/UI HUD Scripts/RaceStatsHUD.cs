@@ -41,7 +41,7 @@ public class RaceStatsHUD : MonoBehaviour
 
         previousLapCount = checkpointManager.GetLapCount(playerObject); 
 
-        raceTime = 0;
+        //raceTime = 0;
     }
 
     void Update()
@@ -57,7 +57,6 @@ public class RaceStatsHUD : MonoBehaviour
             int currentLap = checkpointManager.GetLapCount(playerObject);
             currentLapText.text = "LAP " + currentLap;
 
-            // Check if lap count has changed
             if (currentLap != previousLapCount)
             {
                 if (currentLap == 1 && !lap1TimeSet)
@@ -76,7 +75,6 @@ public class RaceStatsHUD : MonoBehaviour
                     UpdateLapTimesList();
                 }
 
-                // Update previous lap count
                 previousLapCount = currentLap;
             }
 
@@ -87,6 +85,8 @@ public class RaceStatsHUD : MonoBehaviour
 
     public void FreezeRaceStats()
     {
+        raceTime = 0;
+        totalRaceTime.text = RaceTimeFormat(raceTime);
         raceFrozen = true;
     }
 
@@ -107,7 +107,7 @@ public class RaceStatsHUD : MonoBehaviour
         }
     }
 
-    private int previousPlayerIndex = -1; // Variable to store the previous player index
+    private int previousPlayerIndex = -1;
 
     private void UpdatePlayerPosition()
     {
@@ -118,15 +118,15 @@ public class RaceStatsHUD : MonoBehaviour
 
             int playerIndex = racers.FindIndex(racer => racer == playerObject);
 
-            if (playerIndex != previousPlayerIndex) // Check if player position has changed
+            if (playerIndex != previousPlayerIndex)
             {
                 string ordinalPosition = GetOrdinal(playerIndex + 1);
-                AnimatePositionText(ordinalPosition); // Call the new method to animate position text
-                previousPlayerIndex = playerIndex; // Update previous player index
+                AnimatePositionText(ordinalPosition); 
+                previousPlayerIndex = playerIndex; 
             }
             else
             {
-                playerPositionText.text = GetOrdinal(playerIndex + 1); // Update position text without animation
+                playerPositionText.text = GetOrdinal(playerIndex + 1);
             }
         }
     }

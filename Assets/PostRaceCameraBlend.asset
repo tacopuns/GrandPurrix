@@ -13,8 +13,19 @@ MonoBehaviour:
   m_Name: PostRaceCameraBlend
   m_EditorClassIdentifier: 
   m_CustomBlends:
-  - m_From: Virtual Camera FinishLine
-    m_To: Virtual Camera Spec1
+  - m_From: State-Driven Camera
+    m_To: VC FinishLine
+    m_Blend:
+      m_Style: 5
+      m_Time: 1.5
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: VC FinishLine
+    m_To: VC Spec1
     m_Blend:
       m_Style: 0
       m_Time: 2
@@ -24,8 +35,8 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: Virtual Camera Spec1
-    m_To: Virtual Camera Spec2
+  - m_From: VC Spec1
+    m_To: VC Spec2
     m_Blend:
       m_Style: 0
       m_Time: 1
@@ -35,11 +46,33 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: Virtual Camera Spec2
-    m_To: Virtual Camera FinishLine
+  - m_From: VC Spec2
+    m_To: VC Spec3
     m_Blend:
       m_Style: 0
       m_Time: 1
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: VC Spec3
+    m_To: VC Spec4 Top
+    m_Blend:
+      m_Style: 0
+      m_Time: 2
+      m_CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - m_From: VC Spec4 Top
+    m_To: VC FinishLine
+    m_Blend:
+      m_Style: 0
+      m_Time: 2
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

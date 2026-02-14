@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class SceneHandler : MonoBehaviour
 {
 
-    private readonly int sceneA = 1;
-    private readonly int sceneB = 2;
-    private readonly int sceneC = 3;
+    private int SceneA = 1;
+    private int sceneB = 2;
+    private int sceneC = 3;
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -16,7 +16,7 @@ public class SceneHandler : MonoBehaviour
 
     public void GoToAScene()
     {
-        SceneManager.LoadScene(sceneA);
+        SceneManager.LoadScene(SceneA);
     }
 
     public void GoToBScene()

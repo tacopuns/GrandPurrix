@@ -11,14 +11,15 @@ public class RaceCompletion : MonoBehaviour
     public bool finishRace = false;
 
     private CheckpointManager checkpointManager;
+    public SpectatorHandler spectatorHandler;
 
     public RaceManager raceManager;
 
     public Collider finishCollider;
 
-    public List<CinemachineVirtualCamera> spectatorCameras;
-    private int currentCameraIndex = -1;
-    public List<Collider> spectatorTriggers;
+    //public List<CinemachineVirtualCamera> spectatorCameras;
+    //private int currentCameraIndex = -1;
+    //public List<Collider> spectatorTriggers;
 
 
 
@@ -28,11 +29,11 @@ public class RaceCompletion : MonoBehaviour
         checkpointManager = CheckpointManager.Instance;
         finishRace = false;
         
-        SwitchToCamera(-1);
+        //SwitchToCamera(-1);
     }
 
     
-    private void SwitchToCamera(int cameraIndex)
+    /*private void SwitchToCamera(int cameraIndex)
     {
 
         playerCamera.enabled = false;
@@ -42,7 +43,6 @@ public class RaceCompletion : MonoBehaviour
             cam.enabled = false;
         }
 
-        // Enable the appropriate camera based on the index
         if (cameraIndex == -1)
         {
             playerCamera.enabled = true;
@@ -61,13 +61,13 @@ public class RaceCompletion : MonoBehaviour
 
         currentCameraIndex = cameraIndex;
         
-    }
+    }*/
 
     private void CheckRaceCompletion(GameObject racer)
     {
         if (checkpointManager.raceFinished.ContainsKey(racer))
         {
-            SwitchToCamera(-2);
+            spectatorHandler.SwitchToCamera(-2);
             finishRace = true;
             FindObjectOfType<RaceStatsHUD>().FreezeRaceStats();
             RemoveCollider();
@@ -88,12 +88,12 @@ public class RaceCompletion : MonoBehaviour
         finishCollider.enabled = false;
     }
 
-    public void HandleSpectatorCamera(int cameraIndex)
+    /*public void HandleSpectatorCamera(int cameraIndex)
     {
         if (finishRace)
         {
             SwitchToCamera(cameraIndex);
         }
-    }
+    }*/
 
 }

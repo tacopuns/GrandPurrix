@@ -26,8 +26,7 @@ public class CPUController : MonoBehaviour
 
     public float dragOnGround = 7f, gravityForce = 10f;
 
-    [SerializeField]
-    private float accelerationTimer = 0.0f;
+    public float accelerationTimer = 0.0f;
     public float accelerationTime = 5.0f; 
 
     public float obstacleDetectionDistance = 0f;

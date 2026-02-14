@@ -17,9 +17,16 @@ public class PreRaceHandler : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(StartRaceCountdown());
+        ResetRace();
+    }
+    
+    public void ResetRace()
+    {
         raceStatsHUD.raceFrozen = true;
+        raceStatsHUD.raceTime = 0;
+        ResetSpeed();
         DisableRacerMovement();
+        ResetSplinePath();
         raceStarted = false;
     }
 
@@ -27,11 +34,9 @@ public class PreRaceHandler : MonoBehaviour
     public IEnumerator StartRaceCountdown()
     {
         
-        // Initialize race positions
         raceInitializer.InitializeStartingPositions();
         
 
-        // Countdown loop
         float countdown = countdownTime;
         while (countdown > 0)
         {
@@ -40,11 +45,10 @@ public class PreRaceHandler : MonoBehaviour
             countdown--;
         }
 
-        // Start the race
         countdownText.text = "GO!";
         
         EnableRacerMovement();
-        yield return new WaitForSeconds(1.0f); // Display "GO!" for a moment
+        yield return new WaitForSeconds(1.0f);
         raceStarted = true;
         raceStatsHUD.raceFrozen = false;
         countdownText.text = "";
@@ -75,13 +79,6 @@ public class PreRaceHandler : MonoBehaviour
             return;
         }
 
-        /*AICarController aiCarController = racer.GetComponent<AICarController>();
-        if (aiCarController != null)
-        {
-            aiCarController.enabled = false;
-            return;
-        }*/
-
         CPUController cPUController = racer.GetComponent<CPUController>();
         if (cPUController != null)
         {
@@ -99,20 +96,57 @@ public class PreRaceHandler : MonoBehaviour
             return;
         }
 
-        /*AICarController aiCarController = racer.GetComponent<AICarController>();
-        if (aiCarController != null)
-        {
-            aiCarController.enabled = true;
-            return;
-        }*/
-
         CPUController cPUController = racer.GetComponent<CPUController>();
         if (cPUController != null)
         {
             cPUController.enabled = true;
             return;
         }
+
     }
+
+    
+     private void ResetSplinePath()
+    {
+        foreach (GameObject racer in raceManager.racers)
+        {
+            ResetSplineProgress(racer);
+        }
+    }
+    
+    private void ResetSplineProgress(GameObject racer)
+    {
+        CPUController cPUController = racer.GetComponent<CPUController>();
+        if (cPUController != null)
+        {
+            cPUController.splineProgress = 0;
+            return;
+        }
+
+    }
+
+    private void ResetSpeed()
+    {
+        foreach (GameObject racer in raceManager.racers)
+        {
+            SetRacerSpeed(racer);
+        }
+    }
+   
+
+    private void SetRacerSpeed(GameObject racer)
+    {
+        CPUController cPUController = racer.GetComponent<CPUController>();
+        if (cPUController != null)
+        {
+            cPUController.currentSpeed = 0;
+            //cPUController.accelerationTimer = 0;
+            return;
+        }
+
+    }
+
+
 
     public bool IsRaceStarted()
     {
