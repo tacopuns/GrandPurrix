@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class FavorSystem : MonoBehaviour
 {
@@ -24,36 +25,37 @@ public class FavorSystem : MonoBehaviour
         }
     }
 
-    public void AnswerA()
-    {
-        if (currentPaparazzi != null)
-        {
-            currentPaparazzi.favorPoints += 1;
-            Debug.Log("FP for " + currentPaparazzi.name + " = " + currentPaparazzi.favorPoints);
-            SaveFavorPoints();
-        }
-    }
-
-    public void AnswerB()
-    {
-        if (currentPaparazzi != null)
-        {
-            currentPaparazzi.favorPoints -= 1;
-            Debug.Log("FP for " + currentPaparazzi.name + " = " + currentPaparazzi.favorPoints);
-            SaveFavorPoints();
-        }
-    }
-
     private void SaveFavorPoints()
     {
-        /*if (savePlayerData != null)
-        {
-            //savePlayerData.SavePlayerDataToFile();
-            
-        }*/
-
         PersistenceManager.Instance.SaveGame();
     }
+
+
+    public void ApplyAnswerValue(int value)
+    {
+        if (currentPaparazzi == null)
+        {
+            Debug.LogWarning("No current paparazzi set!");
+            return;
+        }
+
+        currentPaparazzi.favorPoints += value;
+
+        Debug.Log($"Favor for {currentPaparazzi.name} is now {currentPaparazzi.favorPoints}");
+
+        SaveFavorPoints();
+    }
+
+    public void ApplyAnswer(AnswerOption answer)
+    {
+        currentPaparazzi.favorPoints += answer.value;
+        Debug.Log($"Favor for {currentPaparazzi.name} is now {currentPaparazzi.favorPoints}");
+
+        SaveFavorPoints();
+    
+    }
+
+
 }
 
 

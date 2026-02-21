@@ -2193,7 +2193,6 @@ GameObject:
   - component: {fileID: 6867780518287684775}
   - component: {fileID: 8439068765784255790}
   - component: {fileID: 6067796908732192615}
-  - component: {fileID: 4132461556717913489}
   - component: {fileID: 8199697588836969593}
   - component: {fileID: 5771649017414981367}
   - component: {fileID: 903079070960461236}
@@ -2453,35 +2452,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   weightMultiplier: 3000
---- !u!114 &4132461556717913489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7163199454873951551}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0206adb83594b0d40a09d893ce41a6f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypoints: []
-  waypointContainer: {fileID: 0}
-  rotationSpeed: 45
-  currentSpeed: 0
-  cpuSpeed: 4
-  aiRB: {fileID: 6867780518287684775}
-  groundRayPoint: {fileID: 8439710432809816554}
-  stuckTimer: 0
-  maxStuckTime: 0.5
-  accelerationRate: 10
-  maxSpeed: 55
-  dragOnGround: 7
-  gravityForce: 10
-  accelerationTimer: 0
-  accelerationTime: 3
-  obstacleDetectionDistance: 8
-  obstacleAvoidanceForce: 0.3
 --- !u!114 &8199697588836969593
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,13 +4,11 @@ public class Paparazzi
 {
     public string name;
     public int favorPoints;
-    //public List<QuestionAnswer> questions;
 
     public Paparazzi(string name)
     {
         this.name = name;
         this.favorPoints = 0;
-        //this.questions = new List<QuestionAnswer>();
     }
 }
 
@@ -18,7 +16,14 @@ public class Paparazzi
 public class QuestionAnswer
 {
     public string question;
-    public string[] answers;
+    public AnswerOption[] answers;
+}
+
+[System.Serializable]
+public class AnswerOption
+{
+    public string answerText;
+    public int value; // +1, -1, +2, etc.
 }
 
 
