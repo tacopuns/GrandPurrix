@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 334995880}
   - component: {fileID: 334995879}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: t (TMP)MP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Track 3
+  m_text: HUb
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 439c5c6c8bf87aa44b4cf916faf723e4, type: 2}
   m_sharedMaterial: {fileID: -4967732170371984544, guid: 439c5c6c8bf87aa44b4cf916faf723e4, type: 2}
@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 363545806}
   - component: {fileID: 363545805}
+  - component: {fileID: 363545807}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -398,6 +399,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &363545807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363545804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &537489368
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,7 +584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &548394591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -603,9 +627,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.90188676, g: 0.5700605, b: 0.79655355, a: 1}
+    m_PressedColor: {r: 0.8980393, g: 0.5647059, b: 0.79215693, a: 1}
+    m_SelectedColor: {r: 0.9803922, g: 0.21568629, b: 0.83921576, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -621,13 +645,13 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 548394593}
+  m_TargetGraphic: {fileID: 1433223458}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1958463876}
         m_TargetAssemblyTypeName: SceneHandler, Assembly-CSharp
-        m_MethodName: GoToCScene
+        m_MethodName: GoToBScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1386,7 +1410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1433223456
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2373,7 +2397,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Track 1
+  m_text: demo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 439c5c6c8bf87aa44b4cf916faf723e4, type: 2}
   m_sharedMaterial: {fileID: -4967732170371984544, guid: 439c5c6c8bf87aa44b4cf916faf723e4, type: 2}

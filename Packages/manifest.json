@@ -9,6 +9,7 @@
     "com.unity.inputsystem": "1.14.2",
     "com.unity.postprocessing": "3.4.0",
     "com.unity.probuilder": "5.2.4",
+    "com.unity.render-pipelines.universal": "14.0.12",
     "com.unity.splines": "2.8.2",
     "com.unity.textmeshpro": "3.0.9",
     "com.unity.timeline": "1.7.7",

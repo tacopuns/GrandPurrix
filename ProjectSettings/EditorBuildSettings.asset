@@ -14,8 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/OtherTest.unity
     guid: d63ca667f540dd8498c7de800b912bef
+  - enabled: 1
+    path: Assets/Scenes/blockouttest.unity
+    guid: 8759f08f4b00a1e4dad0db0e8378221a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 02ada3f45cbb2ca418912e9354f08daf, type: 2}
